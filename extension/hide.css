@@ -56,8 +56,9 @@ html:not([data-ytnd-off~="endscreen"]) .html5-video-player :is(
 }
 
 /*
-  Explore menu: the left-menu section with Music, Movies, Live, Gaming, News, Sports and more.
-  Matched by its links rather than its title, so it works in every language.
+  Explore: the left-menu section with Music, Movies, Live, Gaming, News, Sports and more (matched by
+  its links, so it works in every language), and Home's "Explore more topics" row of topic chips and
+  videos (matched by its own component).
 */
 html:not([data-ytnd-off~="explore"]) :is(
   ytd-guide-section-renderer:has(
@@ -71,7 +72,8 @@ html:not([data-ytnd-off~="explore"]) :is(
     a[href^="/channel/UC4R8DWoMoI7CAwX8_LjQHig"]
   ):not(:has(a[href^="/feed/channels"], a[href^="/feed/subscriptions"])),
   ytd-guide-entry-renderer:has(a[href^="/feed/explore"], a[href^="/feed/trending"]),
-  ytd-mini-guide-entry-renderer:has(a[href^="/feed/explore"], a[href^="/feed/trending"])
+  ytd-mini-guide-entry-renderer:has(a[href^="/feed/explore"], a[href^="/feed/trending"]),
+  ytd-rich-section-renderer:has(ytd-chips-shelf-with-video-shelf-renderer)
 ) {
   display: none !important;
 }

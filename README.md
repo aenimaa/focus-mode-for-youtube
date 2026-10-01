@@ -43,7 +43,7 @@ A small, quiet badge in the bottom-left corner of YouTube shows what's tucked aw
 | 📱 | **Shorts** | Rows, single Shorts in search, and the menu entry |
 | 📝 | **Video description** | Under the title |
 | 🎬 | **End of video** | Cards and suggestion grid as a video ends |
-| 🧭 | **Explore menu** | Music, Gaming, News and more in the left menu |
+| 🧭 | **Explore** | The Explore menu, and Home's "Explore more topics" row |
 
 ## 🔒 Safe by design
 

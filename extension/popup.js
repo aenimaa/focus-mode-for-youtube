@@ -12,8 +12,11 @@ function svg(hit, parts, outline) {
   const body = Object.entries(parts)
     .map(([name, shapes]) => `<g class="${name === hit ? "hit" : ""}">${shapes}</g>`)
     .join("");
+  // One outline box, or several when the tucked-away parts are in different places
+  const boxes = Array.isArray(outline[0]) ? outline : [outline];
+  const outlines = boxes.map(box => rect(...box, 3).replace("<rect", '<rect class="outline"')).join("");
   return `<svg viewBox="0 0 240 154" role="img" aria-label="Page sketch, the tucked-away part in red">
-    <g class="soft">${rect(0, 0, 240, 10, 0)}</g>${body}${rect(...outline, 3).replace("<rect", '<rect class="outline"')}
+    <g class="soft">${rect(0, 0, 240, 10, 0)}</g>${body}${outlines}
   </svg>`;
 }
 
@@ -67,7 +70,7 @@ function endOfVideo() {
   }, [13, 21, 214, 117]);
 }
 
-// The expanded left menu, with the Explore section near the bottom
+// Home with the expanded left menu: the menu's Explore section and the "Explore more topics" row
 function exploreMenu() {
   let menu = "";
   for (const y of [18, 27, 36, 52, 61, 70]) menu += dot(9, y + 2, 2) + rect(14, y, 34, 4, 1);
@@ -77,11 +80,13 @@ function exploreMenu() {
   for (let i = 0; i < 6; i++) explore += dot(9, 97 + i * 9, 2) + rect(14, 95 + i * 9, 30 + (i % 3) * 6, 4, 1);
 
   let videos = "";
-  for (const [x, y] of [[68, 18], [156, 18], [68, 86], [156, 86]]) {
-    videos += rect(x, y, 80, 45, 2) + rect(x, y + 50, 60, 3, 1) + rect(x, y + 56, 40, 3, 1);
-  }
+  for (const x of [68, 156]) videos += rect(x, 18, 80, 45, 2) + rect(x, 68, 60, 3, 1) + rect(x, 74, 40, 3, 1);
 
-  return svg("explore", { menu, explore, videos }, [3, 82, 58, 66]);
+  // "Explore more topics": a row of topic chips over a row of videos
+  for (const [x, w] of [[68, 30], [102, 36], [142, 28], [174, 40]]) explore += rect(x, 88, w, 6, 3);
+  for (const x of [68, 156]) explore += rect(x, 100, 80, 36, 2) + rect(x, 140, 56, 3, 1);
+
+  return svg("explore", { menu, explore, videos }, [[3, 82, 58, 66], [64, 84, 176, 63]]);
 }
 
 const WIREFRAMES = { shorts: homePage, endscreen: endOfVideo, explore: exploreMenu };
