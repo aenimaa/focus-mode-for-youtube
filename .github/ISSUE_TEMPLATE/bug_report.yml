@@ -44,4 +44,4 @@ body:
     attributes:
       label: Extension and Chrome version
       description: The extension version is at the bottom of its popup; Chrome's is at chrome://version.
-      placeholder: "v3.0.0, Chrome 141"
+      placeholder: "v3.0.1, Chrome 141"
