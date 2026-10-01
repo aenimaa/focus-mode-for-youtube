@@ -1,99 +1,149 @@
 const root = document.documentElement;
-const settingsList = document.getElementById("settings");
+const pagesEl = document.getElementById("pages");
 let state = { ...YTND.DEFAULTS };
 
-// Wireframes: a skeleton of the YouTube page with the tucked-away part in red.
+// The switches, grouped by the page they change. Each draws its own area on that page's map.
+const PAGES = {
+  watch: [
+    { key: "sidebar", label: "Related", icon: '<rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="M10 2.5v11"/>',
+      note: 'Tucks away the "Up next" column. The video moves to the center; playlists, live chat and transcripts stay.' },
+    { key: "endscreen", label: "End screen", icon: '<rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="M4 9h3v2H4zM9 9h3v2H9z"/>',
+      note: "Tucks away the cards and suggestion grid that appear as a video ends. Autoplay's countdown stays visible." },
+    { key: "comments", label: "Comments", icon: '<path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/>',
+      note: "Tucks away the comments under the video." },
+    { key: "description", label: "Description", icon: '<path d="M2.5 4h11M2.5 7.5h11M2.5 11h7"/>',
+      note: "Tucks away the box under the title with views, date and description." }
+  ],
+  home: [
+    { key: "shorts", label: "Shorts", icon: '<rect x="4.5" y="1.5" width="7" height="13" rx="2"/><path d="M7 6.2v3.6L10 8z"/>',
+      note: "Tucks away Shorts rows, single Shorts in search and under videos, and the Shorts menu entry." },
+    { key: "explore", label: "Explore", icon: '<circle cx="8" cy="8" r="6.5"/><path d="M10.5 5.5 9 9l-3.5 1.5L7 7z"/>',
+      note: 'Tucks away the Explore section of the left menu and Home\'s "Explore more topics" row.' }
+  ]
+};
 
-const rect = (x, y, w, h, rx = 1.5) =>
-  `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
-const dot = (cx, cy, r) => `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
+// Page maps: block sketches of YouTube's layout. Areas a switch controls are "zones";
+// they turn red while tucked away, and clicking them flips the switch.
 
-function svg(hit, parts, outline) {
-  const body = Object.entries(parts)
-    .map(([name, shapes]) => `<g class="${name === hit ? "hit" : ""}">${shapes}</g>`)
-    .join("");
-  // One outline box, or several when the tucked-away parts are in different places
-  const boxes = Array.isArray(outline[0]) ? outline : [outline];
-  const outlines = boxes.map(box => rect(...box, 3).replace("<rect", '<rect class="outline"')).join("");
-  return `<svg viewBox="0 0 240 154" role="img" aria-label="Page sketch, the tucked-away part in red">
-    <g class="soft">${rect(0, 0, 240, 10, 0)}</g>${body}${outlines}
-  </svg>`;
-}
+const R = (x, y, w, h, rx, cls = "el") => `<rect class="${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
+const C = (cx, cy, r, cls = "el") => `<circle class="${cls}" cx="${cx}" cy="${cy}" r="${r}"/>`;
+const zone = (key, parts, boxes) =>
+  `<g class="zone" data-k="${key}">${parts}${boxes.map(([x, y, w, h]) => `<rect class="box" x="${x}" y="${y}" width="${w}" height="${h}" rx="3"/>`).join("")}</g>`;
+const svg = body => `<svg viewBox="0 0 288 124" preserveAspectRatio="none">${body}</svg>`;
 
-function watchPage(hit) {
+// Simple blocks in YouTube's real proportions: a wide player, horizontal video cards, vertical Shorts
+const topBar = () => R(4, 3, 280, 6, 3);
+
+function watchMap() {
   let related = "";
-  for (let i = 0; i < 8; i++) {
-    const y = 16 + i * 17;
-    related += rect(168, y, 28, 15) + rect(199, y + 2, 33, 3, 1) + rect(199, y + 8, 24, 3, 1);
-  }
+  for (let i = 0; i < 5; i++) related += R(188, 15 + i * 21.5, 40, 18, 2, "part el") + R(232, 19 + i * 21.5, 48, 4, 2, "part el");
 
-  const outlines = {
-    sidebar: [165, 13, 70, 140],
-    description: [5, 119, 158, 18],
-    comments: [6, 135, 118, 17]
+  let endscreen = "";
+  for (const x of [12, 68, 124]) endscreen += R(x, 63, 50, 17, 2, "part on-player");
+
+  return svg(
+    topBar() +
+    R(4, 15, 176, 72, 4, "player") +
+    zone("endscreen", endscreen, [[9, 60, 168, 23]]) +
+    R(4, 93, 130, 5, 2.5, "strong") +
+    zone("description", R(4, 103, 176, 8, 3, "part el"), [[2, 101, 180, 12]]) +
+    zone("comments", R(4, 115, 176, 7, 3, "part el"), [[2, 113, 180, 11]]) +
+    zone("sidebar", related, [[186, 13, 100, 110]])
+  );
+}
+
+function homeMap() {
+  // Left menu: Home, Shorts, Subscriptions at the top, the Explore section lower down
+  const menu = R(4, 15, 38, 4, 2) + R(4, 31, 38, 4, 2) + R(4, 43, 38, 4, 2);
+  const shortsEntry = R(4, 23, 38, 4, 2, "part el");
+  let exploreMenu = "";
+  for (const y of [62, 70, 78, 86]) exploreMenu += R(4, y, 38, 4, 2, "part el");
+
+  let videos = "";
+  for (let i = 0; i < 3; i++) videos += R(50 + i * 79, 15, 73, 34, 3);
+
+  let shorts = shortsEntry;
+  for (let i = 0; i < 7; i++) shorts += R(50 + i * 33.5, 55, 28, 40, 3, "part el");
+
+  let topics = "";
+  for (let i = 0; i < 3; i++) topics += R(50 + i * 79, 101, 73, 21, 3, "part el");
+
+  return svg(
+    topBar() + menu + videos +
+    zone("shorts", shorts, [[2, 21, 42, 8], [48, 53, 238, 44]]) +
+    zone("explore", exploreMenu + topics, [[2, 59, 42, 33], [48, 99, 238, 25]])
+  );
+}
+
+const MAPS = { watch: watchMap, home: homeMap };
+
+// Build the maps and tiles
+
+for (const [page, switches] of Object.entries(PAGES)) {
+  document.querySelector(`[data-map="${page}"]`).innerHTML = MAPS[page]();
+  document.querySelector(`[data-tiles="${page}"]`).innerHTML = switches.map(s => `
+    <button type="button" class="tile" data-k="${s.key}" aria-pressed="false" title="${s.note.replace(/"/g, "&quot;")}">
+      <svg viewBox="0 0 16 16" aria-hidden="true">${s.icon}</svg>
+      <span>${s.label}</span>
+    </button>`).join("");
+}
+
+const highlight = (key, on) =>
+  document.querySelectorAll(`.zone[data-k="${key}"]`).forEach(z => z.classList.toggle("hl", on));
+
+document.querySelectorAll(".tile").forEach(tile => {
+  const key = tile.dataset.k;
+  tile.addEventListener("click", () => update({ [key]: !state[key] }));
+  for (const [event, on] of [["mouseenter", true], ["focus", true], ["mouseleave", false], ["blur", false]]) {
+    tile.addEventListener(event, () => highlight(key, on));
+  }
+});
+
+document.querySelectorAll(".zone").forEach(z => {
+  z.addEventListener("click", () => update({ [z.dataset.k]: !state[z.dataset.k] }));
+});
+
+// Pages fold away; which ones are folded is remembered in this popup only
+
+let folded = [];
+try { folded = JSON.parse(localStorage.getItem("ytnd-folded") || "[]"); } catch (_) {}
+
+document.querySelectorAll(".page").forEach(section => {
+  const head = section.querySelector(".page-head");
+  const setFolded = closed => {
+    section.classList.toggle("closed", closed);
+    head.setAttribute("aria-expanded", String(!closed));
   };
+  setFolded(folded.includes(section.dataset.page));
+  head.addEventListener("click", () => {
+    setFolded(!section.classList.contains("closed"));
+    folded = [...document.querySelectorAll(".page.closed")].map(s => s.dataset.page);
+    try { localStorage.setItem("ytnd-folded", JSON.stringify(folded)); } catch (_) {}
+  });
+});
 
-  return svg(hit, {
-    player: rect(8, 16, 152, 80, 3) + rect(8, 101, 110, 5, 1) +
-      dot(12, 113, 4) + rect(20, 111, 36, 4, 1) + rect(130, 109, 30, 8, 4),
-    description: rect(8, 122, 152, 12, 2),
-    comments: dot(12, 141, 3) + rect(18, 139.5, 100, 3, 1) +
-      dot(12, 148, 3) + rect(18, 146.5, 80, 3, 1),
-    sidebar: related
-  }, outlines[hit]);
+// Tabs
+
+const tabs = [...document.querySelectorAll(".tab")];
+
+function selectTab(tab) {
+  tabs.forEach(t => {
+    const selected = t === tab;
+    t.setAttribute("aria-selected", String(selected));
+    t.tabIndex = selected ? 0 : -1;
+    document.getElementById(t.getAttribute("aria-controls")).hidden = !selected;
+  });
 }
 
-function homePage() {
-  let guide = "";
-  for (let i = 0; i < 6; i++) guide += rect(5, 18 + i * 9, 11, 4, 1);
-
-  let videos = "";
-  for (let i = 0; i < 3; i++) {
-    videos += rect(26 + i * 72, 18, 66, 36, 2) + rect(26 + i * 72, 58, 50, 3, 1) + rect(26 + i * 72, 64, 34, 3, 1);
-  }
-
-  let shorts = rect(26, 76, 30, 4, 1);
-  for (let i = 0; i < 5; i++) shorts += rect(26 + i * 43, 85, 38, 66, 3);
-
-  return svg("shorts", { guide, videos, shorts }, [22, 72, 216, 82]);
-}
-
-// The player at the end of a video: creator cards top right, the suggestion strip along the bottom
-function endOfVideo() {
-  const cards = rect(150, 24, 74, 40, 3) + dot(214, 76, 7);
-  let strip = "";
-  for (let i = 0; i < 3; i++) strip += rect(16 + i * 71, 100, 66, 34, 2);
-
-  return svg("endscreen", {
-    player: rect(8, 16, 224, 126, 4) + rect(8, 146, 120, 5, 1),
-    endscreen: cards + strip
-  }, [13, 21, 214, 117]);
-}
-
-// Home with the expanded left menu: the menu's Explore section and the "Explore more topics" row
-function exploreMenu() {
-  let menu = "";
-  for (const y of [18, 27, 36, 52, 61, 70]) menu += dot(9, y + 2, 2) + rect(14, y, 34, 4, 1);
-  menu += rect(6, 45, 50, 1, 0) + rect(6, 79, 50, 1, 0);
-
-  let explore = rect(6, 86, 30, 4, 1);
-  for (let i = 0; i < 6; i++) explore += dot(9, 97 + i * 9, 2) + rect(14, 95 + i * 9, 30 + (i % 3) * 6, 4, 1);
-
-  let videos = "";
-  for (const x of [68, 156]) videos += rect(x, 18, 80, 45, 2) + rect(x, 68, 60, 3, 1) + rect(x, 74, 40, 3, 1);
-
-  // "Explore more topics": a row of topic chips over a row of videos
-  for (const [x, w] of [[68, 30], [102, 36], [142, 28], [174, 40]]) explore += rect(x, 88, w, 6, 3);
-  for (const x of [68, 156]) explore += rect(x, 100, 80, 36, 2) + rect(x, 140, 56, 3, 1);
-
-  return svg("explore", { menu, explore, videos }, [[3, 82, 58, 66], [64, 84, 176, 63]]);
-}
-
-const WIREFRAMES = { shorts: homePage, endscreen: endOfVideo, explore: exploreMenu };
-
-document.querySelectorAll(".wireframe").forEach(el => {
-  const key = el.dataset.wf;
-  el.innerHTML = WIREFRAMES[key] ? WIREFRAMES[key]() : watchPage(key);
+tabs.forEach((tab, i) => {
+  tab.addEventListener("click", () => selectTab(tab));
+  tab.addEventListener("keydown", event => {
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+    if (!step) return;
+    const next = tabs[(i + step + tabs.length) % tabs.length];
+    selectTab(next);
+    next.focus();
+  });
 });
 
 // Settings
@@ -108,21 +158,26 @@ function applyTheme(theme) {
 }
 
 function render() {
-  document.querySelector(`input[name="master"][value="${state.master ? "on" : "off"}"]`).checked = true;
   const paused = !state.master && state.pausedUntil > Date.now();
-  document.getElementById("masterStatus").textContent = state.master
-    ? "The noisy parts are tucked away"
-    : paused ? `YouTube as usual, ${YTND.backAt(state.pausedUntil)}` : "YouTube as usual";
-  document.getElementById("pauseRow").hidden = state.master;
-  settingsList.classList.toggle("is-off", !state.master);
+  const mode = state.master ? "on" : paused ? "pause" : "off";
+  document.querySelector(`input[name="master"][value="${mode}"]`).checked = true;
+
+  const count = YTND.FEATURES.filter(key => state[key]).length;
+  document.getElementById("masterStatus").textContent =
+    mode === "on" ? `${count} of ${YTND.FEATURES.length} tucked away`
+      : mode === "pause" ? `Paused, ${YTND.backAt(state.pausedUntil)}`
+        : "YouTube as usual";
+  document.getElementById("pauseRow").hidden = mode !== "pause";
+  pagesEl.classList.toggle("inactive", !state.master);
+
+  for (const [page, switches] of Object.entries(PAGES)) {
+    const on = switches.filter(s => state[s.key]).length;
+    document.querySelector(`[data-count="${page}"]`).textContent = `${on} of ${switches.length}`;
+  }
+  document.querySelectorAll(".tile").forEach(tile => tile.setAttribute("aria-pressed", String(Boolean(state[tile.dataset.k]))));
+  document.querySelectorAll(".zone").forEach(z => z.classList.toggle("on", Boolean(state[z.dataset.k])));
+
   document.getElementById("badge").checked = Boolean(state.badge);
-
-  YTND.FEATURES.forEach(key => {
-    const toggle = document.getElementById(key);
-    toggle.checked = Boolean(state[key]);
-    toggle.disabled = !state.master;
-  });
-
   const theme = ["light", "dark", "system"].includes(state.theme) ? state.theme : "system";
   document.querySelector(`input[name="theme"][value="${theme}"]`).checked = true;
   applyTheme(theme);
@@ -134,11 +189,6 @@ function update(patch) {
   YTND.save(patch);
 }
 
-// Turning Master on or off clears any timed pause; the chips below set one
-document.querySelectorAll('input[name="master"]').forEach(input => {
-  input.addEventListener("change", () => update({ master: input.value === "on", pausedUntil: 0 }));
-});
-
 function pauseEnd(choice) {
   if (choice === "15m") return Date.now() + 15 * 60 * 1000;
   if (choice === "1h") return Date.now() + 60 * 60 * 1000;
@@ -148,6 +198,15 @@ function pauseEnd(choice) {
   return morning.getTime();
 }
 
+// On, Pause (15 minutes, adjustable with the chips) and Off
+document.querySelectorAll('input[name="master"]').forEach(input => {
+  input.addEventListener("change", () => {
+    if (input.value === "on") update({ master: true, pausedUntil: 0 });
+    else if (input.value === "pause") update({ master: false, pausedUntil: pauseEnd("15m") });
+    else update({ master: false, pausedUntil: 0 });
+  });
+});
+
 document.querySelectorAll("[data-pause]").forEach(chip => {
   chip.addEventListener("click", () => update({ master: false, pausedUntil: pauseEnd(chip.dataset.pause) }));
 });
@@ -156,31 +215,8 @@ document.getElementById("badge").addEventListener("change", event => {
   update({ badge: event.target.checked });
 });
 
-YTND.FEATURES.forEach(key => {
-  document.getElementById(key).addEventListener("change", event => {
-    update({ [key]: event.target.checked });
-  });
-});
-
 document.querySelectorAll('input[name="theme"]').forEach(input => {
   input.addEventListener("change", () => update({ theme: input.value }));
-});
-
-// Accordion: one section open at a time (the settings and Safety).
-
-function setOpen(item, open) {
-  item.classList.toggle("open", open);
-  item.querySelector(".details").setAttribute("aria-expanded", String(open));
-}
-
-document.addEventListener("click", event => {
-  const button = event.target.closest(".details");
-  if (!button) return;
-
-  const item = button.closest(".setting");
-  const open = !item.classList.contains("open");
-  document.querySelectorAll(".setting.open").forEach(other => setOpen(other, false));
-  setOpen(item, open);
 });
 
 const version = chrome.runtime.getManifest().version;

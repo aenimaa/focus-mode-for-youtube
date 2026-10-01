@@ -16,167 +16,110 @@
       </div>
     </header>
 
-    <section class="master">
-      <div>
-        <div id="masterLabel" class="master-label">Master</div>
-        <div id="masterStatus" class="status"></div>
-      </div>
-      <div class="segmented master-seg" role="radiogroup" aria-labelledby="masterLabel">
-        <label><input type="radio" name="master" value="on"><span>On</span></label>
-        <label><input type="radio" name="master" value="off"><span>Off</span></label>
-      </div>
-    </section>
-
-    <div id="pauseRow" class="pause-row" hidden>
-      <span class="pause-label">Bring it back</span>
-      <button type="button" class="chip" data-pause="15m">in 15 min</button>
-      <button type="button" class="chip" data-pause="1h">in 1 hour</button>
-      <button type="button" class="chip" data-pause="tomorrow">tomorrow morning</button>
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button type="button" class="tab" role="tab" id="tab-focus" aria-controls="panel-focus" aria-selected="true">Focus</button>
+      <button type="button" class="tab" role="tab" id="tab-settings" aria-controls="panel-settings" aria-selected="false" tabindex="-1">Settings</button>
+      <button type="button" class="tab" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="false" tabindex="-1">About</button>
     </div>
 
-    <ul id="settings" class="settings">
-      <li class="setting">
-        <div class="row">
-          <button class="details" type="button" aria-expanded="false" aria-controls="panel-sidebar">
-            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
-            <span id="title-sidebar">Related videos</span>
+    <!-- Focus: what's tucked away, page by page -->
+    <section class="tab-panel" role="tabpanel" id="panel-focus" aria-labelledby="tab-focus">
+      <div class="status-row">
+        <div>
+          <div id="masterLabel" class="status-title">Master</div>
+          <div id="masterStatus" class="status"></div>
+        </div>
+        <div class="segmented master-seg" role="radiogroup" aria-labelledby="masterLabel">
+          <label><input type="radio" name="master" value="on"><span>On</span></label>
+          <label><input type="radio" name="master" value="pause"><span>Pause</span></label>
+          <label><input type="radio" name="master" value="off"><span>Off</span></label>
+        </div>
+      </div>
+
+      <div id="pauseRow" class="pause-row" hidden>
+        <span class="pause-label">Back in</span>
+        <button type="button" class="chip" data-pause="15m">15 min</button>
+        <button type="button" class="chip" data-pause="1h">1 hour</button>
+        <button type="button" class="chip" data-pause="tomorrow" title="Tomorrow at 6:00">Tomorrow</button>
+      </div>
+
+      <div id="pages" class="pages">
+        <section class="page" data-page="watch">
+          <button type="button" class="page-head" aria-expanded="true" aria-controls="page-watch">
+            <span class="page-name">Video page</span>
+            <span class="page-count"><span data-count="watch"></span><svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
           </button>
-          <input id="sidebar" class="toggle" type="checkbox" role="switch" aria-labelledby="title-sidebar">
-        </div>
-        <div id="panel-sidebar" class="panel" role="region" aria-labelledby="title-sidebar">
-          <div class="panel-inner">
-            <p>Tucks away the "Up next" column. The video moves to the center; playlists, live chat and transcripts stay.</p>
-            <div class="wireframe" data-wf="sidebar"></div>
+          <div class="page-body" id="page-watch">
+            <div class="page-inner">
+              <div class="map" data-map="watch" aria-hidden="true"></div>
+              <div class="tiles" data-tiles="watch"></div>
+            </div>
           </div>
-        </div>
-      </li>
+        </section>
 
-      <li class="setting">
-        <div class="row">
-          <button class="details" type="button" aria-expanded="false" aria-controls="panel-endscreen">
-            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
-            <span id="title-endscreen">End of video</span>
+        <section class="page" data-page="home">
+          <button type="button" class="page-head" aria-expanded="true" aria-controls="page-home">
+            <span class="page-name">Home</span>
+            <span class="page-count"><span data-count="home"></span><svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
           </button>
-          <input id="endscreen" class="toggle" type="checkbox" role="switch" aria-labelledby="title-endscreen">
-        </div>
-        <div id="panel-endscreen" class="panel" role="region" aria-labelledby="title-endscreen">
-          <div class="panel-inner">
-            <p>Tucks away the cards and suggestion grid that appear as a video ends. Autoplay's countdown stays visible.</p>
-            <div class="wireframe" data-wf="endscreen"></div>
+          <div class="page-body" id="page-home">
+            <div class="page-inner">
+              <div class="map" data-map="home" aria-hidden="true"></div>
+              <div class="tiles" data-tiles="home"></div>
+            </div>
           </div>
-        </div>
-      </li>
-
-      <li class="setting">
-        <div class="row">
-          <button class="details" type="button" aria-expanded="false" aria-controls="panel-comments">
-            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
-            <span id="title-comments">Comments</span>
-          </button>
-          <input id="comments" class="toggle" type="checkbox" role="switch" aria-labelledby="title-comments">
-        </div>
-        <div id="panel-comments" class="panel" role="region" aria-labelledby="title-comments">
-          <div class="panel-inner">
-            <p>Tucks away the comments under the video.</p>
-            <div class="wireframe" data-wf="comments"></div>
-          </div>
-        </div>
-      </li>
-
-      <li class="setting">
-        <div class="row">
-          <button class="details" type="button" aria-expanded="false" aria-controls="panel-description">
-            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
-            <span id="title-description">Video description</span>
-          </button>
-          <input id="description" class="toggle" type="checkbox" role="switch" aria-labelledby="title-description">
-        </div>
-        <div id="panel-description" class="panel" role="region" aria-labelledby="title-description">
-          <div class="panel-inner">
-            <p>Tucks away the box under the title with views, date and description.</p>
-            <div class="wireframe" data-wf="description"></div>
-          </div>
-        </div>
-      </li>
-
-      <li class="setting">
-        <div class="row">
-          <button class="details" type="button" aria-expanded="false" aria-controls="panel-shorts">
-            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
-            <span id="title-shorts">Shorts</span>
-          </button>
-          <input id="shorts" class="toggle" type="checkbox" role="switch" aria-labelledby="title-shorts">
-        </div>
-        <div id="panel-shorts" class="panel" role="region" aria-labelledby="title-shorts">
-          <div class="panel-inner">
-            <p>Tucks away Shorts rows, single Shorts in search and the Shorts menu entry.</p>
-            <div class="wireframe" data-wf="shorts"></div>
-          </div>
-        </div>
-      </li>
-
-      <li class="setting">
-        <div class="row">
-          <button class="details" type="button" aria-expanded="false" aria-controls="panel-explore">
-            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
-            <span id="title-explore">Explore</span>
-          </button>
-          <input id="explore" class="toggle" type="checkbox" role="switch" aria-labelledby="title-explore">
-        </div>
-        <div id="panel-explore" class="panel" role="region" aria-labelledby="title-explore">
-          <div class="panel-inner">
-            <p>Tucks away the Explore section of the left menu (Music, Gaming, News…) and Home's "Explore more topics" row.</p>
-            <div class="wireframe" data-wf="explore"></div>
-          </div>
-        </div>
-      </li>
-    </ul>
-
-    <a id="reportLink" class="report-link" href="https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=bug_report.yml" target="_blank" rel="noopener">Something still showing? Let me know →</a>
-
-    <section class="appearance">
-      <span id="themeLabel" class="appearance-label">Appearance</span>
-      <div class="segmented compact" role="radiogroup" aria-labelledby="themeLabel">
-        <label><input type="radio" name="theme" value="light"><span>Light</span></label>
-        <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
-        <label><input type="radio" name="theme" value="system"><span>System</span></label>
+        </section>
       </div>
     </section>
 
-    <section class="badge-row">
-      <span id="badgeLabel" class="appearance-label">Corner badge on YouTube</span>
-      <input id="badge" class="toggle" type="checkbox" role="switch" aria-labelledby="badgeLabel">
-    </section>
-
-    <section class="setting safety">
-      <div class="row">
-        <button class="details" type="button" aria-expanded="false" aria-controls="panel-safety">
-          <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
-          <span id="title-safety">Safety &amp; privacy</span>
-        </button>
-      </div>
-      <div id="panel-safety" class="panel" role="region" aria-labelledby="title-safety">
-        <div class="panel-inner">
-          <ul class="facts">
-            <li>Runs only on youtube.com</li>
-            <li>Its only permission is saving these settings</li>
-            <li>No network requests, tracking or data collection</li>
-            <li>Only hides parts of the page; never reads or changes your account</li>
-          </ul>
-          <a class="check-link" href="https://github.com/aenimaa/no-distractions-for-youtube/blob/main/SAFETY.md" target="_blank" rel="noopener">Check it yourself →</a>
+    <!-- Settings -->
+    <section class="tab-panel" role="tabpanel" id="panel-settings" aria-labelledby="tab-settings" hidden>
+      <div class="setting-row">
+        <div>
+          <div id="themeLabel" class="setting-title">Appearance</div>
+          <div class="setting-note">How this popup looks</div>
+        </div>
+        <div class="segmented compact" role="radiogroup" aria-labelledby="themeLabel">
+          <label><input type="radio" name="theme" value="light"><span>Light</span></label>
+          <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+          <label><input type="radio" name="theme" value="system"><span>System</span></label>
         </div>
       </div>
+
+      <div class="setting-row">
+        <div>
+          <div id="badgeLabel" class="setting-title">Corner badge on YouTube</div>
+          <div class="setting-note">A quiet badge showing what's tucked away. Dull until you hover it.</div>
+        </div>
+        <input id="badge" class="toggle" type="checkbox" role="switch" aria-labelledby="badgeLabel">
+      </div>
     </section>
 
-    <footer class="footer">
-      <span class="credit" title="Made by someone who gets distracted too">
-        Vibe-coded by Nima Sh
-        <a class="repo-link" href="https://github.com/aenimaa/no-distractions-for-youtube" target="_blank" rel="noopener" aria-label="Source code on GitHub" title="Source code on GitHub">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
-        </a>
-      </span>
-      <span id="version"></span>
-    </footer>
+    <!-- About -->
+    <section class="tab-panel" role="tabpanel" id="panel-about" aria-labelledby="tab-about" hidden>
+      <h2 class="about-title">Safety and privacy</h2>
+      <ul class="facts">
+        <li>Runs only on youtube.com</li>
+        <li>Its only permission is saving these settings</li>
+        <li>No network requests, tracking or data collection</li>
+        <li>Only hides parts of the page; never reads or changes your account</li>
+      </ul>
+      <a class="text-link" href="https://github.com/aenimaa/no-distractions-for-youtube/blob/main/SAFETY.md" target="_blank" rel="noopener">Check it yourself →</a>
+
+      <h2 class="about-title">Something still showing?</h2>
+      <p class="about-note">YouTube changes its page often. Reports keep this working.</p>
+      <a id="reportLink" class="text-link" href="https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=bug_report.yml" target="_blank" rel="noopener">Let me know →</a>
+
+      <footer class="footer">
+        <span class="credit" title="Made by someone who gets distracted too">
+          Vibe-coded by Nima Sh
+          <a class="repo-link" href="https://github.com/aenimaa/no-distractions-for-youtube" target="_blank" rel="noopener" aria-label="Source code on GitHub" title="Source code on GitHub">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+          </a>
+        </span>
+        <span id="version"></span>
+      </footer>
+    </section>
   </main>
   <script src="settings.js"></script>
   <script src="popup.js"></script>

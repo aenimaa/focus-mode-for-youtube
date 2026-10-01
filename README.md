@@ -36,6 +36,8 @@ Each has its own switch. **Master** turns them all off at once, or ⏸️ **paus
 
 A small, quiet badge in the bottom-left corner of YouTube shows what's tucked away. It stays dull until you hover it, and you can hide it.
 
+The popup shows a small map of the video page and of Home: tap a tile, or the area on the map, to tuck it away or bring it back.
+
 | | Section | Where |
 |---|---|---|
 | 🎞️ | **Related videos** | Beside the player; the video moves to the center |

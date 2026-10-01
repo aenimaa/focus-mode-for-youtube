@@ -11,6 +11,7 @@
 /*
   Contrast (WCAG AA): --accent carries white text at 5:1, --accent-text reads at 4.5:1+
   on the background, and --switch-off keeps the off toggle at 3:1+.
+  --map-* draw the page maps: YouTube's neutral greys, with tucked-away parts in --accent.
 */
 :root {
   color-scheme: light;
@@ -19,16 +20,18 @@
   --muted: #606060;
   --line: #e5e5e5;
   --soft: #f2f2f2;
-  --badge: #e8e8e8;
   --hover: rgba(0, 0, 0, .05);
   --raised: #ffffff;
   --switch-off: #8c8c8c;
-  --wf: #d6d6d6;
-  --wf-soft: #ebebeb;
   --accent: #e0002e;
   --accent-text: #cc0029;
   --on-accent: #ffffff;
   --focus: #065fd4;
+  --map-bg: #f9f9f9;
+  --map-el: #dedede;
+  --map-strong: #bdbdbd;
+  --map-player: #2b2b2b;
+  --map-on-player: #6b6b6b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,14 +42,16 @@
     --muted: #aaaaaa;
     --line: #303030;
     --soft: #272727;
-    --badge: #333333;
     --hover: rgba(255, 255, 255, .06);
     --raised: #3d3d3d;
     --switch-off: #6b6b6b;
-    --wf: #3f3f3f;
-    --wf-soft: #2b2b2b;
     --accent-text: #ff6b80;
     --focus: #3ea6ff;
+    --map-bg: #0f0f0f;
+    --map-el: #333333;
+    --map-strong: #4a4a4a;
+    --map-player: #000000;
+    --map-on-player: #5a5a5a;
   }
 }
 
@@ -57,17 +62,18 @@
   --muted: #aaaaaa;
   --line: #303030;
   --soft: #272727;
-  --badge: #333333;
   --hover: rgba(255, 255, 255, .06);
   --raised: #3d3d3d;
   --switch-off: #6b6b6b;
-  --wf: #3f3f3f;
-  --wf-soft: #2b2b2b;
   --accent-text: #ff6b80;
   --focus: #3ea6ff;
+  --map-bg: #0f0f0f;
+  --map-el: #333333;
+  --map-strong: #4a4a4a;
+  --map-player: #000000;
+  --map-on-player: #5a5a5a;
 }
 
-/* An open section can push past Chrome's 600px popup limit; reserve the scrollbar's space so nothing shifts */
 html {
   scrollbar-gutter: stable;
   scrollbar-width: thin;
@@ -90,19 +96,21 @@ body {
   outline-offset: 2px;
 }
 
+button { font: inherit; color: inherit; }
+
 /* Header */
 
 .header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
 }
 
 .title {
@@ -113,10 +121,40 @@ body {
 }
 
 .subtitle {
-  margin: 2px 0 0;
-  font-size: 12px;
+  margin: 0;
+  font-size: 11px;
   color: var(--muted);
 }
+
+/* Tabs */
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 10px;
+  padding: 2px;
+  border-radius: 8px;
+  background: var(--soft);
+}
+
+.tab {
+  flex: 1;
+  padding: 5px 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab[aria-selected="true"] {
+  background: var(--raised);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.tab-panel[hidden] { display: none; }
 
 /* Segmented controls (Master and Appearance) */
 
@@ -128,25 +166,23 @@ body {
   background: var(--soft);
 }
 
-.segmented label {
-  position: relative;
-}
+.segmented label { position: relative; }
 
 .segmented input {
   position: absolute;
-  opacity: 0;
   inset: 0;
   margin: 0;
+  opacity: 0;
 }
 
 .segmented span {
   display: block;
-  min-width: 44px;
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 6px;
-  text-align: center;
   font-weight: 600;
+  font-size: 12px;
   color: var(--muted);
+  text-align: center;
   cursor: pointer;
   transition: background .15s, color .15s;
 }
@@ -168,84 +204,90 @@ body {
 }
 
 .segmented.compact span {
-  min-width: 0;
-  padding: 3px 9px;
+  padding: 3px 8px;
   font-size: 11px;
 }
 
-/* Master */
+/* Focus tab: status */
 
-.master {
+.status-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  gap: 8px;
 }
 
-.master-label {
+.status-title {
   font-size: 14px;
   font-weight: 700;
 }
 
 .status {
-  margin-top: 2px;
+  margin-top: 1px;
   font-size: 11px;
   color: var(--muted);
 }
 
-/* Settings */
-
-.settings {
-  list-style: none;
-  margin: 0;
-  padding: 4px 0;
+.pause-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
 }
 
-.row {
+.pause-row[hidden] { display: none; }
+
+.pause-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.chip {
+  padding: 2px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.chip:hover { background: var(--hover); }
+
+/* Focus tab: pages */
+
+.pages { margin-top: 4px; }
+
+.page {
+  margin-top: 6px;
+  border-top: 1px solid var(--line);
+}
+
+.page-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  min-height: 40px;
-}
-
-.details {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-  margin-left: -6px;
+  width: calc(100% + 12px);
+  margin: 4px -6px 0;
   padding: 4px 6px;
   border: 0;
   border-radius: 6px;
   background: none;
-  color: inherit;
-  font: inherit;
-  text-align: left;
   cursor: pointer;
-  transition: background .15s;
 }
 
-/* Hover shows the title opens details; the switch keeps its own hit area */
-.details:hover {
-  background: var(--hover);
-}
+.page-head:hover { background: var(--hover); }
 
-.badge {
-  display: grid;
-  place-items: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 5px;
-  background: var(--badge);
+.page-name { font-weight: 700; }
+
+.page-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
   color: var(--muted);
-  transition: color .15s;
 }
 
-.badge svg {
+.chevron {
   width: 12px;
   height: 12px;
   fill: none;
@@ -256,71 +298,106 @@ body {
   transition: transform .2s;
 }
 
-.setting.open .badge {
-  color: var(--accent);
-}
+.page.closed .chevron { transform: rotate(-90deg); }
 
-.setting.open .badge svg {
-  transform: rotate(180deg);
-}
-
-.panel {
+.page-body {
   display: grid;
-  grid-template-rows: 0fr;
-  visibility: hidden;
-  transition: grid-template-rows .2s ease, visibility 0s .2s;
-}
-
-.setting.open .panel {
   grid-template-rows: 1fr;
-  visibility: visible;
-  transition: grid-template-rows .2s ease, visibility 0s;
+  transition: grid-template-rows .2s ease;
 }
 
-.panel-inner {
+.page.closed .page-body {
+  grid-template-rows: 0fr;
+}
+
+.page-inner {
   min-height: 0;
   overflow: hidden;
 }
 
-.panel p {
-  margin: 0 0 8px 26px;
-  font-size: 12px;
-  color: var(--muted);
-}
+.page.closed .page-inner { visibility: hidden; }
 
-.wireframe {
-  margin: 0 0 12px 26px;
-  padding: 6px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-}
+/* Page maps: a sketch of the real page; tucked-away parts are red and can be clicked */
 
-.wireframe svg {
+.map { margin: 2px 0 6px; }
+
+/* Drawn on a 288×124 grid and shown 10% shorter, so both pages fit Chrome's 600px popup */
+.map svg {
   display: block;
   width: 100%;
-  height: auto;
-  fill: var(--wf);
+  height: 112px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--map-bg);
 }
 
-.wireframe::after {
-  content: "Red = tucked away";
-  display: block;
-  margin-top: 4px;
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.wireframe .soft { fill: var(--wf-soft); }
-.wireframe .hit { fill: var(--accent); }
-
-.wireframe .outline {
-  fill: none;
+.map .el { fill: var(--map-el); }
+.map .strong { fill: var(--map-strong); }
+.map .player { fill: var(--map-player); }
+.map .on-player { fill: var(--map-on-player); }
+.map .zone { cursor: pointer; }
+.map .zone .part { transition: fill .15s; }
+.map .zone.on .part { fill: var(--accent); }
+.map .zone .box { fill: transparent; stroke: none; }
+.map .zone.hl .box,
+.map .zone:hover .box {
   stroke: var(--accent);
-  stroke-width: 1;
+  stroke-width: 1.5;
   stroke-dasharray: 3 2;
 }
 
-/* Toggle */
+/* Tiles: the switches for each page */
+
+.tiles {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.tile {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 5px 2px 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: none;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+
+.tile svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tile:hover { background: var(--hover); }
+
+.tile[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.tile[aria-pressed="true"] svg { stroke: var(--accent); }
+
+/* With Master off or paused, the pages show YouTube as usual */
+.pages.inactive .map,
+.pages.inactive .tiles {
+  opacity: .45;
+  pointer-events: none;
+}
+
+/* Toggle (Settings) */
 
 .toggle {
   appearance: none;
@@ -348,141 +425,75 @@ body {
   transition: transform .15s;
 }
 
-.toggle:checked {
-  background: var(--accent);
-}
+.toggle:checked { background: var(--accent); }
+.toggle:checked::before { transform: translateX(16px); }
 
-.toggle:checked::before {
-  transform: translateX(16px);
-}
+/* Settings tab */
 
-.toggle:disabled {
-  opacity: .4;
-  cursor: default;
-}
-
-.settings.is-off .details > span:last-child {
-  color: var(--muted);
-}
-
-/* Pause choices, shown while Master is off */
-
-.pause-row {
+.setting-row {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
-  padding: 10px 0 12px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--line);
 }
 
-.pause-row[hidden] { display: none; }
+.setting-row:first-child { padding-top: 2px; }
 
-.pause-label {
-  margin-right: 2px;
-  font-size: 12px;
+.setting-title { font-weight: 600; }
+
+.setting-note {
+  margin-top: 2px;
+  font-size: 11px;
   color: var(--muted);
 }
 
-.chip {
-  padding: 3px 10px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--bg);
-  color: var(--text);
-  font: inherit;
-  font-size: 12px;
-  cursor: pointer;
+/* About tab */
+
+.about-title {
+  margin: 4px 0 6px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
-.chip:hover { background: var(--hover); }
-
-.chip[aria-pressed="true"] {
-  border-color: var(--accent);
-  color: var(--accent-text);
-  font-weight: 600;
-}
-
-/* "Something still showing?" */
-
-.report-link {
-  display: inline-block;
-  margin: 0 0 12px;
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: none;
-}
-
-.report-link:hover {
-  color: var(--accent-text);
-  text-decoration: underline;
-}
-
-.badge-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 12px;
-}
-
-/* Appearance + footer */
-
-.appearance {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
-}
-
-.appearance-label {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.safety {
-  margin-top: 12px;
-  border-top: 1px solid var(--line);
-}
-
-.safety .row {
-  min-height: 36px;
-}
+.about-title + .facts,
+.about-note { margin-top: 0; }
 
 .facts {
-  margin: 0 0 8px 26px;
-  padding-left: 14px;
+  margin: 0 0 6px;
+  padding-left: 16px;
   font-size: 12px;
   color: var(--muted);
 }
 
-.facts li + li {
-  margin-top: 4px;
+.facts li + li { margin-top: 3px; }
+
+.about-note {
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: var(--muted);
 }
 
-.check-link {
+.text-link {
   display: inline-block;
-  margin: 0 0 8px 26px;
+  margin-bottom: 14px;
   font-size: 12px;
   font-weight: 600;
   color: var(--accent-text);
   text-decoration: none;
 }
 
-.check-link:hover {
-  text-decoration: underline;
-}
+.text-link:hover { text-decoration: underline; }
 
 .footer {
   display: flex;
   justify-content: space-between;
-  padding-top: 12px;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
   font-size: 10px;
   color: var(--muted);
-}
-
-.footer {
-  align-items: center;
 }
 
 .credit {
@@ -497,12 +508,9 @@ body {
   padding: 2px;
   border-radius: 4px;
   color: var(--muted);
-  transition: color .15s;
 }
 
-.repo-link:hover {
-  color: var(--text);
-}
+.repo-link:hover { color: var(--text); }
 
 .repo-link svg {
   width: 13px;
