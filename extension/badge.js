@@ -28,7 +28,7 @@ const Badge = (() => {
     }
     :host([hidden]) { display: none; }
     .wrap { display: flex; align-items: center; gap: 8px; opacity: .35; transition: opacity .2s; }
-    .wrap:hover, .wrap:focus-within, .wrap.peek, .wrap.open { opacity: 1; }
+    .wrap:hover, .wrap:focus-within, .wrap.peek, .wrap.open, .wrap.undo { opacity: 1; }
     button { font: inherit; cursor: pointer; }
     button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
     .mark {
@@ -44,7 +44,7 @@ const Badge = (() => {
       background: var(--bg); color: var(--text);
       box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
     }
-    .wrap:hover .panel, .wrap:focus-within .panel, .wrap.peek .panel, .wrap.open .panel { display: flex; }
+    .wrap:hover .panel, .wrap:focus-within .panel, .wrap.peek .panel, .wrap.open .panel, .wrap.undo .panel { display: flex; }
     .text { display: flex; flex-direction: column; }
     .title { font-weight: 600; }
     .sub { color: var(--muted); font-size: 12px; }
@@ -57,13 +57,17 @@ const Badge = (() => {
       border: 0; border-radius: 50%; background: none; color: var(--muted); font-size: 13px;
     }
     .close:hover { background: var(--line); }
+    .close[hidden] { display: none; }
     @media (prefers-reduced-motion: reduce) { .wrap { transition: none; } }
   `;
 
+  const UNDO_MS = 5000;
   let host = null;
   let ui = null;
-  let dismissed = false;
   let latest = null;
+  // After ✕, the badge stays a few seconds to offer Undo before it goes
+  let undoUntil = 0;
+  let undoTimer = null;
 
   const el = (tag, className, text) => {
     const node = document.createElement(tag);
@@ -112,28 +116,48 @@ const Badge = (() => {
     action.type = "button";
     const close = el("button", "close", "✕");
     close.type = "button";
-    close.setAttribute("aria-label", "Hide this badge");
-    close.title = "Hide until you reload. To hide it for good, use the extension's popup.";
+    close.setAttribute("aria-label", "Hide the badge");
+    close.title = "Hide the badge. You can turn it back on in the extension's popup.";
     panel.append(text, action, close);
     wrap.append(mark, panel);
     shadow.append(style, wrap);
 
     mark.addEventListener("click", () => wrap.classList.toggle("open"));
     action.addEventListener("click", () => {
-      if (latest?.master) YTND.save({ master: false, pausedUntil: Date.now() + 15 * 60 * 1000 });
-      else YTND.save({ master: true, pausedUntil: 0 });
-    });
-    close.addEventListener("click", () => {
-      dismissed = true;
-      host.hidden = true;
+      if (undoUntil > Date.now()) {
+        undoUntil = 0;
+        clearTimeout(undoTimer);
+        YTND.save({ badge: true });
+      } else if (latest?.master) {
+        YTND.save({ master: false, pausedUntil: Date.now() + 15 * 60 * 1000 });
+      } else {
+        YTND.save({ master: true, pausedUntil: 0 });
+      }
     });
 
-    ui = { wrap, title, sub, action };
+    // ✕ turns the badge off for good (the popup's switch follows), with a moment to undo
+    close.addEventListener("click", () => {
+      undoUntil = Date.now() + UNDO_MS;
+      clearTimeout(undoTimer);
+      undoTimer = setTimeout(() => update(latest), UNDO_MS + 50);
+      YTND.save({ badge: false });
+    });
+
+    ui = { wrap, title, sub, action, close };
     document.body.append(host);
     syncTheme();
   }
 
   function render(settings) {
+    const undoing = !settings.badge && undoUntil > Date.now();
+    ui.close.hidden = undoing;
+    ui.wrap.classList.toggle("undo", undoing);
+    if (undoing) {
+      ui.title.textContent = "Badge hidden";
+      ui.sub.textContent = "Turn it back on in the popup";
+      ui.action.textContent = "Undo";
+      return;
+    }
     if (settings.master) {
       const count = YTND.FEATURES.filter(key => settings[key]).length;
       ui.title.textContent = "Tucked away";
@@ -163,7 +187,8 @@ const Badge = (() => {
 
   function update(settings) {
     latest = settings;
-    if (!settings.badge) {
+    const undoing = !settings.badge && undoUntil > Date.now();
+    if (!settings.badge && !undoing) {
       if (host) host.hidden = true;
       return;
     }
@@ -173,13 +198,13 @@ const Badge = (() => {
     }
     const first = !host;
     if (first) build();
-    host.hidden = dismissed || Boolean(document.fullscreenElement);
+    host.hidden = Boolean(document.fullscreenElement);
     render(settings);
     if (first) peekOncePerDay().catch(() => {});
   }
 
   document.addEventListener("fullscreenchange", () => {
-    if (host) host.hidden = dismissed || !latest?.badge || Boolean(document.fullscreenElement);
+    if (host) host.hidden = !latest?.badge || Boolean(document.fullscreenElement);
   });
 
   return { update, syncTheme };

@@ -199,6 +199,15 @@ chrome.tabs.query({ active: true, currentWindow: true })
   .then(pageType => { if (typeof pageType === "string") fillReport(pageType); })
   .catch(() => {});
 
+// Stay in step with changes made elsewhere, like dismissing the badge on YouTube
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== "sync") return;
+  YTND.load().then(settings => {
+    state = settings;
+    render();
+  });
+});
+
 YTND.load().then(settings => {
   state = settings;
   // A pause that ran out while no YouTube tab was open
