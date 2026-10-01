@@ -2,7 +2,7 @@ const root = document.documentElement;
 const settingsList = document.getElementById("settings");
 let state = { ...YTND.DEFAULTS };
 
-// Wireframes: a skeleton of the YouTube page with the affected area in red.
+// Wireframes: a skeleton of the YouTube page with the tucked-away part in red.
 
 const rect = (x, y, w, h, rx = 1.5) =>
   `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
@@ -12,7 +12,7 @@ function svg(hit, parts, outline) {
   const body = Object.entries(parts)
     .map(([name, shapes]) => `<g class="${name === hit ? "hit" : ""}">${shapes}</g>`)
     .join("");
-  return `<svg viewBox="0 0 240 154" role="img" aria-label="Page sketch, hidden area in red">
+  return `<svg viewBox="0 0 240 154" role="img" aria-label="Page sketch, the tucked-away part in red">
     <g class="soft">${rect(0, 0, 240, 10, 0)}</g>${body}${rect(...outline, 3).replace("<rect", '<rect class="outline"')}
   </svg>`;
 }
@@ -55,8 +55,40 @@ function homePage() {
   return svg("shorts", { guide, videos, shorts }, [22, 72, 216, 82]);
 }
 
+// The player at the end of a video: creator cards top right, the suggestion strip along the bottom
+function endOfVideo() {
+  const cards = rect(150, 24, 74, 40, 3) + dot(214, 76, 7);
+  let strip = "";
+  for (let i = 0; i < 3; i++) strip += rect(16 + i * 71, 100, 66, 34, 2);
+
+  return svg("endscreen", {
+    player: rect(8, 16, 224, 126, 4) + rect(8, 146, 120, 5, 1),
+    endscreen: cards + strip
+  }, [13, 21, 214, 117]);
+}
+
+// The expanded left menu, with the Explore section near the bottom
+function exploreMenu() {
+  let menu = "";
+  for (const y of [18, 27, 36, 52, 61, 70]) menu += dot(9, y + 2, 2) + rect(14, y, 34, 4, 1);
+  menu += rect(6, 45, 50, 1, 0) + rect(6, 79, 50, 1, 0);
+
+  let explore = rect(6, 86, 30, 4, 1);
+  for (let i = 0; i < 6; i++) explore += dot(9, 97 + i * 9, 2) + rect(14, 95 + i * 9, 30 + (i % 3) * 6, 4, 1);
+
+  let videos = "";
+  for (const [x, y] of [[68, 18], [156, 18], [68, 86], [156, 86]]) {
+    videos += rect(x, y, 80, 45, 2) + rect(x, y + 50, 60, 3, 1) + rect(x, y + 56, 40, 3, 1);
+  }
+
+  return svg("explore", { menu, explore, videos }, [3, 82, 58, 66]);
+}
+
+const WIREFRAMES = { shorts: homePage, endscreen: endOfVideo, explore: exploreMenu };
+
 document.querySelectorAll(".wireframe").forEach(el => {
-  el.innerHTML = el.dataset.wf === "shorts" ? homePage() : watchPage(el.dataset.wf);
+  const key = el.dataset.wf;
+  el.innerHTML = WIREFRAMES[key] ? WIREFRAMES[key]() : watchPage(key);
 });
 
 // Settings
@@ -73,7 +105,7 @@ function applyTheme(theme) {
 function render() {
   document.querySelector(`input[name="master"][value="${state.master ? "on" : "off"}"]`).checked = true;
   document.getElementById("masterStatus").textContent =
-    state.master ? "Your choices below are applied" : "Everything is visible";
+    state.master ? "The noisy parts are tucked away" : "YouTube as usual";
   settingsList.classList.toggle("is-off", !state.master);
 
   YTND.FEATURES.forEach(key => {

@@ -1,13 +1,15 @@
 // Shared by content.js and popup.js.
 const YTND = {
   ATTR: "data-ytnd-off",
-  FEATURES: ["sidebar", "comments", "shorts", "description"],
+  FEATURES: ["sidebar", "comments", "shorts", "description", "endscreen", "explore"],
   DEFAULTS: {
     master: true,
     sidebar: true,
     comments: true,
     shorts: true,
     description: true,
+    endscreen: true,
+    explore: true,
     theme: "system"
   },
 

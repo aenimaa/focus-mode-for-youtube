@@ -23,17 +23,55 @@ html:not([data-ytnd-off~="comments"]) ytd-watch-flexy #comments {
   display: none !important;
 }
 
-/* Shorts shelves: Home, Search, Subscriptions and under the video */
+/* Shorts: shelves on Home, Search, Subscriptions and under the video, single Shorts in results, and the menu entry */
 html:not([data-ytnd-off~="shorts"]) :is(
   ytd-reel-shelf-renderer,
   ytd-rich-shelf-renderer[is-shorts],
   ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts], ytd-reel-shelf-renderer),
-  grid-shelf-view-model:has(ytm-shorts-lockup-view-model, ytm-shorts-lockup-view-model-v2)
+  grid-shelf-view-model:has(ytm-shorts-lockup-view-model, ytm-shorts-lockup-view-model-v2),
+  ytd-video-renderer:has(a#thumbnail[href^="/shorts/"]),
+  ytd-guide-entry-renderer:has(a[href^="/shorts"], a[title="Shorts"]),
+  ytd-mini-guide-entry-renderer:has(a[href^="/shorts"]),
+  ytd-mini-guide-entry-renderer[aria-label="Shorts"]
 ) {
   display: none !important;
 }
 
 /* Video description */
 html:not([data-ytnd-off~="description"]) ytd-watch-metadata :is(#description, #description-inline-expander) {
+  display: none !important;
+}
+
+/*
+  End of video: the creator's cards in the last seconds, the strip of suggestions along the
+  bottom of the player (it expands into a grid with "More videos (v)"), and the older grid
+  shown after a video ends. Autoplay's countdown stays visible, so it never moves on silently.
+*/
+html:not([data-ytnd-off~="endscreen"]) .html5-video-player :is(
+  .ytp-ce-element,
+  .ytp-fullscreen-grid,
+  .html5-endscreen
+) {
+  display: none !important;
+}
+
+/*
+  Explore menu: the left-menu section with Music, Movies, Live, Gaming, News, Sports and more.
+  Matched by its links rather than its title, so it works in every language.
+*/
+html:not([data-ytnd-off~="explore"]) :is(
+  ytd-guide-section-renderer:has(
+    a[href^="/gaming"],
+    a[href^="/feed/storefront"],
+    a[href^="/feed/explore"],
+    a[href^="/feed/trending"],
+    a[href^="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"],
+    a[href^="/channel/UCEgdi0XIXXZ-qJOFPf4JSKw"],
+    a[href^="/channel/UCYfdidRxbB8Qhf0Nx7ioOYw"],
+    a[href^="/channel/UC4R8DWoMoI7CAwX8_LjQHig"]
+  ):not(:has(a[href^="/feed/channels"], a[href^="/feed/subscriptions"])),
+  ytd-guide-entry-renderer:has(a[href^="/feed/explore"], a[href^="/feed/trending"]),
+  ytd-mini-guide-entry-renderer:has(a[href^="/feed/explore"], a[href^="/feed/trending"])
+) {
   display: none !important;
 }

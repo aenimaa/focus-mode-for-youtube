@@ -6,7 +6,7 @@
 
 | What | Why |
 |---|---|
-| **`storage` permission** | Saves your six settings (the Master switch, the four toggles, and Light/Dark/System). |
+| **`storage` permission** | Saves your settings: the Master switch, the six section switches, and Light/Dark/System. |
 | **Site access: `https://www.youtube.com/*`** | Adds a stylesheet to YouTube pages that hides the sections you've switched on. |
 
 That's all. It doesn't ask for your tabs, browsing history, cookies, downloads or any other site.
@@ -26,11 +26,11 @@ The popup has two links: **"Check it yourself →"**, which opens this page, and
 
 ## Where your settings live
 
-The six settings are saved with `chrome.storage.sync`. If you've turned on Chrome sync, Chrome itself copies them to your other computers through your Google account, just like your bookmarks. The extension doesn't do any of that sending itself.
+Your settings are saved with `chrome.storage.sync`. If you've turned on Chrome sync, Chrome itself copies them to your other computers through your Google account, just like your bookmarks. The extension doesn't do any of that sending itself.
 
 ## Privacy policy
 
-No Distractions for YouTube does not collect, store, share or sell any personal or usage data. The only data it keeps is the six on/off and theme settings described above, which stay in your browser (and in Chrome sync, if you use it). There are no third parties involved.
+No Distractions for YouTube does not collect, store, share or sell any personal or usage data. The only data it keeps is the on/off and theme settings described above, which stay in your browser (and in Chrome sync, if you use it). There are no third parties involved.
 
 ## Verify it yourself
 

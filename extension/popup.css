@@ -303,7 +303,7 @@ body {
 }
 
 .wireframe::after {
-  content: "Red = hidden";
+  content: "Red = tucked away";
   display: block;
   margin-top: 4px;
   font-size: 11px;

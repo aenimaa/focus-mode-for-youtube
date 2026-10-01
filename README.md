@@ -38,8 +38,10 @@ Each has its own switch. **Master** turns them all off at once.
 |---|---|---|
 | 🎞️ | **Related videos** | Beside the player; the video moves to the center |
 | 💬 | **Comments** | Below the video |
-| 📱 | **Shorts** | Rows on Home, Search and under videos |
+| 📱 | **Shorts** | Rows, single Shorts in search, and the menu entry |
 | 📝 | **Video description** | Under the title |
+| 🎬 | **End of video** | Cards and suggestion grid as a video ends |
+| 🧭 | **Explore menu** | Music, Gaming, News and more in the left menu |
 
 ## 🔒 Safe by design
 
@@ -82,7 +84,7 @@ The hiding rules are plain CSS, applied before YouTube draws the page, so nothin
 
 ```mermaid
 flowchart LR
-  A[YouTube page starts loading] --> B[hide.css hides all four sections]
+  A[YouTube page starts loading] --> B[hide.css hides every section]
   B --> C{Your settings}
   C -- switched on --> D[Section stays hidden]
   C -- switched off --> E[Section shows again]
@@ -113,7 +115,7 @@ Pull requests are welcome. For anything bigger than a small fix, please open an 
 <summary><b>📄 Credits and license</b></summary>
 <br>
 
-Vibe-coded by Nima Sh. [MIT License](LICENSE).
+Vibe-coded by Nima Sh, who gets distracted too. [MIT License](LICENSE).
 Font: [Asap](https://github.com/Omnibus-Type/Asap) by Omnibus-Type, [SIL Open Font License](extension/fonts/OFL.txt).
 YouTube is a trademark of Google LLC. This project isn't endorsed by or affiliated with Google or YouTube.
 
