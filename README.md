@@ -76,6 +76,7 @@ extension/           The extension itself: the folder you load in Chrome
   settings.js        Loads and saves settings
   popup.*            The popup window
   theme-init.js      Applies the popup's Light/Dark choice before it draws
+  fonts/             Asap typeface, bundled so nothing loads from the web
 tools/
   safety-check.html  Standalone safety checker
 docs/                Images for this README
@@ -85,5 +86,7 @@ SAFETY.md            Permissions, privacy policy, how to verify
 ## Credits
 
 Vibe-coded by Nima Sh. Released under the [MIT License](LICENSE).
+
+The popup uses [Asap](https://github.com/Omnibus-Type/Asap) by Omnibus-Type, licensed under the [SIL Open Font License](extension/fonts/OFL.txt).
 
 YouTube is a trademark of Google LLC. This project is independent and not endorsed by or affiliated with Google or YouTube.

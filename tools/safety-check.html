@@ -7,6 +7,14 @@
   <style>
     * { box-sizing: border-box; }
 
+    /* Asap, bundled with the extension. If this page is opened on its own, it falls back to the system font. */
+    @font-face {
+      font-family: "Asap";
+      src: url("../extension/fonts/asap-latin-var.woff2") format("woff2");
+      font-weight: 400 700;
+      font-style: normal;
+    }
+
     :root {
       color-scheme: light;
       --bg: #f7f7f8;
@@ -22,7 +30,7 @@
       --info-bg: #e9effc;
       --warn-bg: #fdf1df;
       --fail-bg: #fde8eb;
-      --accent: #ff0033;
+      --accent: #e0002e;
       --focus: #2557d6;
     }
 
@@ -68,7 +76,7 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font: 15px/1.55 system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+      font: 15px/1.55 "Asap", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
     main {
@@ -83,6 +91,32 @@
     .muted { color: var(--muted); }
     code { font: 13px ui-monospace, Consolas, monospace; }
     :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .brand img { border-radius: 10px; }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: 8px;
+    }
+
+    .tile {
+      display: grid;
+      gap: 4px;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      font-size: 14px;
+    }
 
     .drop {
       display: grid;
@@ -191,6 +225,10 @@
 </head>
 <body>
   <main>
+    <header class="brand">
+      <img src="../extension/icons/icon48.png" width="40" height="40" alt="" onerror="this.remove()">
+      <span class="muted">Made for No Distractions for YouTube · works on any Chrome extension</span>
+    </header>
     <h1>Extension Safety Check</h1>
     <p class="muted">Pick an unpacked Chrome extension folder. This page reads the files in your browser and looks for the usual red flags. Nothing is uploaded; the page makes no network requests.</p>
 
@@ -201,6 +239,28 @@
       </label>
       <span class="muted">or drop the folder here</span>
     </div>
+
+    <section id="intro">
+      <h2>What it checks</h2>
+      <div class="tiles">
+        <div class="tile">
+          <strong>Permissions and site access</strong>
+          <span class="muted">What the extension can reach: your tabs, cookies, history, or every website.</span>
+        </div>
+        <div class="tile">
+          <strong>Network calls</strong>
+          <span class="muted">Code that could send data somewhere: fetch, XMLHttpRequest, WebSocket, beacons, web addresses.</span>
+        </div>
+        <div class="tile">
+          <strong>Hidden or remote code</strong>
+          <span class="muted">Text run as code (eval), scripts loaded from the internet, minified or encoded code.</span>
+        </div>
+        <div class="tile">
+          <strong>Files and fingerprints</strong>
+          <span class="muted">Every file, with a SHA-256 fingerprint to compare against a published release.</span>
+        </div>
+      </div>
+    </section>
 
     <div id="results" aria-live="polite"></div>
 
@@ -461,6 +521,8 @@
       const all = sections.flatMap(([, findings]) => findings);
       const count = level => all.filter(([l]) => l === level).length;
 
+      document.getElementById("intro").hidden = true;
+
       const summary = ["fail", "warn", "info", "pass"]
         .filter(level => count(level))
         .map(level => `<span class="pill ${level}">${count(level)} ${label(level)}</span>`)
@@ -493,7 +555,7 @@
       results.innerHTML = `<div class="finding"><span class="tag fail">Error</span><span class="title">${esc(message)}</span></div>`;
     }
 
-    const label = level => ({ pass: "OK", info: "Info", warn: "Check", fail: "Risk" })[level];
+    const label = level => ({ pass: "OK", info: "Info", warn: "Review", fail: "Risk" })[level];
     const snippet = line => line.trim().slice(0, 140);
     const escapeRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);

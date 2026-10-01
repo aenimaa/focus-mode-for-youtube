@@ -17,7 +17,7 @@ Chrome shows this warning for **any** extension that changes how a website looks
 
 ## What it doesn't do
 
-- **No network requests.** The extension's code never contacts a server: no analytics, no tracking, no ads, no update checks of its own.
+- **No network requests.** The extension's code never contacts a server: no analytics, no tracking, no ads, no update checks of its own. Even the popup's font (Asap) is bundled inside the extension instead of being loaded from Google Fonts.
 - **No data collection.** Nothing about you or your viewing is recorded, stored or sent.
 - **No code from the internet.** Everything it runs is in the `extension/` folder. Chrome's Manifest V3 format forbids loading code from the web anyway.
 - **No background process.** Nothing runs unless a YouTube tab is open.

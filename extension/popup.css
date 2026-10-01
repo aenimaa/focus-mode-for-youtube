@@ -1,5 +1,17 @@
 * { box-sizing: border-box; }
 
+/* Asap (SIL Open Font License, see fonts/OFL.txt), bundled so the popup makes no network requests */
+@font-face {
+  font-family: "Asap";
+  src: url("fonts/asap-latin-var.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+}
+
+/*
+  Contrast (WCAG AA): --accent carries white text at 5:1, --accent-text reads at 4.5:1+
+  on the background, and --switch-off keeps the off toggle at 3:1+.
+*/
 :root {
   color-scheme: light;
   --bg: #ffffff;
@@ -7,11 +19,14 @@
   --muted: #606060;
   --line: #e5e5e5;
   --soft: #f2f2f2;
+  --badge: #e8e8e8;
+  --hover: rgba(0, 0, 0, .05);
   --raised: #ffffff;
-  --switch-off: #c4c4c4;
+  --switch-off: #8c8c8c;
   --wf: #d6d6d6;
   --wf-soft: #ebebeb;
-  --accent: #ff0033;
+  --accent: #e0002e;
+  --accent-text: #cc0029;
   --on-accent: #ffffff;
   --focus: #065fd4;
 }
@@ -24,10 +39,13 @@
     --muted: #aaaaaa;
     --line: #303030;
     --soft: #272727;
+    --badge: #333333;
+    --hover: rgba(255, 255, 255, .06);
     --raised: #3d3d3d;
-    --switch-off: #555555;
+    --switch-off: #6b6b6b;
     --wf: #3f3f3f;
     --wf-soft: #2b2b2b;
+    --accent-text: #ff6b80;
     --focus: #3ea6ff;
   }
 }
@@ -39,17 +57,20 @@
   --muted: #aaaaaa;
   --line: #303030;
   --soft: #272727;
+  --badge: #333333;
+  --hover: rgba(255, 255, 255, .06);
   --raised: #3d3d3d;
-  --switch-off: #555555;
+  --switch-off: #6b6b6b;
   --wf: #3f3f3f;
   --wf-soft: #2b2b2b;
+  --accent-text: #ff6b80;
   --focus: #3ea6ff;
 }
 
 body {
   margin: 0;
   width: 320px;
-  font: 13px/1.4 system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  font: 13px/1.4 "Asap", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
   color: var(--text);
   background: var(--bg);
 }
@@ -69,7 +90,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .logo {
@@ -190,13 +211,21 @@ body {
   align-items: center;
   gap: 8px;
   flex: 1;
-  padding: 4px 0;
+  margin-left: -6px;
+  padding: 4px 6px;
   border: 0;
+  border-radius: 6px;
   background: none;
   color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
+  transition: background .15s;
+}
+
+/* Hover shows the title opens details; the switch keeps its own hit area */
+.details:hover {
+  background: var(--hover);
 }
 
 .badge {
@@ -205,7 +234,7 @@ body {
   width: 18px;
   height: 18px;
   border-radius: 5px;
-  background: var(--soft);
+  background: var(--badge);
   color: var(--muted);
   transition: color .15s;
 }
@@ -254,7 +283,7 @@ body {
 }
 
 .wireframe {
-  margin: 0 0 10px 26px;
+  margin: 0 0 12px 26px;
   padding: 6px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -265,6 +294,14 @@ body {
   width: 100%;
   height: auto;
   fill: var(--wf);
+}
+
+.wireframe::after {
+  content: "Red = hidden";
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
 }
 
 .wireframe .soft { fill: var(--wf-soft); }
@@ -328,7 +365,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 10px;
+  padding-top: 12px;
   border-top: 1px solid var(--line);
 }
 
@@ -338,7 +375,7 @@ body {
 }
 
 .safety {
-  margin-top: 10px;
+  margin-top: 12px;
   border-top: 1px solid var(--line);
 }
 
@@ -354,7 +391,7 @@ body {
 }
 
 .facts li + li {
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 .check-link {
@@ -362,7 +399,7 @@ body {
   margin: 0 0 8px 26px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
 }
 
