@@ -27,6 +27,13 @@
       </div>
     </section>
 
+    <div id="pauseRow" class="pause-row" hidden>
+      <span class="pause-label">Bring it back</span>
+      <button type="button" class="chip" data-pause="15m">in 15 min</button>
+      <button type="button" class="chip" data-pause="1h">in 1 hour</button>
+      <button type="button" class="chip" data-pause="tomorrow">tomorrow morning</button>
+    </div>
+
     <ul id="settings" class="settings">
       <li class="setting">
         <div class="row">
@@ -125,6 +132,8 @@
       </li>
     </ul>
 
+    <a id="reportLink" class="report-link" href="https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=bug_report.yml" target="_blank" rel="noopener">Something still showing? Let me know →</a>
+
     <section class="appearance">
       <span id="themeLabel" class="appearance-label">Appearance</span>
       <div class="segmented compact" role="radiogroup" aria-labelledby="themeLabel">
@@ -132,6 +141,11 @@
         <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
         <label><input type="radio" name="theme" value="system"><span>System</span></label>
       </div>
+    </section>
+
+    <section class="badge-row">
+      <span id="badgeLabel" class="appearance-label">Corner badge on YouTube</span>
+      <input id="badge" class="toggle" type="checkbox" role="switch" aria-labelledby="badgeLabel">
     </section>
 
     <section class="setting safety">

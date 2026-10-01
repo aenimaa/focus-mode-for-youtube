@@ -32,7 +32,9 @@
 
 ## 🙈 What it hides
 
-Each has its own switch. **Master** turns them all off at once.
+Each has its own switch. **Master** turns them all off at once, or ⏸️ **pauses** them for 15 minutes, an hour, or until tomorrow morning; they come back by themselves.
+
+A small, quiet badge in the bottom-left corner of YouTube shows what's tucked away. It stays dull until you hover it, and you can hide it.
 
 | | Section | Where |
 |---|---|---|

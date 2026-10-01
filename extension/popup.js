@@ -104,9 +104,13 @@ function applyTheme(theme) {
 
 function render() {
   document.querySelector(`input[name="master"][value="${state.master ? "on" : "off"}"]`).checked = true;
-  document.getElementById("masterStatus").textContent =
-    state.master ? "The noisy parts are tucked away" : "YouTube as usual";
+  const paused = !state.master && state.pausedUntil > Date.now();
+  document.getElementById("masterStatus").textContent = state.master
+    ? "The noisy parts are tucked away"
+    : paused ? `YouTube as usual, ${YTND.backAt(state.pausedUntil)}` : "YouTube as usual";
+  document.getElementById("pauseRow").hidden = state.master;
   settingsList.classList.toggle("is-off", !state.master);
+  document.getElementById("badge").checked = Boolean(state.badge);
 
   YTND.FEATURES.forEach(key => {
     const toggle = document.getElementById(key);
@@ -125,8 +129,26 @@ function update(patch) {
   YTND.save(patch);
 }
 
+// Turning Master on or off clears any timed pause; the chips below set one
 document.querySelectorAll('input[name="master"]').forEach(input => {
-  input.addEventListener("change", () => update({ master: input.value === "on" }));
+  input.addEventListener("change", () => update({ master: input.value === "on", pausedUntil: 0 }));
+});
+
+function pauseEnd(choice) {
+  if (choice === "15m") return Date.now() + 15 * 60 * 1000;
+  if (choice === "1h") return Date.now() + 60 * 60 * 1000;
+  const morning = new Date();
+  morning.setDate(morning.getDate() + 1);
+  morning.setHours(6, 0, 0, 0);
+  return morning.getTime();
+}
+
+document.querySelectorAll("[data-pause]").forEach(chip => {
+  chip.addEventListener("click", () => update({ master: false, pausedUntil: pauseEnd(chip.dataset.pause) }));
+});
+
+document.getElementById("badge").addEventListener("change", event => {
+  update({ badge: event.target.checked });
 });
 
 YTND.FEATURES.forEach(key => {
@@ -139,7 +161,7 @@ document.querySelectorAll('input[name="theme"]').forEach(input => {
   input.addEventListener("change", () => update({ theme: input.value }));
 });
 
-// Accordion: one section open at a time (the four settings and Safety).
+// Accordion: one section open at a time (the settings and Safety).
 
 function setOpen(item, open) {
   item.classList.toggle("open", open);
@@ -156,9 +178,33 @@ document.addEventListener("click", event => {
   setOpen(item, open);
 });
 
-document.getElementById("version").textContent = "v" + chrome.runtime.getManifest().version;
+const version = chrome.runtime.getManifest().version;
+document.getElementById("version").textContent = "v" + version;
+
+// "Something still showing?" pre-fills a bug report with the extension and Chrome versions and,
+// if a YouTube tab is open, the kind of page it is. Never the page's address.
+const reportLink = document.getElementById("reportLink");
+
+function fillReport(pageType) {
+  const url = new URL(reportLink.href);
+  const chromeVersion = (navigator.userAgent.match(/Chrome\/(\d+)/) || [])[1] || "?";
+  url.searchParams.set("versions", `v${version}, Chrome ${chromeVersion}`);
+  if (pageType) url.searchParams.set("url", pageType);
+  reportLink.href = url.toString();
+}
+
+fillReport();
+chrome.tabs.query({ active: true, currentWindow: true })
+  .then(([tab]) => tab?.id && chrome.tabs.sendMessage(tab.id, { type: "pageType" }))
+  .then(pageType => { if (typeof pageType === "string") fillReport(pageType); })
+  .catch(() => {});
 
 YTND.load().then(settings => {
   state = settings;
-  render();
+  // A pause that ran out while no YouTube tab was open
+  if (!state.master && state.pausedUntil && state.pausedUntil <= Date.now()) {
+    update({ master: true, pausedUntil: 0 });
+  } else {
+    render();
+  }
 });

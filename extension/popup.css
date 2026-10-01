@@ -365,6 +365,66 @@ body {
   color: var(--muted);
 }
 
+/* Pause choices, shown while Master is off */
+
+.pause-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.pause-row[hidden] { display: none; }
+
+.pause-label {
+  margin-right: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.chip {
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.chip:hover { background: var(--hover); }
+
+.chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+/* "Something still showing?" */
+
+.report-link {
+  display: inline-block;
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.report-link:hover {
+  color: var(--accent-text);
+  text-decoration: underline;
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+}
+
 /* Appearance + footer */
 
 .appearance {

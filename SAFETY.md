@@ -6,8 +6,8 @@
 
 | What | Why |
 |---|---|
-| **`storage` permission** | Saves your settings: the Master switch, the six section switches, and Light/Dark/System. |
-| **Site access: `https://www.youtube.com/*`** | Adds a stylesheet to YouTube pages that hides the sections you've switched on. |
+| **`storage` permission** | Saves your settings: the Master switch, the six section switches, a pause end time, the corner badge switch, and Light/Dark/System. It also remembers the date the badge last showed itself, so it does that only once a day. |
+| **Site access: `https://www.youtube.com/*`** | Adds a stylesheet to YouTube pages that hides the sections you've switched on, and the small corner badge. |
 
 That's all. It doesn't ask for your tabs, browsing history, cookies, downloads or any other site.
 
@@ -23,6 +23,16 @@ Chrome shows this warning for **any** extension that changes how a website looks
 - **No background process.** Nothing runs unless a YouTube tab is open.
 
 The popup has two links: **"Check it yourself →"**, which opens this page, and the **GitHub icon** in the footer, which opens the project's source code. Both open in a new tab only when you click them.
+
+## What it adds to YouTube's page
+
+- **A stylesheet** that hides the sections you've switched on.
+- **A marker on the page** (`data-ytnd-off`) listing the sections you've switched off. YouTube could use it to tell the extension is installed, as with any extension that changes a page.
+- **The corner badge** (you can turn it off in the popup). It's built in a closed, isolated container so YouTube's styles can't change it, and its text is set as plain text, never as HTML. Its buttons only pause or resume the extension.
+
+## The "Something still showing?" link
+
+It opens a new GitHub issue form, pre-filled with the extension version, your Chrome version, and the *kind* of page you're on (for example "Video page"). It never includes the page's address, because that would show what you were watching, and issues are public. Nothing is sent until you review the form and submit it yourself.
 
 ## Where your settings live
 

@@ -468,7 +468,7 @@
       const sections = [
         ["Permissions and site access", checkManifest(manifest)],
         ["Network and hidden code", await checkCode(files)],
-        ["Chrome features used", await checkApis(files)]
+        ["Chrome features used", await checkApis(files, manifest)]
       ];
 
       render(manifest, scoped.base, sections, await fileTable(files));
@@ -545,7 +545,7 @@
       return out;
     }
 
-    async function checkApis(files) {
+    async function checkApis(files, manifest) {
       const used = new Map();
       for (const { path, file } of files) {
         if (!/\.m?js$/i.test(path)) continue;
@@ -556,11 +556,20 @@
       }
 
       if (!used.size) return [["pass", "No Chrome extension features used", ""]];
-      return [...used].map(([ns, paths]) => [
-        SENSITIVE_PERMISSIONS[ns] ? "warn" : "pass",
-        `chrome.${ns}`,
-        (SENSITIVE_PERMISSIONS[ns] || KNOWN_PERMISSIONS[ns] || describeApi(ns)) + ` — in ${[...paths].join(", ")}`
-      ]);
+      const granted = new Set(manifest.permissions || []);
+      return [...used].map(([ns, paths]) => {
+        const where = ` — in ${[...paths].join(", ")}`;
+        // chrome.tabs without the "tabs" permission can find tabs and message its own scripts,
+        // but Chrome hides every tab's address and title from it.
+        if (ns === "tabs" && !granted.has("tabs")) {
+          return ["info", "chrome.tabs (without the tabs permission)", "Can find the current tab and message its own scripts there, but can't see any tab's address or title" + where];
+        }
+        return [
+          SENSITIVE_PERMISSIONS[ns] ? "warn" : "pass",
+          `chrome.${ns}`,
+          (SENSITIVE_PERMISSIONS[ns] || KNOWN_PERMISSIONS[ns] || describeApi(ns)) + where
+        ];
+      });
     }
 
     function describeApi(ns) {
