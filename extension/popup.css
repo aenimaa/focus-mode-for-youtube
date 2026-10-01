@@ -9,69 +9,96 @@
 }
 
 /*
-  Contrast (WCAG AA): --accent carries white text at 5:1, --accent-text reads at 4.5:1+
-  on the background, and --switch-off keeps the off toggle at 3:1+.
+  3.0 "Wine" palette (see design/style-3.0.md, where every pair is checked against WCAG AA).
+  --accent fills carry white text at 5.3:1; --accent-line marks "on" outlines (lighter in dark mode);
+  --focus is indigo so keyboard focus never looks like "on".
   --map-* draw the page maps: YouTube's neutral greys, with tucked-away parts in --accent.
 */
 :root {
   color-scheme: light;
-  --bg: #ffffff;
-  --text: #0f0f0f;
-  --muted: #606060;
-  --line: #e5e5e5;
-  --soft: #f2f2f2;
-  --hover: rgba(0, 0, 0, .05);
+  --bg: #fffbfb;
+  --text: #2a0a12;
+  --muted: #74525a;
+  --line: #ebdcdf;
+  --soft: #f6ecee;
+  --hover: rgba(74, 14, 27, .05);
   --raised: #ffffff;
-  --switch-off: #8c8c8c;
+  --switch-off: #9a7a81;
   --accent: #d3133f;
   --accent-text: #c0103a;
   --on-accent: #ffffff;
-  --focus: #065fd4;
-  --map-bg: #f9f9f9;
-  --map-el: #dedede;
-  --map-strong: #bdbdbd;
-  --map-player: #2b2b2b;
-  --map-on-player: #6b6b6b;
+  --focus: #4f46e5;
+  --map-bg: #fbf3f4;
+  --map-el: #ebdde0;
+  --map-strong: #d8c4c9;
+  --map-player: #3a1a22;
+  --map-on-player: #6b4650;
+  --line-strong: #dcc5ca;
+  --tile-on: #fdedf0;
+  --tile-on-hover: #fbe3e8;
+  --accent-line: #d3133f;
+  --brand-from: #ff1a35;
+  --brand-to: #d3133f;
+  --btn-from: #dd1440;
+  --btn-to: #c0103a;
+  --shine: linear-gradient(180deg, rgba(255, 255, 255, .20) 0%, rgba(255, 255, 255, 0) 45%);
+  --shadow-xs: 0 1px 1px rgba(74, 14, 27, .06);
+  --shadow-sm: 0 1px 2px rgba(74, 14, 27, .10), 0 0 0 1px rgba(74, 14, 27, .04);
+  --shadow-accent: 0 1px 2px rgba(120, 8, 34, .30), 0 6px 16px -6px rgba(211, 19, 63, .45);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #181818;
-    --text: #f1f1f1;
-    --muted: #aaaaaa;
-    --line: #303030;
-    --soft: #272727;
-    --hover: rgba(255, 255, 255, .06);
-    --raised: #3d3d3d;
-    --switch-off: #6b6b6b;
+    --bg: #1a1013;
+    --text: #f8eef0;
+    --muted: #c0a8ae;
+    --line: #3b272c;
+    --soft: #251619;
+    --hover: rgba(255, 214, 222, .06);
+    --raised: #2e1c21;
+    --switch-off: #876a71;
     --accent-text: #ff6b80;
-    --focus: #3ea6ff;
-    --map-bg: #0f0f0f;
-    --map-el: #333333;
-    --map-strong: #4a4a4a;
-    --map-player: #000000;
-    --map-on-player: #5a5a5a;
+    --focus: #a5b4fc;
+    --map-bg: #130a0c;
+    --map-el: #3a2a2e;
+    --map-strong: #4f3a40;
+    --map-player: #070304;
+    --map-on-player: #4a3238;
+    --line-strong: #533a40;
+    --tile-on: #3a1520;
+    --tile-on-hover: #451825;
+    --accent-line: #ff6b80;
+    --shadow-xs: 0 1px 1px rgba(0, 0, 0, .30);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .40), inset 0 1px 0 rgba(255, 255, 255, .04);
+    --shadow-accent: 0 1px 2px rgba(0, 0, 0, .40), 0 6px 18px -6px rgba(211, 19, 63, .55);
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #181818;
-  --text: #f1f1f1;
-  --muted: #aaaaaa;
-  --line: #303030;
-  --soft: #272727;
-  --hover: rgba(255, 255, 255, .06);
-  --raised: #3d3d3d;
-  --switch-off: #6b6b6b;
+  --bg: #1a1013;
+  --text: #f8eef0;
+  --muted: #c0a8ae;
+  --line: #3b272c;
+  --soft: #251619;
+  --hover: rgba(255, 214, 222, .06);
+  --raised: #2e1c21;
+  --switch-off: #876a71;
   --accent-text: #ff6b80;
-  --focus: #3ea6ff;
-  --map-bg: #0f0f0f;
-  --map-el: #333333;
-  --map-strong: #4a4a4a;
-  --map-player: #000000;
-  --map-on-player: #5a5a5a;
+  --focus: #a5b4fc;
+  --map-bg: #130a0c;
+  --map-el: #3a2a2e;
+  --map-strong: #4f3a40;
+  --map-player: #070304;
+  --map-on-player: #4a3238;
+  --line-strong: #533a40;
+  --tile-on: #3a1520;
+  --tile-on-hover: #451825;
+  --accent-line: #ff6b80;
+  --shadow-xs: 0 1px 1px rgba(0, 0, 0, .30);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .40), inset 0 1px 0 rgba(255, 255, 255, .04);
+  --shadow-accent: 0 1px 2px rgba(0, 0, 0, .40), 0 6px 18px -6px rgba(211, 19, 63, .55);
 }
 
 html {
@@ -132,26 +159,27 @@ button { font: inherit; color: inherit; }
   display: flex;
   gap: 2px;
   margin-bottom: 10px;
-  padding: 2px;
-  border-radius: 8px;
+  padding: 3px;
+  border-radius: 12px;
   background: var(--soft);
 }
 
 .tab {
   flex: 1;
-  padding: 5px 0;
+  height: 28px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 9px;
   background: none;
   color: var(--muted);
   font-weight: 600;
   cursor: pointer;
+  transition: color .15s;
 }
 
 .tab[aria-selected="true"] {
   background: var(--raised);
   color: var(--text);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+  box-shadow: var(--shadow-sm);
 }
 
 .tab-panel[hidden] { display: none; }
@@ -161,8 +189,9 @@ button { font: inherit; color: inherit; }
 .segmented {
   display: inline-flex;
   flex: none;
-  padding: 2px;
-  border-radius: 8px;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
   background: var(--soft);
 }
 
@@ -178,7 +207,7 @@ button { font: inherit; color: inherit; }
 .segmented span {
   display: block;
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: 7px;
   font-weight: 600;
   font-size: 12px;
   color: var(--muted);
@@ -190,7 +219,7 @@ button { font: inherit; color: inherit; }
 .segmented input:checked + span {
   background: var(--raised);
   color: var(--text);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+  box-shadow: var(--shadow-sm);
 }
 
 .segmented input:focus-visible + span {
@@ -199,8 +228,9 @@ button { font: inherit; color: inherit; }
 }
 
 .master-seg input[value="on"]:checked + span {
-  background: var(--accent);
+  background: var(--shine), linear-gradient(160deg, var(--btn-from), var(--btn-to));
   color: var(--on-accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), var(--shadow-accent);
 }
 
 .segmented.compact span {
@@ -246,12 +276,16 @@ button { font: inherit; color: inherit; }
   padding: 2px 10px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--bg);
+  background: var(--raised);
   font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.chip:hover { background: var(--hover); }
+.chip:hover {
+  background: linear-gradient(var(--hover), var(--hover)), var(--raised);
+  border-color: var(--line-strong);
+}
 
 /* Focus tab: pages */
 
@@ -285,6 +319,14 @@ button { font: inherit; color: inherit; }
   gap: 6px;
   font-size: 12px;
   color: var(--muted);
+}
+
+.page-count [data-count] {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--soft);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .chevron {
@@ -321,13 +363,13 @@ button { font: inherit; color: inherit; }
 
 .map { margin: 2px 0 6px; }
 
-/* Drawn on a 288×124 grid and shown 10% shorter, so both pages fit Chrome's 600px popup */
+/* Drawn on a 288×124 grid and shown shorter, so both pages fit Chrome's 600px popup even while paused */
 .map svg {
   display: block;
   width: 100%;
-  height: 112px;
+  height: 104px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--map-bg);
 }
 
@@ -341,7 +383,7 @@ button { font: inherit; color: inherit; }
 .map .zone .box { fill: transparent; stroke: none; }
 .map .zone.hl .box,
 .map .zone:hover .box {
-  stroke: var(--accent);
+  stroke: var(--accent-line);
   stroke-width: 1.5;
   stroke-dasharray: 3 2;
 }
@@ -357,15 +399,18 @@ button { font: inherit; color: inherit; }
 }
 
 .tile {
+  position: relative;
   display: grid;
   justify-items: center;
-  gap: 2px;
-  padding: 5px 2px 4px;
+  gap: 3px;
+  padding: 7px 2px 6px;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  background: none;
+  border-radius: 12px;
+  background: var(--raised);
+  box-shadow: var(--shadow-xs);
   color: var(--muted);
   font-size: 11px;
+  font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
   transition: border-color .15s, color .15s, background .15s;
@@ -381,14 +426,37 @@ button { font: inherit; color: inherit; }
   stroke-linejoin: round;
 }
 
-.tile:hover { background: var(--hover); }
-
-.tile[aria-pressed="true"] {
-  border-color: var(--accent);
+.tile:hover {
+  background: linear-gradient(var(--hover), var(--hover)), var(--raised);
+  border-color: var(--line-strong);
   color: var(--text);
 }
 
-.tile[aria-pressed="true"] svg { stroke: var(--accent); }
+.tile[aria-pressed="true"] {
+  background: var(--tile-on);
+  border-color: var(--accent-line);
+  color: var(--text);
+}
+
+.tile[aria-pressed="true"] svg {
+  stroke: var(--accent-text);
+}
+
+.tile[aria-pressed="true"]:hover {
+  background: var(--tile-on-hover);
+}
+
+/* A small "tucked away" dot, so "on" never relies on colour alone */
+.tile[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+}
 
 /* With Master off or paused, the pages show YouTube as usual */
 .pages.inactive .map,
@@ -425,7 +493,9 @@ button { font: inherit; color: inherit; }
   transition: transform .15s;
 }
 
-.toggle:checked { background: var(--accent); }
+.toggle:checked {
+  background: linear-gradient(160deg, var(--btn-from), var(--btn-to));
+}
 .toggle:checked::before { transform: translateX(16px); }
 
 /* Settings tab */

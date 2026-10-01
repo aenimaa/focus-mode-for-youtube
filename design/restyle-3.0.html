@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Focus Mode 3.0 restyle</title>
+<style>
+/* Reference mockup for design/style-3.0.md. Self-contained: no fonts, no network. */
+* { box-sizing: border-box; }
+
+.t-light {
+  color-scheme: light;
+  --bg: #FFFBFB; --raised: #FFFFFF; --soft: #F6ECEE; --hover: rgba(74,14,27,.05); --line: #EBDCDF; --card: #FFFFFF;
+  --text: #2A0A12; --muted: #74525A;
+  --accent: #D3133F; --accent-text: #C0103A; --on-accent: #FFFFFF; --focus: #4F46E5; --switch-off: #9A7A81;
+  --map-bg: #FBF3F4; --map-el: #EBDDE0; --map-strong: #D8C4C9; --map-player: #3A1A22; --map-on-player: #6B4650;
+  --line-strong: #DCC5CA; --tile-on: #FDEDF0; --tile-on-hover: #FBE3E8; --accent-line: #D3133F;
+  --shadow-xs: 0 1px 1px rgba(74,14,27,.06);
+  --shadow-sm: 0 1px 2px rgba(74,14,27,.10), 0 0 0 1px rgba(74,14,27,.04);
+  --shadow-md: 0 1px 2px rgba(74,14,27,.08), 0 10px 28px -12px rgba(74,14,27,.22);
+  --shadow-accent: 0 1px 2px rgba(120,8,34,.30), 0 6px 16px -6px rgba(211,19,63,.45);
+  --glow: rgba(211,19,63,.07);
+  --pass: #17743A; --pass-bg: #E8F5EC; --info: #4F46E5; --info-bg: #EEEDFC; --warn: #A15C00; --warn-bg: #FDF1DF; --fail: #C0103A; --fail-bg: #FDEDF0;
+}
+.t-dark {
+  color-scheme: dark;
+  --bg: #1A1013; --raised: #2E1C21; --soft: #251619; --hover: rgba(255,214,222,.06); --line: #3B272C; --card: #221518;
+  --text: #F8EEF0; --muted: #C0A8AE;
+  --accent: #D3133F; --accent-text: #FF6B80; --on-accent: #FFFFFF; --focus: #A5B4FC; --switch-off: #876A71;
+  --map-bg: #130A0C; --map-el: #3A2A2E; --map-strong: #4F3A40; --map-player: #070304; --map-on-player: #4A3238;
+  --line-strong: #533A40; --tile-on: #3A1520; --tile-on-hover: #451825; --accent-line: #FF6B80;
+  --shadow-xs: 0 1px 1px rgba(0,0,0,.30);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.40), inset 0 1px 0 rgba(255,255,255,.04);
+  --shadow-md: 0 1px 2px rgba(0,0,0,.40), 0 12px 32px -12px rgba(0,0,0,.70);
+  --shadow-accent: 0 1px 2px rgba(0,0,0,.40), 0 6px 18px -6px rgba(211,19,63,.55);
+  --glow: rgba(211,19,63,.14);
+  --pass: #4EC46F; --pass-bg: #16301F; --info: #A5B4FC; --info-bg: #23213F; --warn: #F0B04A; --warn-bg: #3A2A12; --fail: #FF6B80; --fail-bg: #3D1820;
+}
+.t-light, .t-dark {
+  --brand-from: #FF1A35; --brand-to: #D3133F;
+  --btn-from: #DD1440; --btn-to: #C0103A; --btn-hover-from: #C9123B; --btn-hover-to: #B00E35;
+  --shine: linear-gradient(180deg, rgba(255,255,255,.20) 0%, rgba(255,255,255,0) 45%);
+  --r-xs: 6px; --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-pill: 999px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  margin: 0;
+  font: 13px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #EEE8E9;
+  color: #2A0A12;
+}
+.sheet { max-width: 1240px; margin: 0 auto; padding: 32px 16px 64px; }
+.sheet > h1 { margin: 0 0 4px; font-size: 22px; }
+.sheet > p { margin: 0 0 28px; color: #5E434A; max-width: 70ch; }
+.block { margin-bottom: 40px; }
+.block > h2 { margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: #5E434A; }
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; }
+.frame { border-radius: 20px; padding: 24px; box-shadow: 0 1px 2px rgba(0,0,0,.08); overflow: hidden; }
+.frame.center { display: grid; justify-items: center; }
+.lib { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+:focus-visible, .is-focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+button { font: inherit; color: inherit; }
+
+/* ---------- Popup ---------- */
+.popup { width: 320px; padding: 16px 16px 12px; background: var(--bg); color: var(--text); border-radius: 14px; box-shadow: var(--shadow-md); border: 1px solid var(--line); }
+.header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.logo { display: block; width: 32px; height: 32px; }
+.title { margin: 0; font-size: 15px; font-weight: 700; line-height: 20px; letter-spacing: -.01em; }
+.subtitle { margin: 0; font-size: 11px; color: var(--muted); }
+
+.tabs { display: flex; gap: 2px; padding: 3px; margin-bottom: 14px; border-radius: var(--r-md); background: var(--soft); }
+.tab { flex: 1; height: 30px; border: 0; border-radius: 9px; background: none; color: var(--muted); font-weight: 600; font-size: 13px; cursor: pointer; }
+.tab:hover { color: var(--text); }
+.tab[aria-selected="true"] { background: var(--raised); color: var(--text); box-shadow: var(--shadow-sm); }
+
+.status-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.status-title { font-size: 14px; font-weight: 700; }
+.status { font-size: 11px; color: var(--muted); }
+
+.segmented { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: var(--soft); }
+.segmented label { position: relative; }
+.segmented input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.segmented span { display: block; padding: 5px 12px; border-radius: 7px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.segmented label:hover span { color: var(--text); }
+.segmented input:checked + span { background: var(--raised); color: var(--text); box-shadow: var(--shadow-sm); }
+.segmented input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 1px; }
+.master-seg input[value="on"]:checked + span {
+  background: var(--shine), linear-gradient(160deg, var(--btn-from), var(--btn-to));
+  color: var(--on-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), var(--shadow-accent);
+}
+.segmented.compact span { padding: 4px 9px; font-size: 11px; }
+
+.page { margin-top: 12px; padding-top: 6px; border-top: 1px solid var(--line); }
+.page-head { display: flex; align-items: center; justify-content: space-between; width: calc(100% + 12px); margin: 0 -6px 4px; padding: 5px 6px; border: 0; border-radius: 9px; background: none; cursor: pointer; }
+.page-head:hover { background: var(--hover); }
+.page-name { font-weight: 700; }
+.page-count { display: inline-flex; align-items: center; gap: 6px; }
+.count { padding: 1px 8px; border-radius: var(--r-pill); background: var(--soft); color: var(--muted); font-size: 11px; font-weight: 600; }
+.chevron { width: 12px; height: 12px; fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+.map svg { display: block; width: 100%; height: 112px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--map-bg); }
+.map .el { fill: var(--map-el); }
+.map .strong { fill: var(--map-strong); }
+.map .player { fill: var(--map-player); }
+.map .on-player { fill: var(--map-on-player); }
+.map .zone.on .part { fill: var(--accent); }
+.map .zone .box { fill: transparent; }
+.map .zone.hl .box { stroke: var(--accent-line); stroke-width: 1.5; stroke-dasharray: 3 2; }
+
+.tiles { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; margin: 8px 0 2px; }
+.tile { position: relative; display: grid; justify-items: center; gap: 4px; padding: 9px 4px 8px; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--raised); box-shadow: var(--shadow-xs); color: var(--muted); font-size: 11px; font-weight: 600; line-height: 1.2; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+.tile svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.tile:hover, .tile.is-hover { background: linear-gradient(var(--hover), var(--hover)), var(--raised); border-color: var(--line-strong); color: var(--text); }
+.tile[aria-pressed="true"] { background: var(--tile-on); border-color: var(--accent-line); color: var(--text); }
+.tile[aria-pressed="true"] svg { stroke: var(--accent-text); }
+.tile[aria-pressed="true"]::after { content: ""; position: absolute; top: 5px; right: 5px; width: 6px; height: 6px; border-radius: 50%; background: linear-gradient(135deg, var(--brand-from), var(--brand-to)); }
+.tile[aria-pressed="true"]:hover, .tile[aria-pressed="true"].is-hover { background: var(--tile-on-hover); }
+.tile:active { transform: scale(.98); }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 18px; border-radius: var(--r-md); font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; transition: box-shadow .15s, transform .15s; }
+.btn-primary { border: 0; color: var(--on-accent); background: var(--shine), linear-gradient(160deg, var(--btn-from), var(--btn-to)); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), var(--shadow-accent); }
+.btn-primary:hover, .btn-primary.is-hover { background: var(--shine), linear-gradient(160deg, var(--btn-hover-from), var(--btn-hover-to)); }
+.btn-primary:active { transform: translateY(1px); box-shadow: inset 0 1px 2px rgba(0,0,0,.25); }
+.btn-primary:focus-visible, .btn-primary.is-focus { outline: 2px solid var(--focus); outline-offset: 3px; }
+.btn-secondary { border: 1px solid var(--line); background: var(--raised); color: var(--text); box-shadow: var(--shadow-xs); }
+.btn-secondary:hover, .btn-secondary.is-hover { background: linear-gradient(var(--hover), var(--hover)), var(--raised); border-color: var(--line-strong); }
+
+/* ---------- Site hero ---------- */
+.site { width: 100%; border-radius: 16px; border: 1px solid var(--line); overflow: hidden; background: var(--bg); }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; }
+.brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; color: var(--text); text-decoration: none; }
+.brand svg { width: 28px; height: 28px; }
+.hero { display: grid; justify-items: center; text-align: center; padding: 20px 20px 28px; background: radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 70%); }
+.hero .mark { width: 88px; height: 88px; filter: drop-shadow(0 10px 18px rgba(74,14,27,.18)); }
+.hero h1 { margin: 14px 0 6px; font-size: clamp(28px, 4vw, 38px); line-height: 1.1; font-weight: 800; letter-spacing: -.02em; }
+.tagline { margin: 0; font-size: 16px; color: var(--muted); max-width: 34ch; }
+.fine { margin: 8px 0 18px; font-size: 13px; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.compare { margin: 24px 0 0; width: 100%; }
+.compare svg { display: block; width: 100%; height: auto; }
+
+/* ---------- Checker header ---------- */
+.checker { width: 100%; padding: 20px; border-radius: 16px; border: 1px solid var(--line); background: var(--bg); }
+.check-brand { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.check-brand svg { width: 40px; height: 40px; }
+.check-brand .made { flex: 1; min-width: 160px; color: var(--muted); font-size: 13px; }
+.check-brand a { color: var(--accent-text); font-weight: 600; text-decoration: none; }
+.check-brand a:hover { text-decoration: underline; }
+.checker h1 { margin: 18px 0 6px; font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+.checker .muted { margin: 0; color: var(--muted); max-width: 62ch; }
+.drop { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; padding: 18px; border: 1.5px dashed var(--line-strong); border-radius: var(--r-lg); background: var(--card); }
+.drop .muted { font-size: 13px; }
+.statuses { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.badge { padding: 3px 10px; border-radius: var(--r-pill); font-size: 12px; font-weight: 600; }
+.badge.pass { color: var(--pass); background: var(--pass-bg); }
+.badge.info { color: var(--info); background: var(--info-bg); }
+.badge.warn { color: var(--warn); background: var(--warn-bg); }
+.badge.fail { color: var(--fail); background: var(--fail-bg); }
+
+/* ---------- States strip ---------- */
+.states { display: grid; gap: 14px; width: 100%; }
+.states .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.states .row .tile { width: 70px; }
+.states .cap { font-size: 11px; font-weight: 600; color: var(--muted); }
+.toggle { appearance: none; position: relative; width: 36px; height: 20px; margin: 0; border-radius: 999px; background: var(--switch-off); cursor: pointer; }
+.toggle::before { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: var(--shadow-sm); transition: transform .2s cubic-bezier(.2,.7,.3,1); }
+.toggle:checked { background: linear-gradient(160deg, var(--btn-from), var(--btn-to)); }
+.toggle:checked::before { transform: translateX(16px); }
+.chip { padding: 3px 10px; border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--raised); color: var(--text); font-size: 12px; font-weight: 600; cursor: pointer; }
+.chip:hover { background: linear-gradient(var(--hover), var(--hover)), var(--raised); border-color: var(--line-strong); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- Logo library (Squircle Held, from design/logo-options.html) -->
+<svg class="lib" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="wine-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF1A35"/><stop offset="1" stop-color="#D3133F"/></linearGradient>
+    <linearGradient id="wine-sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.26"/><stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+    <linearGradient id="wine-tl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FBEFF0"/></linearGradient>
+    <linearGradient id="wine-td" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A0E18"/><stop offset="1" stop-color="#1E060C"/></linearGradient>
+    <linearGradient id="wine-ts" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.12"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+  </defs>
+  <symbol id="wine-held-sq-l-m" viewBox="0 0 128 128"><path d="M16 56C16 22.4 22.4 16 56 16H72C105.6 16 112 22.4 112 56V72C112 105.6 105.6 112 72 112H56C22.4 112 16 105.6 16 72Z" fill="url(#wine-tl)"/><path d="M16 56C16 22.4 22.4 16 56 16H72C105.6 16 112 22.4 112 56V72C112 105.6 105.6 112 72 112H56C22.4 112 16 105.6 16 72Z" fill="none" stroke="#EBCACE" stroke-width="2"/><path d="M46.8 35.2C37.2 37 33 41.8 33 52V76C33 86.2 37.2 91 46.8 92.8M81.2 35.2C90.8 37 95 41.8 95 52V76C95 86.2 90.8 91 81.2 92.8" fill="none" stroke="url(#wine-g)" stroke-width="9" stroke-linecap="round"/><path d="M46.8 35.2C37.2 37 33 41.8 33 52V76C33 86.2 37.2 91 46.8 92.8M81.2 35.2C90.8 37 95 41.8 95 52V76C95 86.2 90.8 91 81.2 92.8" fill="none" stroke="url(#wine-sh)" stroke-width="9" stroke-linecap="round"/><path d="M56.5 50V78L80 64Z" fill="#4A0E1B" stroke="#4A0E1B" stroke-width="7" stroke-linejoin="round"/></symbol>
+  <symbol id="wine-held-sq-d-m" viewBox="0 0 128 128"><path d="M16 56C16 22.4 22.4 16 56 16H72C105.6 16 112 22.4 112 56V72C112 105.6 105.6 112 72 112H56C22.4 112 16 105.6 16 72Z" fill="url(#wine-td)"/><path d="M16 56C16 22.4 22.4 16 56 16H72C105.6 16 112 22.4 112 56V72C112 105.6 105.6 112 72 112H56C22.4 112 16 105.6 16 72Z" fill="url(#wine-ts)"/><path d="M16 56C16 22.4 22.4 16 56 16H72C105.6 16 112 22.4 112 56V72C112 105.6 105.6 112 72 112H56C22.4 112 16 105.6 16 72Z" fill="none" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="2"/><path d="M46.8 35.2C37.2 37 33 41.8 33 52V76C33 86.2 37.2 91 46.8 92.8M81.2 35.2C90.8 37 95 41.8 95 52V76C95 86.2 90.8 91 81.2 92.8" fill="none" stroke="url(#wine-g)" stroke-width="9" stroke-linecap="round"/><path d="M46.8 35.2C37.2 37 33 41.8 33 52V76C33 86.2 37.2 91 46.8 92.8M81.2 35.2C90.8 37 95 41.8 95 52V76C95 86.2 90.8 91 81.2 92.8" fill="none" stroke="url(#wine-sh)" stroke-width="9" stroke-linecap="round"/><path d="M56.5 50V78L80 64Z" fill="#FCE9EB" stroke="#FCE9EB" stroke-width="7" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="sheet">
+  <h1>Focus Mode for YouTube · 3.0 restyle</h1>
+  <p>This page is the reference for <code>design/style-3.0.md</code>. Each surface is shown in light and in dark, and every colour comes from the spec's tokens.</p>
+
+  <section class="block">
+    <h2>Popup · Focus tab · 320px</h2>
+    <div class="pair">
+      <div class="frame center t-light">
+        <main class="popup">
+          <header class="header">
+            <svg class="logo" viewBox="16 16 96 96" aria-hidden="true"><use href="#wine-held-sq-l-m" width="128" height="128"/></svg>
+            <div><h3 class="title">Focus Mode for YouTube</h3><p class="subtitle">Watch what you came for</p></div>
+          </header>
+          <div class="tabs" role="tablist" aria-label="Sections">
+            <button type="button" class="tab" role="tab" aria-selected="true">Focus</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">Settings</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">About</button>
+          </div>
+          <div class="status-row">
+            <div><div class="status-title" id="ml-light">Master</div><div class="status">5 of 6 tucked away</div></div>
+            <div class="segmented master-seg" role="radiogroup" aria-labelledby="ml-light">
+              <label><input type="radio" name="master-light" value="on" checked><span>On</span></label>
+              <label><input type="radio" name="master-light" value="pause"><span>Pause</span></label>
+              <label><input type="radio" name="master-light" value="off"><span>Off</span></label>
+            </div>
+          </div>
+          
+        <section class="page">
+          <button type="button" class="page-head" aria-expanded="true" aria-controls="pg-watch-light">
+            <span class="page-name">Video page</span>
+            <span class="page-count"><span class="count" data-count="watch">3 of 4</span><svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+          </button>
+          <div id="pg-watch-light">
+            <div class="map" data-map="watch" aria-hidden="true"></div>
+            <div class="tiles"><button type="button" class="tile" data-k="related" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="M10 2.5v11"/></svg>Related</button><button type="button" class="tile" data-k="endscreen" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="M4 9h3v2H4zM9 9h3v2H9z"/></svg>End screen</button><button type="button" class="tile" data-k="comments" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><button type="button" class="tile" data-k="description" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 4h11M2.5 7.5h11M2.5 11h7"/></svg>Description</button></div>
+          </div>
+        </section>
+          
+        <section class="page">
+          <button type="button" class="page-head" aria-expanded="true" aria-controls="pg-home-light">
+            <span class="page-name">Home</span>
+            <span class="page-count"><span class="count" data-count="home">2 of 2</span><svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+          </button>
+          <div id="pg-home-light">
+            <div class="map" data-map="home" aria-hidden="true"></div>
+            <div class="tiles"><button type="button" class="tile" data-k="shorts" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4.5" y="1.5" width="7" height="13" rx="2"/><path d="M7 6.2v3.6L10 8z"/></svg>Shorts</button><button type="button" class="tile" data-k="explore" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M10.5 5.5 9 9l-3.5 1.5L7 7z"/></svg>Explore</button></div>
+          </div>
+        </section>
+        </main>
+      </div>
+      <div class="frame center t-dark">
+        <main class="popup">
+          <header class="header">
+            <svg class="logo" viewBox="16 16 96 96" aria-hidden="true"><use href="#wine-held-sq-d-m" width="128" height="128"/></svg>
+            <div><h3 class="title">Focus Mode for YouTube</h3><p class="subtitle">Watch what you came for</p></div>
+          </header>
+          <div class="tabs" role="tablist" aria-label="Sections">
+            <button type="button" class="tab" role="tab" aria-selected="true">Focus</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">Settings</button>
+            <button type="button" class="tab" role="tab" aria-selected="false" tabindex="-1">About</button>
+          </div>
+          <div class="status-row">
+            <div><div class="status-title" id="ml-dark">Master</div><div class="status">5 of 6 tucked away</div></div>
+            <div class="segmented master-seg" role="radiogroup" aria-labelledby="ml-dark">
+              <label><input type="radio" name="master-dark" value="on" checked><span>On</span></label>
+              <label><input type="radio" name="master-dark" value="pause"><span>Pause</span></label>
+              <label><input type="radio" name="master-dark" value="off"><span>Off</span></label>
+            </div>
+          </div>
+          
+        <section class="page">
+          <button type="button" class="page-head" aria-expanded="true" aria-controls="pg-watch-dark">
+            <span class="page-name">Video page</span>
+            <span class="page-count"><span class="count" data-count="watch">3 of 4</span><svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+          </button>
+          <div id="pg-watch-dark">
+            <div class="map" data-map="watch" aria-hidden="true"></div>
+            <div class="tiles"><button type="button" class="tile" data-k="related" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="M10 2.5v11"/></svg>Related</button><button type="button" class="tile" data-k="endscreen" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="2"/><path d="M4 9h3v2H4zM9 9h3v2H9z"/></svg>End screen</button><button type="button" class="tile" data-k="comments" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><button type="button" class="tile" data-k="description" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 4h11M2.5 7.5h11M2.5 11h7"/></svg>Description</button></div>
+          </div>
+        </section>
+          
+        <section class="page">
+          <button type="button" class="page-head" aria-expanded="true" aria-controls="pg-home-dark">
+            <span class="page-name">Home</span>
+            <span class="page-count"><span class="count" data-count="home">2 of 2</span><svg class="chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+          </button>
+          <div id="pg-home-dark">
+            <div class="map" data-map="home" aria-hidden="true"></div>
+            <div class="tiles"><button type="button" class="tile" data-k="shorts" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4.5" y="1.5" width="7" height="13" rx="2"/><path d="M7 6.2v3.6L10 8z"/></svg>Shorts</button><button type="button" class="tile" data-k="explore" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M10.5 5.5 9 9l-3.5 1.5L7 7z"/></svg>Explore</button></div>
+          </div>
+        </section>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Component states</h2>
+    <div class="pair">
+      <div class="frame t-light">
+        <div class="states">
+          <div class="row">
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">Off</span></div>
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile is-hover" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">Off · hover</span></div>
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">On</span></div>
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile is-hover" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">On · hover</span></div>
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile is-focus" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">Focus</span></div>
+          </div>
+          <div class="row">
+            <a class="btn btn-primary" href="#" onclick="return false">Add to Chrome</a>
+            <a class="btn btn-primary is-hover" href="#" onclick="return false">Hover</a>
+            <a class="btn btn-primary is-focus" href="#" onclick="return false">Focus</a>
+            <a class="btn btn-secondary" href="#" onclick="return false">Secondary</a>
+          </div>
+          <div class="row">
+            <div class="segmented compact" role="radiogroup" aria-label="Appearance">
+              <label><input type="radio" name="ap-light" value="light" checked><span>Light</span></label>
+              <label><input type="radio" name="ap-light" value="dark"><span>Dark</span></label>
+              <label><input type="radio" name="ap-light" value="system"><span>System</span></label>
+            </div>
+            <input class="toggle" type="checkbox" role="switch" aria-label="Off switch">
+            <input class="toggle" type="checkbox" role="switch" aria-label="On switch" checked>
+            <span class="cap">Back in</span>
+            <button type="button" class="chip">15 min</button>
+            <button type="button" class="chip">1 hour</button>
+          </div>
+        </div>
+      </div>
+      <div class="frame t-dark">
+        <div class="states">
+          <div class="row">
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">Off</span></div>
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile is-hover" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">Off · hover</span></div>
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">On</span></div>
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile is-hover" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">On · hover</span></div>
+            <div style="display:grid;gap:4px;justify-items:center"><button type="button" class="tile is-focus" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3.5h11v7.5h-6l-3 2.5V11h-2z"/></svg>Comments</button><span class="cap">Focus</span></div>
+          </div>
+          <div class="row">
+            <a class="btn btn-primary" href="#" onclick="return false">Add to Chrome</a>
+            <a class="btn btn-primary is-hover" href="#" onclick="return false">Hover</a>
+            <a class="btn btn-primary is-focus" href="#" onclick="return false">Focus</a>
+            <a class="btn btn-secondary" href="#" onclick="return false">Secondary</a>
+          </div>
+          <div class="row">
+            <div class="segmented compact" role="radiogroup" aria-label="Appearance">
+              <label><input type="radio" name="ap-dark" value="light"><span>Light</span></label>
+              <label><input type="radio" name="ap-dark" value="dark" checked><span>Dark</span></label>
+              <label><input type="radio" name="ap-dark" value="system"><span>System</span></label>
+            </div>
+            <input class="toggle" type="checkbox" role="switch" aria-label="Off switch">
+            <input class="toggle" type="checkbox" role="switch" aria-label="On switch" checked>
+            <span class="cap">Back in</span>
+            <button type="button" class="chip">15 min</button>
+            <button type="button" class="chip">1 hour</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Site hero</h2>
+    <div class="pair">
+      <div class="frame t-light" style="padding:16px">
+        <div class="site">
+          <header class="topbar">
+            <a class="brand" href="#" onclick="return false"><svg class="" viewBox="16 16 96 96" aria-hidden="true"><use href="#wine-held-sq-l-m" width="128" height="128"/></svg><span>Focus Mode</span></a>
+            <div class="segmented compact" role="radiogroup" aria-label="Appearance">
+              <label><input type="radio" name="st-light" value="light" checked><span>Light</span></label>
+              <label><input type="radio" name="st-light" value="dark"><span>Dark</span></label>
+              <label><input type="radio" name="st-light" value="system"><span>System</span></label>
+            </div>
+          </header>
+          <div class="hero">
+            <svg class="mark" viewBox="16 16 96 96" aria-hidden="true"><use href="#wine-held-sq-l-m" width="128" height="128"/></svg>
+            <h1>Focus Mode for YouTube</h1>
+            <p class="tagline">Watch the video you came for. The rest stays tucked away.</p>
+            <p class="fine">Free · open source · no tracking · not affiliated with YouTube</p>
+            <div class="actions">
+              <a class="btn btn-primary" href="#" onclick="return false">Add to Chrome</a>
+              <a class="btn btn-secondary" href="#" onclick="return false">View on GitHub</a>
+            </div>
+            <figure class="compare"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Before: a video page with related videos, end screen, description and comments highlighted. After: only the video, centred, and its title." viewBox="0 0 800 320" width="800" height="320"><defs><linearGradient id="hla" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF1A35"/><stop offset="1" stop-color="#D3133F"/></linearGradient><linearGradient id="hls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.26"/><stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient><linearGradient id="hlp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#45202A"/><stop offset="1" stop-color="#2C0F17"/></linearGradient><filter id="hlf" x="-15%" y="-15%" width="130%" height="140%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#4A0E1B" flood-opacity="0.09"/></filter></defs><rect x="0.5" y="0.5" width="799" height="319" rx="20" fill="#FCF5F6" stroke="#F0E1E4"/><g transform="translate(24 40) scale(1.3)"><rect width="260" height="184" rx="14" fill="#FFFFFF" filter="url(#hlf)"/><rect x="0.5" y="0.5" width="259" height="183" rx="13.5" fill="none" stroke="#EBDCDF"/><g><rect x="12" y="10" width="22" height="7" rx="3.5" fill="#EBDDE0"/><rect x="88" y="10" width="84" height="7" rx="3.5" fill="#EBDDE0"/><rect x="12" y="25" width="152" height="86" rx="7" fill="url(#hlp)"/><rect x="20" y="105" width="136" height="2" rx="1" fill="#5A3540"/><rect x="16" y="78" width="144" height="25" rx="6" fill="#D3133F" fill-opacity="0.07" stroke="#D3133F" stroke-width="1.5" stroke-dasharray="4 3"/><rect x="20" y="81" width="32" height="18" rx="3" fill="url(#hla)"/><rect x="20" y="81" width="32" height="18" rx="3" fill="url(#hls)"/><rect x="58" y="81" width="32" height="18" rx="3" fill="url(#hla)"/><rect x="58" y="81" width="32" height="18" rx="3" fill="url(#hls)"/><rect x="96" y="81" width="32" height="18" rx="3" fill="url(#hla)"/><rect x="96" y="81" width="32" height="18" rx="3" fill="url(#hls)"/><rect x="134" y="81" width="18" height="18" rx="5" fill="url(#hla)"/><rect x="134" y="81" width="18" height="18" rx="5" fill="url(#hls)"/><rect x="12" y="117" width="104" height="6" rx="3" fill="#D8C4C9"/><rect x="9" y="126" width="158" height="53" rx="6" fill="#D3133F" fill-opacity="0.07" stroke="#D3133F" stroke-width="1.5" stroke-dasharray="4 3"/><rect x="12" y="129" width="152" height="16" rx="4" fill="url(#hla)"/><rect x="12" y="129" width="152" height="16" rx="4" fill="url(#hls)"/><rect x="12" y="152" width="52" height="6" rx="3" fill="url(#hla)"/><rect x="12" y="152" width="52" height="6" rx="3" fill="url(#hls)"/><rect x="12" y="161" width="152" height="6" rx="3" fill="url(#hla)"/><rect x="12" y="161" width="152" height="6" rx="3" fill="url(#hls)"/><rect x="12" y="170" width="132" height="6" rx="3" fill="url(#hla)"/><rect x="12" y="170" width="132" height="6" rx="3" fill="url(#hls)"/><rect x="168" y="21" width="84" height="148" rx="6" fill="#D3133F" fill-opacity="0.07" stroke="#D3133F" stroke-width="1.5" stroke-dasharray="4 3"/><rect x="172" y="25" width="36" height="20" rx="3" fill="url(#hla)"/><rect x="172" y="25" width="36" height="20" rx="3" fill="url(#hls)"/><rect x="212" y="27" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="34" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="49" width="36" height="20" rx="3" fill="url(#hla)"/><rect x="172" y="49" width="36" height="20" rx="3" fill="url(#hls)"/><rect x="212" y="51" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="58" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="73" width="36" height="20" rx="3" fill="url(#hla)"/><rect x="172" y="73" width="36" height="20" rx="3" fill="url(#hls)"/><rect x="212" y="75" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="82" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="97" width="36" height="20" rx="3" fill="url(#hla)"/><rect x="172" y="97" width="36" height="20" rx="3" fill="url(#hls)"/><rect x="212" y="99" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="106" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="121" width="36" height="20" rx="3" fill="url(#hla)"/><rect x="172" y="121" width="36" height="20" rx="3" fill="url(#hls)"/><rect x="212" y="123" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="130" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="145" width="36" height="20" rx="3" fill="url(#hla)"/><rect x="172" y="145" width="36" height="20" rx="3" fill="url(#hls)"/><rect x="212" y="147" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="154" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><g transform="translate(160 78)"><circle r="11.5" fill="#FFFFFF"/><circle r="10" fill="url(#hla)"/><circle r="10" fill="url(#hls)"/><path d="M-5.6 0C-3.8 -3.3 3.8 -3.3 5.6 0C3.8 3.3 -3.8 3.3 -5.6 0Z" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/><circle r="1.6" fill="#FFFFFF"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#D3133F" stroke-width="3.4" stroke-linecap="round"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></g><g transform="translate(167 126)"><circle r="11.5" fill="#FFFFFF"/><circle r="10" fill="url(#hla)"/><circle r="10" fill="url(#hls)"/><path d="M-5.6 0C-3.8 -3.3 3.8 -3.3 5.6 0C3.8 3.3 -3.8 3.3 -5.6 0Z" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/><circle r="1.6" fill="#FFFFFF"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#D3133F" stroke-width="3.4" stroke-linecap="round"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></g><g transform="translate(252 21)"><circle r="11.5" fill="#FFFFFF"/><circle r="10" fill="url(#hla)"/><circle r="10" fill="url(#hls)"/><path d="M-5.6 0C-3.8 -3.3 3.8 -3.3 5.6 0C3.8 3.3 -3.8 3.3 -5.6 0Z" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/><circle r="1.6" fill="#FFFFFF"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#D3133F" stroke-width="3.4" stroke-linecap="round"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></g></g></g><g transform="translate(400 160)"><circle r="20" fill="#FBE4E8"/><path d="M-7 0H7M1.5 -5.5L7 0L1.5 5.5" fill="none" stroke="#C0103A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(438 40) scale(1.3)"><rect width="260" height="184" rx="14" fill="#FFFFFF" filter="url(#hlf)"/><rect x="0.5" y="0.5" width="259" height="183" rx="13.5" fill="none" stroke="#EBDCDF"/><g><rect x="12" y="10" width="22" height="7" rx="3.5" fill="#EBDDE0"/><rect x="88" y="10" width="84" height="7" rx="3.5" fill="#EBDDE0"/><rect x="54" y="25" width="152" height="86" rx="7" fill="url(#hlp)"/><rect x="62" y="105" width="136" height="2" rx="1" fill="#5A3540"/><rect x="54" y="117" width="104" height="6" rx="3" fill="#D8C4C9"/></g></g></svg></figure>
+          </div>
+        </div>
+      </div>
+      <div class="frame t-dark" style="padding:16px">
+        <div class="site">
+          <header class="topbar">
+            <a class="brand" href="#" onclick="return false"><svg class="" viewBox="16 16 96 96" aria-hidden="true"><use href="#wine-held-sq-d-m" width="128" height="128"/></svg><span>Focus Mode</span></a>
+            <div class="segmented compact" role="radiogroup" aria-label="Appearance">
+              <label><input type="radio" name="st-dark" value="light"><span>Light</span></label>
+              <label><input type="radio" name="st-dark" value="dark" checked><span>Dark</span></label>
+              <label><input type="radio" name="st-dark" value="system"><span>System</span></label>
+            </div>
+          </header>
+          <div class="hero">
+            <svg class="mark" viewBox="16 16 96 96" aria-hidden="true"><use href="#wine-held-sq-d-m" width="128" height="128"/></svg>
+            <h1>Focus Mode for YouTube</h1>
+            <p class="tagline">Watch the video you came for. The rest stays tucked away.</p>
+            <p class="fine">Free · open source · no tracking · not affiliated with YouTube</p>
+            <div class="actions">
+              <a class="btn btn-primary" href="#" onclick="return false">Add to Chrome</a>
+              <a class="btn btn-secondary" href="#" onclick="return false">View on GitHub</a>
+            </div>
+            <figure class="compare"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Before: a video page with related videos, end screen, description and comments highlighted. After: only the video, centred, and its title." viewBox="0 0 800 320" width="800" height="320"><defs><linearGradient id="hda" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF1A35"/><stop offset="1" stop-color="#D3133F"/></linearGradient><linearGradient id="hds" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.26"/><stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient><linearGradient id="hdp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E0607"/><stop offset="1" stop-color="#050203"/></linearGradient><filter id="hdf" x="-15%" y="-15%" width="130%" height="140%" color-interpolation-filters="sRGB"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#000000" flood-opacity="0.45"/></filter></defs><rect x="0.5" y="0.5" width="799" height="319" rx="20" fill="#1A1013" stroke="#33222A"/><g transform="translate(24 40) scale(1.3)"><rect width="260" height="184" rx="14" fill="#120A0C" filter="url(#hdf)"/><rect x="0.5" y="0.5" width="259" height="183" rx="13.5" fill="none" stroke="#3B272C"/><g><rect x="12" y="10" width="22" height="7" rx="3.5" fill="#3A2A2E"/><rect x="88" y="10" width="84" height="7" rx="3.5" fill="#3A2A2E"/><rect x="12" y="25" width="152" height="86" rx="7" fill="url(#hdp)" stroke="#2E1E22"/><rect x="20" y="105" width="136" height="2" rx="1" fill="#33222A"/><rect x="16" y="78" width="144" height="25" rx="6" fill="#FF6B80" fill-opacity="0.08" stroke="#FF6B80" stroke-width="1.5" stroke-dasharray="4 3"/><rect x="20" y="81" width="32" height="18" rx="3" fill="url(#hda)"/><rect x="20" y="81" width="32" height="18" rx="3" fill="url(#hds)"/><rect x="58" y="81" width="32" height="18" rx="3" fill="url(#hda)"/><rect x="58" y="81" width="32" height="18" rx="3" fill="url(#hds)"/><rect x="96" y="81" width="32" height="18" rx="3" fill="url(#hda)"/><rect x="96" y="81" width="32" height="18" rx="3" fill="url(#hds)"/><rect x="134" y="81" width="18" height="18" rx="5" fill="url(#hda)"/><rect x="134" y="81" width="18" height="18" rx="5" fill="url(#hds)"/><rect x="12" y="117" width="104" height="6" rx="3" fill="#4F3A40"/><rect x="9" y="126" width="158" height="53" rx="6" fill="#FF6B80" fill-opacity="0.08" stroke="#FF6B80" stroke-width="1.5" stroke-dasharray="4 3"/><rect x="12" y="129" width="152" height="16" rx="4" fill="url(#hda)"/><rect x="12" y="129" width="152" height="16" rx="4" fill="url(#hds)"/><rect x="12" y="152" width="52" height="6" rx="3" fill="url(#hda)"/><rect x="12" y="152" width="52" height="6" rx="3" fill="url(#hds)"/><rect x="12" y="161" width="152" height="6" rx="3" fill="url(#hda)"/><rect x="12" y="161" width="152" height="6" rx="3" fill="url(#hds)"/><rect x="12" y="170" width="132" height="6" rx="3" fill="url(#hda)"/><rect x="12" y="170" width="132" height="6" rx="3" fill="url(#hds)"/><rect x="168" y="21" width="84" height="148" rx="6" fill="#FF6B80" fill-opacity="0.08" stroke="#FF6B80" stroke-width="1.5" stroke-dasharray="4 3"/><rect x="172" y="25" width="36" height="20" rx="3" fill="url(#hda)"/><rect x="172" y="25" width="36" height="20" rx="3" fill="url(#hds)"/><rect x="212" y="27" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="34" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="49" width="36" height="20" rx="3" fill="url(#hda)"/><rect x="172" y="49" width="36" height="20" rx="3" fill="url(#hds)"/><rect x="212" y="51" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="58" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="73" width="36" height="20" rx="3" fill="url(#hda)"/><rect x="172" y="73" width="36" height="20" rx="3" fill="url(#hds)"/><rect x="212" y="75" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="82" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="97" width="36" height="20" rx="3" fill="url(#hda)"/><rect x="172" y="97" width="36" height="20" rx="3" fill="url(#hds)"/><rect x="212" y="99" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="106" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="121" width="36" height="20" rx="3" fill="url(#hda)"/><rect x="172" y="121" width="36" height="20" rx="3" fill="url(#hds)"/><rect x="212" y="123" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="130" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="172" y="145" width="36" height="20" rx="3" fill="url(#hda)"/><rect x="172" y="145" width="36" height="20" rx="3" fill="url(#hds)"/><rect x="212" y="147" width="36" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><rect x="212" y="154" width="24" height="4" rx="2" fill="#D3133F" fill-opacity="0.45"/><g transform="translate(160 78)"><circle r="11.5" fill="#120A0C"/><circle r="10" fill="url(#hda)"/><circle r="10" fill="url(#hds)"/><path d="M-5.6 0C-3.8 -3.3 3.8 -3.3 5.6 0C3.8 3.3 -3.8 3.3 -5.6 0Z" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/><circle r="1.6" fill="#FFFFFF"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#D3133F" stroke-width="3.4" stroke-linecap="round"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></g><g transform="translate(167 126)"><circle r="11.5" fill="#120A0C"/><circle r="10" fill="url(#hda)"/><circle r="10" fill="url(#hds)"/><path d="M-5.6 0C-3.8 -3.3 3.8 -3.3 5.6 0C3.8 3.3 -3.8 3.3 -5.6 0Z" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/><circle r="1.6" fill="#FFFFFF"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#D3133F" stroke-width="3.4" stroke-linecap="round"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></g><g transform="translate(252 21)"><circle r="11.5" fill="#120A0C"/><circle r="10" fill="url(#hda)"/><circle r="10" fill="url(#hds)"/><path d="M-5.6 0C-3.8 -3.3 3.8 -3.3 5.6 0C3.8 3.3 -3.8 3.3 -5.6 0Z" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/><circle r="1.6" fill="#FFFFFF"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#D3133F" stroke-width="3.4" stroke-linecap="round"/><path d="M-4.6 -4.6L4.6 4.6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></g></g></g><g transform="translate(400 160)"><circle r="20" fill="#3A1520"/><path d="M-7 0H7M1.5 -5.5L7 0L1.5 5.5" fill="none" stroke="#FF6B80" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(438 40) scale(1.3)"><rect width="260" height="184" rx="14" fill="#120A0C" filter="url(#hdf)"/><rect x="0.5" y="0.5" width="259" height="183" rx="13.5" fill="none" stroke="#3B272C"/><g><rect x="12" y="10" width="22" height="7" rx="3.5" fill="#3A2A2E"/><rect x="88" y="10" width="84" height="7" rx="3.5" fill="#3A2A2E"/><rect x="54" y="25" width="152" height="86" rx="7" fill="url(#hdp)" stroke="#2E1E22"/><rect x="62" y="105" width="136" height="2" rx="1" fill="#33222A"/><rect x="54" y="117" width="104" height="6" rx="3" fill="#4F3A40"/></g></g></svg></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Safety checker header</h2>
+    <div class="pair">
+      <div class="frame t-light" style="padding:16px">
+        <div class="checker">
+          <header class="check-brand">
+            <svg class="" viewBox="16 16 96 96" aria-hidden="true"><use href="#wine-held-sq-l-m" width="128" height="128"/></svg>
+            <span class="made">Made for <a href="#" onclick="return false">Focus Mode for YouTube</a> · works on any Chrome extension</span>
+            <div class="segmented compact" role="radiogroup" aria-label="Appearance">
+              <label><input type="radio" name="ck-light" value="light" checked><span>Light</span></label>
+              <label><input type="radio" name="ck-light" value="dark"><span>Dark</span></label>
+              <label><input type="radio" name="ck-light" value="system"><span>System</span></label>
+            </div>
+          </header>
+          <h1>Extension Safety Check</h1>
+          <p class="muted">Pick an unpacked Chrome extension folder. This page reads the files in your browser and looks for the usual red flags. Nothing is uploaded; the page makes no network requests.</p>
+          <div class="drop">
+            <span class="btn btn-primary">Choose extension folder</span>
+            <span class="muted">or drop the folder here</span>
+          </div>
+          <div class="statuses">
+            <span class="badge pass">No network access</span>
+            <span class="badge info">1 permission</span>
+            <span class="badge warn">Runs on all sites</span>
+            <span class="badge fail">Remote code</span>
+          </div>
+        </div>
+      </div>
+      <div class="frame t-dark" style="padding:16px">
+        <div class="checker">
+          <header class="check-brand">
+            <svg class="" viewBox="16 16 96 96" aria-hidden="true"><use href="#wine-held-sq-d-m" width="128" height="128"/></svg>
+            <span class="made">Made for <a href="#" onclick="return false">Focus Mode for YouTube</a> · works on any Chrome extension</span>
+            <div class="segmented compact" role="radiogroup" aria-label="Appearance">
+              <label><input type="radio" name="ck-dark" value="light"><span>Light</span></label>
+              <label><input type="radio" name="ck-dark" value="dark" checked><span>Dark</span></label>
+              <label><input type="radio" name="ck-dark" value="system"><span>System</span></label>
+            </div>
+          </header>
+          <h1>Extension Safety Check</h1>
+          <p class="muted">Pick an unpacked Chrome extension folder. This page reads the files in your browser and looks for the usual red flags. Nothing is uploaded; the page makes no network requests.</p>
+          <div class="drop">
+            <span class="btn btn-primary">Choose extension folder</span>
+            <span class="muted">or drop the folder here</span>
+          </div>
+          <div class="statuses">
+            <span class="badge pass">No network access</span>
+            <span class="badge info">1 permission</span>
+            <span class="badge warn">Runs on all sites</span>
+            <span class="badge fail">Remote code</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+// Page maps on the popup's 288x124 grid (same geometry as extension/popup.js, rounding +1)
+const R = (x, y, w, h, rx, cls = "el") => `<rect class="${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
+const zone = (on, parts, boxes) => `<g class="zone${on ? " on" : ""}">${parts}${boxes.map(([x, y, w, h]) => `<rect class="box" x="${x}" y="${y}" width="${w}" height="${h}" rx="4"/>`).join("")}</g>`;
+const svg = b => `<svg viewBox="0 0 288 124" preserveAspectRatio="none">${b}</svg>`;
+const topBar = () => R(4, 3, 280, 6, 3);
+function watchMap(on) {
+  let related = ""; for (let i = 0; i < 5; i++) related += R(188, 15 + i * 21.5, 40, 18, 3, "part el") + R(232, 19 + i * 21.5, 48, 4, 2, "part el");
+  let end = ""; for (const x of [12, 68, 124]) end += R(x, 63, 50, 17, 3, "part on-player");
+  return svg(topBar() + R(4, 15, 176, 72, 5, "player") + zone(on.endscreen, end, [[9, 60, 168, 23]]) + R(4, 93, 130, 5, 2.5, "strong") +
+    zone(on.description, R(4, 103, 176, 8, 4, "part el"), [[2, 101, 180, 12]]) + zone(on.comments, R(4, 115, 176, 7, 3.5, "part el"), [[2, 113, 180, 11]]) +
+    zone(on.related, related, [[186, 13, 100, 110]]));
+}
+function homeMap(on) {
+  const menu = R(4, 15, 38, 4, 2) + R(4, 31, 38, 4, 2) + R(4, 43, 38, 4, 2);
+  let exploreMenu = ""; for (const y of [62, 70, 78, 86]) exploreMenu += R(4, y, 38, 4, 2, "part el");
+  let videos = ""; for (let i = 0; i < 3; i++) videos += R(50 + i * 79, 15, 73, 34, 4);
+  let shorts = R(4, 23, 38, 4, 2, "part el"); for (let i = 0; i < 7; i++) shorts += R(50 + i * 33.5, 55, 28, 40, 4, "part el");
+  let topics = ""; for (let i = 0; i < 3; i++) topics += R(50 + i * 79, 101, 73, 21, 4, "part el");
+  return svg(topBar() + menu + videos + zone(on.shorts, shorts, [[2, 21, 42, 8], [48, 53, 238, 44]]) + zone(on.explore, exploreMenu + topics, [[2, 59, 42, 33], [48, 99, 238, 25]]));
+}
+const ON = { related: true, endscreen: true, comments: true, description: false, shorts: true, explore: true };
+document.querySelectorAll("[data-map=watch]").forEach(el => el.innerHTML = watchMap(ON));
+document.querySelectorAll("[data-map=home]").forEach(el => el.innerHTML = homeMap(ON));
+
+// Tiles flip on click, and their map zone follows
+document.addEventListener("click", e => {
+  const t = e.target.closest(".popup .tile");
+  if (!t) return;
+  const pressed = t.getAttribute("aria-pressed") !== "true";
+  t.setAttribute("aria-pressed", pressed);
+  const popup = t.closest(".popup");
+  const state = {};
+  popup.querySelectorAll(".tile[data-k]").forEach(x => state[x.dataset.k] = x.getAttribute("aria-pressed") === "true");
+  popup.querySelector("[data-map=watch]").innerHTML = watchMap(state);
+  popup.querySelector("[data-map=home]").innerHTML = homeMap(state);
+  popup.querySelector("[data-count=watch]").textContent = ["related", "endscreen", "comments", "description"].filter(k => state[k]).length + " of 4";
+  popup.querySelector("[data-count=home]").textContent = ["shorts", "explore"].filter(k => state[k]).length + " of 2";
+});
+// Folding
+document.addEventListener("click", e => {
+  const h = e.target.closest(".page-head");
+  if (!h) return;
+  const open = h.getAttribute("aria-expanded") !== "true";
+  h.setAttribute("aria-expanded", open);
+  h.nextElementSibling.hidden = !open;
+  h.querySelector(".chevron").style.transform = open ? "" : "rotate(-90deg)";
+});
+</script>
+</body>
+</html>

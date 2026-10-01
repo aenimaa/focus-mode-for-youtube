@@ -1,22 +1,27 @@
 <p align="center">
-  <img src="docs/icon.png" width="88" height="88" alt="">
+  <b>English</b> · <a href="README.fa.md">فارسی</a>
+</p>
+
+<p align="center">
+  <img src="docs/logo.svg" width="88" height="88" alt="">
 </p>
 
 <h1 align="center">Focus Mode for YouTube</h1>
 
 <p align="center">
-  Hide what pulls you away from the video you came for.<br>
+  Tuck away what pulls you from the video you came for.<br>
   <sub>Free · open source · no tracking · not affiliated with YouTube</sub>
 </p>
 
 <p align="center">
-  <a href="https://github.com/aenimaa/no-distractions-for-youtube/releases/latest/download/no-distractions-for-youtube.zip"><b>⬇️ Download the latest version</b></a>
+  <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ Download the latest version</b></a><br>
+  <sub>For Chrome and other Chromium browsers · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">Website</a></sub>
 </p>
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/before-after-dark.svg">
-    <img src="docs/before-after-light.svg" width="800" alt="Before: a YouTube video page with related videos, description and comments. After: only the video, centered, with its title.">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/hero-dark.svg">
+    <img src="docs/illustrations/hero-light.svg" width="800" alt="Before: YouTube with suggestions, comments and Shorts all around the video. After: the same page with only the video and its title, calm and centered.">
   </picture>
 </p>
 
@@ -30,33 +35,90 @@
 
 📌 Then click the puzzle-piece icon in Chrome's toolbar and pin **Focus Mode for YouTube**.
 
-## 🙈 What it hides
+## 🙈 What it tucks away
 
-Each has its own switch. **Master** turns them all off at once, or ⏸️ **pauses** them for 15 minutes, an hour, or until tomorrow morning; they come back by themselves.
+Each part has its own switch. Everything starts tucked away, and you can bring back anything you miss.
 
-A small, quiet badge in the bottom-left corner of YouTube shows what's tucked away. It stays dull until you hover it, and you can hide it.
+### On the video page
 
-The popup shows a small map of the video page and of Home: tap a tile, or the area on the map, to tuck it away or bring it back.
+#### Related videos
 
-| | Section | Where |
-|---|---|---|
-| 🎞️ | **Related videos** | Beside the player; the video moves to the center |
-| 💬 | **Comments** | Below the video |
-| 📱 | **Shorts** | Rows, single Shorts in search, and the menu entry |
-| 📝 | **Video description** | Under the title |
-| 🎬 | **End of video** | Cards and suggestion grid as a video ends |
-| 🧭 | **Explore** | The Explore menu, and Home's "Explore more topics" row |
+The "Up next" column beside the player. The video moves to the center; playlists, live chat and transcripts stay.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/related-dark.svg">
+  <img src="docs/illustrations/related-light.svg" width="480" alt="A video page without the column of suggested videos. The player sits in the center.">
+</picture>
+
+#### End screen
+
+The cards and suggestion grid that appear as a video ends. Autoplay's countdown stays visible.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/endscreen-dark.svg">
+  <img src="docs/illustrations/endscreen-light.svg" width="480" alt="The last moments of a video, with no suggestion cards laid over the picture.">
+</picture>
+
+#### Comments
+
+The comments under the video.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/comments-dark.svg">
+  <img src="docs/illustrations/comments-light.svg" width="480" alt="The area under a video, with the comments tucked away.">
+</picture>
+
+#### Description
+
+The box under the title, with views, date and description.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/description-dark.svg">
+  <img src="docs/illustrations/description-light.svg" width="480" alt="A video title with nothing below it: no views, date or description box.">
+</picture>
+
+### On Home
+
+#### Shorts
+
+Shorts rows, single Shorts in search and under videos, and the Shorts entry in the menu.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/shorts-dark.svg">
+  <img src="docs/illustrations/shorts-light.svg" width="480" alt="YouTube's Home page with regular videos only. The row of tall Shorts and the Shorts menu entry are gone.">
+</picture>
+
+#### Explore
+
+The Explore section of the left menu, and Home's "Explore more topics" row.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/explore-dark.svg">
+  <img src="docs/illustrations/explore-light.svg" width="480" alt="YouTube's Home page with a shorter left menu and no row of topics to explore.">
+</picture>
+
+## 🎛️ Gentle controls
+
+**⏸️ Pause when you want YouTube as usual.** The Master switch has three settings: On, Pause and Off. Pause for 15 minutes, 1 hour or until tomorrow morning. It comes back by itself.
+
+**🫧 A quiet corner badge.** A small badge in the bottom-left corner of YouTube shows what's tucked away, with a button to pause for 15 minutes. It stays dull until you hover it and shows itself once a day. Close it with ✕ and you get a few seconds to **Undo**. You can also switch it off in the popup.
+
+**🗺️ A popup with a map.** Three tabs:
+
+- **Focus:** a small map of the Video page and of Home. Tap a tile, or the area itself on the map, to tuck it away or bring it back.
+- **Settings:** the popup's look (Light, Dark or System), and the corner badge.
+- **About:** how it keeps you safe, and where to report a problem.
 
 ## 🔒 Safe by design
 
-Runs only on youtube.com, makes no network requests, and collects nothing.
-[How to verify it yourself →](SAFETY.md) · [Online safety checker →](https://aenimaa.github.io/no-distractions-for-youtube/tools/safety-check.html)
+Runs only on youtube.com. Its only permission is saving its own settings. No network requests, no tracking, nothing collected.
+[How to verify it yourself →](SAFETY.md) · [Online safety checker →](https://aenimaa.github.io/focus-mode-for-youtube/tools/safety-check.html)
 
 ## 🙋 Something broken? Got an idea?
 
 YouTube changes its page often, so reports keep this working.
 
-🐞 **[Report a problem](https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=bug_report.yml)** &nbsp;·&nbsp; 💡 **[Suggest a feature](https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=feature_request.yml)**
+🐞 **[Report a problem](https://github.com/aenimaa/focus-mode-for-youtube/issues/new?template=bug_report.yml)** &nbsp;·&nbsp; 💡 **[Suggest a feature](https://github.com/aenimaa/focus-mode-for-youtube/issues/new?template=feature_request.yml)**
 
 ---
 
@@ -76,7 +138,7 @@ Download the new zip, unzip it over your old folder, and click **Reload** on the
 <summary><b>🌐 Other browsers</b></summary>
 <br>
 
-Works in Chrome 107+ and other Chromium browsers (Edge, Brave, Opera, Vivaldi). Their extensions page has the same **Developer mode** and **Load unpacked** options.
+Works in Chrome 107+ and other Chromium browsers: Edge, Brave, Opera and Vivaldi. Their extensions page has the same **Developer mode** and **Load unpacked** options.
 
 </details>
 
@@ -84,20 +146,21 @@ Works in Chrome 107+ and other Chromium browsers (Edge, Brave, Opera, Vivaldi). 
 <summary><b>⚙️ How it works</b></summary>
 <br>
 
-The hiding rules are plain CSS, applied before YouTube draws the page, so nothing flashes on screen first. Changes apply to every open YouTube tab instantly, and with Chrome sync on, your choices follow you to your other computers.
+The hiding rules are plain CSS, applied before YouTube draws the page, so nothing flashes on screen first. Changes reach every open YouTube tab instantly. With Chrome sync on, your choices follow you to your other computers.
 
 ```mermaid
 flowchart LR
-  A[YouTube page starts loading] --> B[hide.css hides every section]
-  B --> C{Your settings}
-  C -- switched on --> D[Section stays hidden]
-  C -- switched off --> E[Section shows again]
+  A[YouTube page starts loading] --> B[hide.css tucks away every section]
+  B --> C{Your switches}
+  C -- on --> D[Section stays tucked away]
+  C -- off or paused --> E[Section shows again]
 ```
 
 ```
 extension/           The extension: what's in the download
-  hide.css           Rules that hide each section
+  hide.css           Rules that tuck away each section
   content.js         Turns rules off for sections you've switched off
+  badge.js           The quiet corner badge
   settings.js        Loads and saves settings
   popup.*            The popup window
   fonts/             Asap typeface, bundled so nothing loads from the web
@@ -111,7 +174,7 @@ tools/
 <summary><b>🤝 Contributing</b></summary>
 <br>
 
-Pull requests are welcome. For anything bigger than a small fix, please open an issue first so we can agree on the approach. New releases are built automatically when a version tag (like `v2.3.0`) is pushed.
+Pull requests are welcome. For anything bigger than a small fix, please open an issue first so we can agree on the approach. New releases are built automatically when a version tag (like `v3.0.0`) is pushed.
 
 </details>
 

@@ -24,59 +24,73 @@
 
     :root {
       color-scheme: light;
-      --bg: #f7f7f8;
+      --bg: #fffbfb;
       --card: #ffffff;
-      --text: #111114;
-      --muted: #5f5f6b;
-      --line: #e3e3e8;
-      --pass: #1a7f37;
-      --info: #2557d6;
+      --text: #2a0a12;
+      --muted: #74525a;
+      --line: #ebdcdf;
+      --pass: #17743a;
+      --info: #4f46e5;
       --warn: #a15c00;
-      --fail: #c4122f;
+      --fail: #c0103a;
       --pass-bg: #e8f5ec;
-      --info-bg: #e9effc;
+      --info-bg: #eeedfc;
       --warn-bg: #fdf1df;
-      --fail-bg: #fde8eb;
+      --fail-bg: #fdedf0;
       --accent: #d3133f;
-      --focus: #2557d6;
+      --focus: #4f46e5;
+      --line-strong: #dcc5ca;
+      --btn-from: #dd1440;
+      --btn-to: #c0103a;
+      --btn-hover-from: #c9123b;
+      --btn-hover-to: #b00e35;
+      --shine: linear-gradient(180deg, rgba(255, 255, 255, .20) 0%, rgba(255, 255, 255, 0) 45%);
+      --shadow-accent: 0 1px 2px rgba(120, 8, 34, .30), 0 6px 16px -6px rgba(211, 19, 63, .45);
+      --glow: rgba(211, 19, 63, .07);
     }
 
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
         color-scheme: dark;
-        --bg: #121216;
-        --card: #1b1b21;
-        --text: #f1f1f4;
-        --muted: #a3a3ae;
-        --line: #2e2e36;
+        --bg: #1a1013;
+        --card: #221518;
+        --text: #f8eef0;
+        --muted: #c0a8ae;
+        --line: #3b272c;
         --pass: #4ec46f;
-        --info: #7aa2ff;
+        --info: #a5b4fc;
         --warn: #f0b04a;
         --fail: #ff6b80;
         --pass-bg: #16301f;
-        --info-bg: #1a2440;
+        --info-bg: #23213f;
         --warn-bg: #3a2a12;
         --fail-bg: #3d1820;
-        --focus: #7aa2ff;
+        --focus: #a5b4fc;
+        --line-strong: #533a40;
+        --shadow-accent: 0 1px 2px rgba(0, 0, 0, .40), 0 6px 18px -6px rgba(211, 19, 63, .55);
+        --glow: rgba(211, 19, 63, .14);
       }
     }
 
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --bg: #121216;
-      --card: #1b1b21;
-      --text: #f1f1f4;
-      --muted: #a3a3ae;
-      --line: #2e2e36;
+      --bg: #1a1013;
+      --card: #221518;
+      --text: #f8eef0;
+      --muted: #c0a8ae;
+      --line: #3b272c;
       --pass: #4ec46f;
-      --info: #7aa2ff;
+      --info: #a5b4fc;
       --warn: #f0b04a;
       --fail: #ff6b80;
       --pass-bg: #16301f;
-      --info-bg: #1a2440;
+      --info-bg: #23213f;
       --warn-bg: #3a2a12;
       --fail-bg: #3d1820;
-      --focus: #7aa2ff;
+      --focus: #a5b4fc;
+      --line-strong: #533a40;
+      --shadow-accent: 0 1px 2px rgba(0, 0, 0, .40), 0 6px 18px -6px rgba(211, 19, 63, .55);
+      --glow: rgba(211, 19, 63, .14);
     }
 
     body {
@@ -166,8 +180,8 @@
       gap: 10px;
       margin: 24px 0 8px;
       padding: 32px 16px;
-      border: 2px dashed var(--line);
-      border-radius: 14px;
+      border: 1.5px dashed var(--line-strong);
+      border-radius: 16px;
       background: var(--card);
       text-align: center;
       transition: border-color .15s;
@@ -178,8 +192,9 @@
     .button {
       display: inline-block;
       padding: 9px 18px;
-      border-radius: 999px;
-      background: var(--accent);
+      border-radius: 12px;
+      background: var(--shine), linear-gradient(160deg, var(--btn-from), var(--btn-to));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), var(--shadow-accent);
       color: #fff;
       font-weight: 600;
       cursor: pointer;

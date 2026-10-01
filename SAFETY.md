@@ -42,6 +42,32 @@ Your settings are saved with `chrome.storage.sync`. If you've turned on Chrome s
 
 Focus Mode for YouTube does not collect, store, share or sell any personal or usage data. The only data it keeps is the on/off and theme settings described above, which stay in your browser (and in Chrome sync, if you use it). There are no third parties involved.
 
+## How much access does an extension need?
+
+Every extension asks Chrome for some access. More access isn't bad by itself (a tool that works on every website has to ask for every website), but it does mean more trust. Here's how common kinds of extensions compare:
+
+| What the extension does | Access it typically asks for | What Chrome tells you when you install it |
+|---|---|---|
+| **Changes how one website looks** (this extension) | Saving its settings, plus that one site | "Read and change your data on www.youtube.com" |
+| Works on any website you visit (ad blockers, translators, dark-mode tools) | Every website | "Read and change all your data on all websites" |
+| Organises your tabs, history or bookmarks | Tabs, history or bookmarks | "Read your browsing history", "Read and change your bookmarks" |
+| Watches or changes network traffic | Web requests | "Block content on any page" and similar |
+| Works together with an app on your computer | Native messaging | "Communicate with cooperating native applications" |
+
+Focus Mode for YouTube sits in the first row and asks for nothing more. To see what any extension can access, open `chrome://extensions`, click **Details**, and look under **Permissions** and **Site access**.
+
+## Latest checks
+
+Run on every release. Results for this version:
+
+| Check | Result |
+|---|---|
+| Permissions | `storage` only; site access limited to `https://www.youtube.com/*` |
+| Network calls, code loaded from the web, hidden or encoded code | None found by the [safety checker](https://aenimaa.github.io/focus-mode-for-youtube/tools/safety-check.html) |
+| Automated tests (settings, pause, corner badge, popup, hiding rules) | All pass |
+| Loads and runs in a real browser | Yes (tested in a Chromium browser with a clean profile) |
+| Secrets or private keys in the repository | None |
+
 ## Verify it yourself
 
 1. **Read the code** in [`extension/`](extension/). Only three files ever touch YouTube, about 100 lines together:
@@ -50,7 +76,7 @@ Focus Mode for YouTube does not collect, store, share or sell any personal or us
    - `settings.js` loads and saves your settings.
 
    The rest (`popup.html`, `popup.css`, `popup.js`, `theme-init.js`) is the popup window, which never touches YouTube.
-2. **Run the safety checker.** Open the [online checker](https://aenimaa.github.io/no-distractions-for-youtube/tools/safety-check.html) (or [`tools/safety-check.html`](tools/safety-check.html) from this repo, offline) and pick the extension folder. It reads the files on your computer, uploads nothing, and flags the usual red flags: broad permissions, network calls, code loaded at runtime, and hidden or minified code. It also prints a SHA-256 fingerprint for every file.
+2. **Run the safety checker.** Open the [online checker](https://aenimaa.github.io/focus-mode-for-youtube/tools/safety-check.html) (or [`tools/safety-check.html`](tools/safety-check.html) from this repo, offline) and pick the extension folder. It reads the files on your computer, uploads nothing, and flags the usual red flags: broad permissions, network calls, code loaded at runtime, and hidden or minified code. It also prints a SHA-256 fingerprint for every file.
 3. **Watch the network.** On a YouTube tab, open Chrome's developer tools (F12), go to the **Network** tab and reload the page. Every request you see comes from YouTube; none comes from the extension.
 4. **Limit its access.** In `chrome://extensions`, click **Details** on the extension and set **Site access** to "On click" or to specific sites.
 
@@ -65,4 +91,4 @@ It's a static scan: it reads code, it doesn't run it. It catches the common warn
 
 ## Reporting a security problem
 
-If you find something that looks unsafe, please [open an issue](https://github.com/aenimaa/no-distractions-for-youtube/issues/new/choose). For anything sensitive, use **Report a vulnerability** in the repository's **Security** tab instead.
+If you find something that looks unsafe, please [open an issue](https://github.com/aenimaa/focus-mode-for-youtube/issues/new/choose). For anything sensitive, use **Report a vulnerability** in the repository's **Security** tab instead.

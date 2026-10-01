@@ -25,45 +25,59 @@
 
     :root {
       color-scheme: light;
-      --bg: #f7f7f8;
+      --bg: #fffbfb;
       --card: #ffffff;
-      --text: #111114;
-      --muted: #5f5f6b;
-      --line: #e3e3e8;
-      --soft: #eeeef1;
+      --text: #2a0a12;
+      --muted: #74525a;
+      --line: #ebdcdf;
+      --soft: #f6ecee;
       --raised: #ffffff;
       --accent: #d3133f;
       --accent-text: #c0103a;
       --on-accent: #ffffff;
-      --focus: #2557d6;
+      --focus: #4f46e5;
+      --line-strong: #dcc5ca;
+      --btn-from: #dd1440;
+      --btn-to: #c0103a;
+      --btn-hover-from: #c9123b;
+      --btn-hover-to: #b00e35;
+      --shine: linear-gradient(180deg, rgba(255, 255, 255, .20) 0%, rgba(255, 255, 255, 0) 45%);
+      --shadow-accent: 0 1px 2px rgba(120, 8, 34, .30), 0 6px 16px -6px rgba(211, 19, 63, .45);
+      --glow: rgba(211, 19, 63, .07);
     }
 
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
         color-scheme: dark;
-        --bg: #121216;
-        --card: #1b1b21;
-        --text: #f1f1f4;
-        --muted: #a3a3ae;
-        --line: #2e2e36;
-        --soft: #24242b;
-        --raised: #3a3a43;
+        --bg: #1a1013;
+        --card: #221518;
+        --text: #f8eef0;
+        --muted: #c0a8ae;
+        --line: #3b272c;
+        --soft: #251619;
+        --raised: #2e1c21;
         --accent-text: #ff6b80;
-        --focus: #7aa2ff;
+        --focus: #a5b4fc;
+        --line-strong: #533a40;
+        --shadow-accent: 0 1px 2px rgba(0, 0, 0, .40), 0 6px 18px -6px rgba(211, 19, 63, .55);
+        --glow: rgba(211, 19, 63, .14);
       }
     }
 
     :root[data-theme="dark"] {
       color-scheme: dark;
-      --bg: #121216;
-      --card: #1b1b21;
-      --text: #f1f1f4;
-      --muted: #a3a3ae;
-      --line: #2e2e36;
-      --soft: #24242b;
-      --raised: #3a3a43;
+      --bg: #1a1013;
+      --card: #221518;
+      --text: #f8eef0;
+      --muted: #c0a8ae;
+      --line: #3b272c;
+      --soft: #251619;
+      --raised: #2e1c21;
       --accent-text: #ff6b80;
-      --focus: #7aa2ff;
+      --focus: #a5b4fc;
+      --line-strong: #533a40;
+      --shadow-accent: 0 1px 2px rgba(0, 0, 0, .40), 0 6px 18px -6px rgba(211, 19, 63, .55);
+      --glow: rgba(211, 19, 63, .14);
     }
 
     body {
@@ -145,6 +159,7 @@
     .hero {
       padding: 48px 0 32px;
       text-align: center;
+      background: radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 70%);
     }
 
     .hero img { border-radius: 20px; }
@@ -185,10 +200,18 @@
       text-decoration: none;
     }
 
+    /* The logo's shine on a text-safe wine gradient (white text 4.9:1 at its lightest point) */
     .button.primary {
-      background: var(--accent);
+      background: var(--shine), linear-gradient(160deg, var(--btn-from), var(--btn-to));
       color: var(--on-accent);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), var(--shadow-accent);
     }
+
+    .button.primary:hover {
+      background: var(--shine), linear-gradient(160deg, var(--btn-hover-from), var(--btn-hover-to));
+    }
+
+    .button.secondary:hover { border-color: var(--line-strong); }
 
     .button.secondary {
       border: 1px solid var(--line);
@@ -235,7 +258,7 @@
     .card {
       padding: 16px 20px;
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 16px;
       background: var(--card);
     }
 
@@ -302,14 +325,14 @@
         <p class="tagline">Watch the video you came for. The rest stays tucked away.</p>
         <p class="fine">Free · open source · no tracking · not affiliated with YouTube</p>
         <div class="actions">
-          <a class="button primary" href="https://github.com/aenimaa/no-distractions-for-youtube/releases/latest/download/no-distractions-for-youtube.zip">⬇️ Download for Chrome</a>
-          <a class="button secondary" href="https://github.com/aenimaa/no-distractions-for-youtube">View on GitHub</a>
+          <a class="button primary" href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip">⬇️ Download for Chrome</a>
+          <a class="button secondary" href="https://github.com/aenimaa/focus-mode-for-youtube">View on GitHub</a>
         </div>
       </div>
 
       <figure class="compare">
-        <img class="for-light" src="docs/before-after-light.svg" width="800" height="316" alt="Before: a YouTube video page with related videos, description and comments. After: only the video, centered, with its title.">
-        <img class="for-dark" src="docs/before-after-dark.svg" width="800" height="316" alt="Before: a YouTube video page with related videos, description and comments. After: only the video, centered, with its title.">
+        <img class="for-light" src="docs/illustrations/hero-light.svg" width="800" height="320" alt="Before: a YouTube video page with related videos, end screen suggestions, description and comments. After: just the video, centered, with its title.">
+        <img class="for-dark" src="docs/illustrations/hero-dark.svg" width="800" height="320" alt="Before: a YouTube video page with related videos, end screen suggestions, description and comments. After: just the video, centered, with its title.">
       </figure>
 
       <section>
@@ -344,7 +367,7 @@
             <li>No network requests, no tracking, nothing collected</li>
           </ul>
           <div class="links">
-            <a href="https://github.com/aenimaa/no-distractions-for-youtube/blob/main/SAFETY.md">How to verify it yourself →</a>
+            <a href="https://github.com/aenimaa/focus-mode-for-youtube/blob/main/SAFETY.md">How to verify it yourself →</a>
             <a href="tools/safety-check.html">Online safety checker →</a>
           </div>
         </div>
@@ -354,14 +377,14 @@
         <h2>🙋 Something broken? Got an idea?</h2>
         <p>YouTube changes its page often, so reports keep this working.</p>
         <div class="links">
-          <a href="https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=bug_report.yml">🐞 Report a problem</a>
-          <a href="https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=feature_request.yml">💡 Suggest a feature</a>
+          <a href="https://github.com/aenimaa/focus-mode-for-youtube/issues/new?template=bug_report.yml">🐞 Report a problem</a>
+          <a href="https://github.com/aenimaa/focus-mode-for-youtube/issues/new?template=feature_request.yml">💡 Suggest a feature</a>
         </div>
       </section>
     </main>
 
     <footer>
-      <p>Vibe-coded by Nima Sh, who gets distracted too · <a href="https://github.com/aenimaa/no-distractions-for-youtube/blob/main/LICENSE">MIT License</a> · Font: <a href="https://github.com/Omnibus-Type/Asap">Asap</a></p>
+      <p>Vibe-coded by Nima Sh, who gets distracted too · <a href="https://github.com/aenimaa/focus-mode-for-youtube/blob/main/LICENSE">MIT License</a> · Font: <a href="https://github.com/Omnibus-Type/Asap">Asap</a></p>
       <p>YouTube is a trademark of Google LLC. This project isn't endorsed by or affiliated with Google or YouTube.</p>
     </footer>
   </div>

@@ -19,14 +19,14 @@ const Badge = (() => {
       --muted: #606060;
       --line: rgba(0, 0, 0, .12);
       --accent: #d3133f;
-      --focus: #065fd4;
+      --focus: #4f46e5;
     }
     :host([data-dark]) {
       --bg: #212121;
       --text: #f1f1f1;
       --muted: #aaaaaa;
       --line: rgba(255, 255, 255, .16);
-      --focus: #3ea6ff;
+      --focus: #a5b4fc;
     }
     :host([hidden]) { display: none; }
     .wrap { display: flex; align-items: center; gap: 8px; opacity: .35; transition: opacity .2s; }
