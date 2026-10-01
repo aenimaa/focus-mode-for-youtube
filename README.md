@@ -2,7 +2,7 @@
   <img src="docs/icon.png" width="88" height="88" alt="">
 </p>
 
-<h1 align="center">No Distractions for YouTube</h1>
+<h1 align="center">Focus Mode for YouTube</h1>
 
 <p align="center">
   Hide what pulls you away from the video you came for.<br>
@@ -28,7 +28,7 @@
 2. Open `chrome://extensions` and turn on **Developer mode** (top right).
 3. Click **Load unpacked** and choose the unzipped folder.
 
-📌 Then click the puzzle-piece icon in Chrome's toolbar and pin **No Distractions for YouTube**.
+📌 Then click the puzzle-piece icon in Chrome's toolbar and pin **Focus Mode for YouTube**.
 
 ## 🙈 What it hides
 

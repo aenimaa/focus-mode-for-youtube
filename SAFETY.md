@@ -1,6 +1,6 @@
 # Safety & privacy
 
-**Short version:** No Distractions for YouTube only hides parts of YouTube's page. It runs only on `www.youtube.com`, its only permission is saving its own settings, and it sends nothing anywhere. You can check every claim on this page yourself; see [Verify it yourself](#verify-it-yourself).
+**Short version:** Focus Mode for YouTube only hides parts of YouTube's page. It runs only on `www.youtube.com`, its only permission is saving its own settings, and it sends nothing anywhere. You can check every claim on this page yourself; see [Verify it yourself](#verify-it-yourself).
 
 ## What it can access
 
@@ -40,7 +40,7 @@ Your settings are saved with `chrome.storage.sync`. If you've turned on Chrome s
 
 ## Privacy policy
 
-No Distractions for YouTube does not collect, store, share or sell any personal or usage data. The only data it keeps is the on/off and theme settings described above, which stay in your browser (and in Chrome sync, if you use it). There are no third parties involved.
+Focus Mode for YouTube does not collect, store, share or sell any personal or usage data. The only data it keeps is the on/off and theme settings described above, which stay in your browser (and in Chrome sync, if you use it). There are no third parties involved.
 
 ## Verify it yourself
 

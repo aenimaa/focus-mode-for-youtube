@@ -38,5 +38,5 @@ jobs:
             echo "**SHA-256** of the zip: \`$(cut -d' ' -f1 SHA256SUMS.txt)\`"
           } > notes.md
           gh release create "$GITHUB_REF_NAME" no-distractions-for-youtube.zip SHA256SUMS.txt \
-            --title "No Distractions for YouTube $GITHUB_REF_NAME" \
+            --title "Focus Mode for YouTube $GITHUB_REF_NAME" \
             --notes-file notes.md

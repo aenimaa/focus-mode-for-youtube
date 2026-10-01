@@ -1,13 +1,13 @@
 {
   "manifest_version": 3,
-  "name": "No Distractions for YouTube",
+  "name": "Focus Mode for YouTube",
   "version": "2.6.0",
   "description": "Tuck away YouTube's related videos, comments, Shorts, end screens and more. Not affiliated with YouTube.",
   "minimum_chrome_version": "107",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxqJrkr3JRiIHIquUzvm+GyRXmAjV6gjyk5GQMTAisQY8oNT+vfs7F5T3vH6gUttbFHCoQu4BZgKL6bBPGOzHOaWI+iWGU9Jj6m1vAH/mHcNQsYdJc/4XDZHubvBiYvD9CWE3wV1DT85MaPSWXWKHxcqrzD3r3TQJHJZPFID6op5uoSJ5unrpeIroWU4WxRIho5dQhFdkayECBov5nnA+LFIqFHdbDZFQLa245kDWylDUGEwSxxNorTDEDoSn1gstjGB6X6+xkC1v+/e/N/84LGQ8on6dgLOO26ivgU/jw/UoZ8foFeP9iQbZDh848FbZ1KTQHUc/0M+oIKdZa4VpDQIDAQAB",
   "permissions": ["storage"],
   "action": {
-    "default_title": "No Distractions for YouTube",
+    "default_title": "Focus Mode for YouTube",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
