@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>No Distractions for YouTube</title>
+  <meta name="description" content="A free, open-source Chrome extension that hides the distracting parts of YouTube. No tracking, no network requests.">
+  <link rel="icon" href="extension/icons/icon32.png">
+  <script>
+    // Apply a saved Light/Dark choice before the page paints. Shared with the safety checker.
+    try {
+      const theme = localStorage.getItem("theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch (_) {}
+  </script>
+  <style>
+    @font-face {
+      font-family: "Asap";
+      src: url("extension/fonts/asap-latin-var.woff2") format("woff2");
+      font-weight: 400 700;
+      font-style: normal;
+    }
+
+    * { box-sizing: border-box; }
+
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --text: #111114;
+      --muted: #5f5f6b;
+      --line: #e3e3e8;
+      --soft: #eeeef1;
+      --raised: #ffffff;
+      --accent: #e0002e;
+      --accent-text: #cc0029;
+      --on-accent: #ffffff;
+      --focus: #2557d6;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #121216;
+        --card: #1b1b21;
+        --text: #f1f1f4;
+        --muted: #a3a3ae;
+        --line: #2e2e36;
+        --soft: #24242b;
+        --raised: #3a3a43;
+        --accent-text: #ff6b80;
+        --focus: #7aa2ff;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #121216;
+      --card: #1b1b21;
+      --text: #f1f1f4;
+      --muted: #a3a3ae;
+      --line: #2e2e36;
+      --soft: #24242b;
+      --raised: #3a3a43;
+      --accent-text: #ff6b80;
+      --focus: #7aa2ff;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 "Asap", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    a { color: var(--accent-text); }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Top bar */
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand img { border-radius: 7px; }
+
+    .segmented {
+      display: inline-flex;
+      padding: 2px;
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .segmented label { position: relative; }
+
+    .segmented input {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+    }
+
+    .segmented span {
+      display: block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .segmented input:checked + span {
+      background: var(--raised);
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+    }
+
+    .segmented input:focus-visible + span {
+      outline: 2px solid var(--focus);
+      outline-offset: 1px;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding: 48px 0 32px;
+      text-align: center;
+    }
+
+    .hero img { border-radius: 20px; }
+
+    h1 {
+      margin: 16px 0 8px;
+      font-size: clamp(30px, 6vw, 44px);
+      line-height: 1.1;
+    }
+
+    .tagline {
+      margin: 0 auto;
+      max-width: 520px;
+      font-size: 19px;
+    }
+
+    .fine {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button.primary {
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+
+    .button.secondary {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+    }
+
+    .compare {
+      margin: 16px 0 0;
+    }
+
+    .compare img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Show the sketch that matches the active theme */
+    .for-dark { display: none !important; }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .for-dark { display: block !important; }
+      :root:not([data-theme="light"]) .for-light { display: none !important; }
+    }
+
+    :root[data-theme="dark"] .for-dark { display: block !important; }
+    :root[data-theme="dark"] .for-light { display: none !important; }
+
+    /* Sections */
+
+    section { padding: 32px 0; }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+    }
+
+    .card strong { display: block; }
+    .card p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+    .step {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 8px;
+      border-radius: 50%;
+      background: var(--soft);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .emoji { font-size: 22px; line-height: 1; margin-bottom: 8px; display: block; }
+
+    code {
+      padding: 1px 6px;
+      border-radius: 5px;
+      background: var(--soft);
+      font: 14px ui-monospace, Consolas, monospace;
+    }
+
+    .note { margin: 12px 0 0; color: var(--muted); font-size: 15px; }
+
+    ul.facts { margin: 0; padding-left: 20px; }
+    ul.facts li + li { margin-top: 4px; }
+
+    .links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 12px; font-weight: 600; }
+
+    footer {
+      margin-top: 32px;
+      padding: 24px 0 48px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer p { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="brand" href="./">
+        <img src="extension/icons/icon32.png" width="28" height="28" alt="">
+        <span>No Distractions</span>
+      </a>
+      <div class="segmented" role="radiogroup" aria-label="Appearance">
+        <label><input type="radio" name="theme" value="light"><span>Light</span></label>
+        <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+        <label><input type="radio" name="theme" value="system"><span>System</span></label>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <img src="docs/icon.png" width="96" height="96" alt="">
+        <h1>No Distractions for YouTube</h1>
+        <p class="tagline">Watch the video you came for. The rest stays tucked away.</p>
+        <p class="fine">Free · open source · no tracking · not affiliated with YouTube</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/aenimaa/no-distractions-for-youtube/releases/latest/download/no-distractions-for-youtube.zip">⬇️ Download for Chrome</a>
+          <a class="button secondary" href="https://github.com/aenimaa/no-distractions-for-youtube">View on GitHub</a>
+        </div>
+      </div>
+
+      <figure class="compare">
+        <img class="for-light" src="docs/before-after-light.svg" width="800" height="316" alt="Before: a YouTube video page with related videos, description and comments. After: only the video, centered, with its title.">
+        <img class="for-dark" src="docs/before-after-dark.svg" width="800" height="316" alt="Before: a YouTube video page with related videos, description and comments. After: only the video, centered, with its title.">
+      </figure>
+
+      <section>
+        <h2>🚀 Install in a minute</h2>
+        <div class="grid">
+          <div class="card"><span class="step">1</span><strong>Unzip the download</strong><p>You'll get one folder.</p></div>
+          <div class="card"><span class="step">2</span><strong>Turn on Developer mode</strong><p>Open <code>chrome://extensions</code>, switch is at the top right.</p></div>
+          <div class="card"><span class="step">3</span><strong>Load unpacked</strong><p>Choose the unzipped folder. That's it.</p></div>
+        </div>
+        <p class="note">📌 Pin it from the puzzle-piece icon in Chrome's toolbar. Works in Edge, Brave, Opera and Vivaldi too.</p>
+      </section>
+
+      <section>
+        <h2>🙈 What it tucks away</h2>
+        <div class="grid">
+          <div class="card"><span class="emoji" aria-hidden="true">🎞️</span><strong>Related videos</strong><p>The column beside the player. The video moves to the center.</p></div>
+          <div class="card"><span class="emoji" aria-hidden="true">💬</span><strong>Comments</strong><p>The section below the video.</p></div>
+          <div class="card"><span class="emoji" aria-hidden="true">📱</span><strong>Shorts</strong><p>The rows on Home, Search and under videos.</p></div>
+          <div class="card"><span class="emoji" aria-hidden="true">📝</span><strong>Video description</strong><p>The box under the title.</p></div>
+        </div>
+        <p class="note">Each has its own switch, and Master turns them all off at once.</p>
+      </section>
+
+      <section>
+        <h2>🔒 Safe by design</h2>
+        <div class="card">
+          <ul class="facts">
+            <li>Runs only on youtube.com</li>
+            <li>Its only permission is saving your settings</li>
+            <li>No network requests, no tracking, nothing collected</li>
+          </ul>
+          <div class="links">
+            <a href="https://github.com/aenimaa/no-distractions-for-youtube/blob/main/SAFETY.md">How to verify it yourself →</a>
+            <a href="tools/safety-check.html">Online safety checker →</a>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🙋 Something broken? Got an idea?</h2>
+        <p>YouTube changes its page often, so reports keep this working.</p>
+        <div class="links">
+          <a href="https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=bug_report.yml">🐞 Report a problem</a>
+          <a href="https://github.com/aenimaa/no-distractions-for-youtube/issues/new?template=feature_request.yml">💡 Suggest a feature</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Vibe-coded by Nima Sh · <a href="https://github.com/aenimaa/no-distractions-for-youtube/blob/main/LICENSE">MIT License</a> · Font: <a href="https://github.com/Omnibus-Type/Asap">Asap</a></p>
+      <p>YouTube is a trademark of Google LLC. This project isn't endorsed by or affiliated with Google or YouTube.</p>
+    </footer>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    let saved = "system";
+    try { saved = localStorage.getItem("theme") || "system"; } catch (_) {}
+
+    document.querySelectorAll('input[name="theme"]').forEach(input => {
+      input.checked = input.value === saved;
+      input.addEventListener("change", () => {
+        if (input.value === "system") delete root.dataset.theme;
+        else root.dataset.theme = input.value;
+        try { localStorage.setItem("theme", input.value); } catch (_) {}
+      });
+    });
+  </script>
+</body>
+</html>

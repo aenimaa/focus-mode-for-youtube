@@ -4,6 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Extension Safety Check</title>
+  <script>
+    // Apply a saved Light/Dark choice before the page paints. Shared with the project's home page.
+    try {
+      const theme = localStorage.getItem("theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch (_) {}
+  </script>
   <style>
     * { box-sizing: border-box; }
 
@@ -101,6 +108,40 @@
     }
 
     .brand img { border-radius: 10px; }
+    .brand .theme { margin-left: auto; }
+
+    .theme {
+      display: inline-flex;
+      flex: none;
+      padding: 2px;
+      border-radius: 8px;
+      background: var(--line);
+    }
+
+    .theme label { position: relative; }
+    .theme input { position: absolute; inset: 0; margin: 0; opacity: 0; }
+
+    .theme span {
+      display: block;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .theme input:checked + span {
+      background: var(--card);
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+    }
+
+    .theme input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+    @media (max-width: 560px) {
+      .brand { flex-wrap: wrap; }
+    }
 
     .tiles {
       display: grid;
@@ -227,7 +268,12 @@
   <main>
     <header class="brand">
       <img src="../extension/icons/icon48.png" width="40" height="40" alt="" onerror="this.remove()">
-      <span class="muted">Made for No Distractions for YouTube · works on any Chrome extension</span>
+      <span class="muted">Made for <a href="../">No Distractions for YouTube</a> · works on any Chrome extension</span>
+      <div class="theme" role="radiogroup" aria-label="Appearance">
+        <label><input type="radio" name="theme" value="light"><span>Light</span></label>
+        <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+        <label><input type="radio" name="theme" value="system"><span>System</span></label>
+      </div>
     </header>
     <h1>Extension Safety Check</h1>
     <p class="muted">Pick an unpacked Chrome extension folder. This page reads the files in your browser and looks for the usual red flags. Nothing is uploaded; the page makes no network requests.</p>
@@ -322,6 +368,21 @@
 
     const CODE_EXT = /\.(m?js|html?|css)$/i;
     const BINARY_RISK = /\.(wasm|exe|dll|so|dylib|bat|cmd|ps1|sh)$/i;
+
+    // Appearance switch
+    (() => {
+      const root = document.documentElement;
+      let saved = "system";
+      try { saved = localStorage.getItem("theme") || "system"; } catch (_) {}
+      document.querySelectorAll('input[name="theme"]').forEach(input => {
+        input.checked = input.value === saved;
+        input.addEventListener("change", () => {
+          if (input.value === "system") delete root.dataset.theme;
+          else root.dataset.theme = input.value;
+          try { localStorage.setItem("theme", input.value); } catch (_) {}
+        });
+      });
+    })();
 
     const results = document.getElementById("results");
     const drop = document.getElementById("drop");
