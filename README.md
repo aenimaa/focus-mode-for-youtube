@@ -55,7 +55,7 @@ All four sections are hidden by default. Set **Master** to **Off** to see YouTub
 The extension runs only on `www.youtube.com`, its only permission is saving its own settings, and it makes no network requests. It collects nothing.
 
 - **[SAFETY.md](SAFETY.md)** explains each permission (including Chrome's "Read and change your data on www.youtube.com" warning) and lists four ways to verify these claims yourself.
-- **[tools/safety-check.html](tools/safety-check.html)** is a checker you open in your browser. Pick the extension folder and it scans for red flags (broad permissions, network calls, hidden or remote code) without uploading anything. It works on other unpacked extensions too.
+- **[Safety checker](https://aenimaa.github.io/no-distractions-for-youtube/tools/safety-check.html)** runs in your browser. Pick the extension folder and it scans for red flags (broad permissions, network calls, hidden or remote code) without uploading anything. It works on other unpacked extensions too. The same page is in this repo at [`tools/safety-check.html`](tools/safety-check.html) if you'd rather open it offline.
 
 ## Ideas, bugs and questions: please open an issue
 

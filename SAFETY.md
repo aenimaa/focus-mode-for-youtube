@@ -40,7 +40,7 @@ No Distractions for YouTube does not collect, store, share or sell any personal 
    - `settings.js` loads and saves your settings.
 
    The rest (`popup.html`, `popup.css`, `popup.js`, `theme-init.js`) is the popup window, which never touches YouTube.
-2. **Run the safety checker.** Open [`tools/safety-check.html`](tools/safety-check.html) in your browser and pick the extension folder. It reads the files on your computer, uploads nothing, and flags the usual red flags: broad permissions, network calls, code loaded at runtime, and hidden or minified code. It also prints a SHA-256 fingerprint for every file.
+2. **Run the safety checker.** Open the [online checker](https://aenimaa.github.io/no-distractions-for-youtube/tools/safety-check.html) (or [`tools/safety-check.html`](tools/safety-check.html) from this repo, offline) and pick the extension folder. It reads the files on your computer, uploads nothing, and flags the usual red flags: broad permissions, network calls, code loaded at runtime, and hidden or minified code. It also prints a SHA-256 fingerprint for every file.
 3. **Watch the network.** On a YouTube tab, open Chrome's developer tools (F12), go to the **Network** tab and reload the page. Every request you see comes from YouTube; none comes from the extension.
 4. **Limit its access.** In `chrome://extensions`, click **Details** on the extension and set **Site access** to "On click" or to specific sites.
 
