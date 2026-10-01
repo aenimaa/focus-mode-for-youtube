@@ -1,0 +1,45 @@
+name: Something isn't hidden / something broke
+description: A section still shows, or the extension hides something it shouldn't.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! YouTube changes its page often, so reports like this are how the extension keeps working.
+  - type: dropdown
+    id: feature
+    attributes:
+      label: Which setting?
+      options:
+        - Related videos
+        - Comments
+        - Shorts shelves
+        - Video description
+        - Master switch / popup
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you see instead?
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Page where it happens
+      description: For example the Home page, Search, or a video link. Playlists and live streams matter too.
+  - type: textarea
+    id: element
+    attributes:
+      label: The element's HTML (optional, very helpful)
+      description: Right-click the part that should be hidden → Inspect → right-click the highlighted line → Copy → Copy element. Paste it here.
+      render: html
+  - type: input
+    id: versions
+    attributes:
+      label: Extension and Chrome version
+      description: The extension version is at the bottom of its popup; Chrome's is at chrome://version.
+      placeholder: "v2.2.0, Chrome 141"

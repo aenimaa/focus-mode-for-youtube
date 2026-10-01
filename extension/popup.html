@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>No Distractions for YouTube</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="theme-init.js"></script>
+</head>
+<body>
+  <main class="popup">
+    <header class="header">
+      <img src="icons/icon48.png" class="logo" alt="">
+      <div>
+        <h1 class="title">No Distractions for YouTube</h1>
+        <p class="subtitle">Control what stays on screen</p>
+      </div>
+    </header>
+
+    <section class="master">
+      <div>
+        <div id="masterLabel" class="master-label">Master</div>
+        <div id="masterStatus" class="status"></div>
+      </div>
+      <div class="segmented master-seg" role="radiogroup" aria-labelledby="masterLabel">
+        <label><input type="radio" name="master" value="on"><span>On</span></label>
+        <label><input type="radio" name="master" value="off"><span>Off</span></label>
+      </div>
+    </section>
+
+    <ul id="settings" class="settings">
+      <li class="setting">
+        <div class="row">
+          <button class="details" type="button" aria-expanded="false" aria-controls="panel-sidebar">
+            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+            <span id="title-sidebar">Related videos</span>
+          </button>
+          <input id="sidebar" class="toggle" type="checkbox" role="switch" aria-labelledby="title-sidebar">
+        </div>
+        <div id="panel-sidebar" class="panel" role="region" aria-labelledby="title-sidebar">
+          <div class="panel-inner">
+            <p>Hides the "Up next" column beside the player. Playlists, live chat and transcripts stay.</p>
+            <div class="wireframe" data-wf="sidebar"></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="setting">
+        <div class="row">
+          <button class="details" type="button" aria-expanded="false" aria-controls="panel-comments">
+            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+            <span id="title-comments">Comments</span>
+          </button>
+          <input id="comments" class="toggle" type="checkbox" role="switch" aria-labelledby="title-comments">
+        </div>
+        <div id="panel-comments" class="panel" role="region" aria-labelledby="title-comments">
+          <div class="panel-inner">
+            <p>Hides the comment section below the video.</p>
+            <div class="wireframe" data-wf="comments"></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="setting">
+        <div class="row">
+          <button class="details" type="button" aria-expanded="false" aria-controls="panel-shorts">
+            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+            <span id="title-shorts">Shorts shelves</span>
+          </button>
+          <input id="shorts" class="toggle" type="checkbox" role="switch" aria-labelledby="title-shorts">
+        </div>
+        <div id="panel-shorts" class="panel" role="region" aria-labelledby="title-shorts">
+          <div class="panel-inner">
+            <p>Hides the rows of Shorts on Home, Search and under videos.</p>
+            <div class="wireframe" data-wf="shorts"></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="setting">
+        <div class="row">
+          <button class="details" type="button" aria-expanded="false" aria-controls="panel-description">
+            <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+            <span id="title-description">Video description</span>
+          </button>
+          <input id="description" class="toggle" type="checkbox" role="switch" aria-labelledby="title-description">
+        </div>
+        <div id="panel-description" class="panel" role="region" aria-labelledby="title-description">
+          <div class="panel-inner">
+            <p>Hides the box under the title with views, date and description.</p>
+            <div class="wireframe" data-wf="description"></div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <section class="appearance">
+      <span id="themeLabel" class="appearance-label">Appearance</span>
+      <div class="segmented compact" role="radiogroup" aria-labelledby="themeLabel">
+        <label><input type="radio" name="theme" value="light"><span>Light</span></label>
+        <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+        <label><input type="radio" name="theme" value="system"><span>System</span></label>
+      </div>
+    </section>
+
+    <section class="setting safety">
+      <div class="row">
+        <button class="details" type="button" aria-expanded="false" aria-controls="panel-safety">
+          <span class="badge" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 4.5 6 7.5 9 4.5"/></svg></span>
+          <span id="title-safety">Safety &amp; privacy</span>
+        </button>
+      </div>
+      <div id="panel-safety" class="panel" role="region" aria-labelledby="title-safety">
+        <div class="panel-inner">
+          <ul class="facts">
+            <li>Runs only on youtube.com</li>
+            <li>Its only permission is saving these settings</li>
+            <li>No network requests, tracking or data collection</li>
+            <li>Only hides parts of the page; never reads or changes your account</li>
+          </ul>
+          <a class="check-link" href="https://github.com/aenimaa/no-distractions-for-youtube/blob/main/SAFETY.md" target="_blank" rel="noopener">Check it yourself →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Vibe-coded by Nima Sh</span>
+      <span id="version"></span>
+    </footer>
+  </main>
+  <script src="settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

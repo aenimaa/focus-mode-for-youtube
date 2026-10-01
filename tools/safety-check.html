@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Extension Safety Check</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      color-scheme: light;
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --text: #111114;
+      --muted: #5f5f6b;
+      --line: #e3e3e8;
+      --pass: #1a7f37;
+      --info: #2557d6;
+      --warn: #a15c00;
+      --fail: #c4122f;
+      --pass-bg: #e8f5ec;
+      --info-bg: #e9effc;
+      --warn-bg: #fdf1df;
+      --fail-bg: #fde8eb;
+      --accent: #ff0033;
+      --focus: #2557d6;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #121216;
+        --card: #1b1b21;
+        --text: #f1f1f4;
+        --muted: #a3a3ae;
+        --line: #2e2e36;
+        --pass: #4ec46f;
+        --info: #7aa2ff;
+        --warn: #f0b04a;
+        --fail: #ff6b80;
+        --pass-bg: #16301f;
+        --info-bg: #1a2440;
+        --warn-bg: #3a2a12;
+        --fail-bg: #3d1820;
+        --focus: #7aa2ff;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #121216;
+      --card: #1b1b21;
+      --text: #f1f1f4;
+      --muted: #a3a3ae;
+      --line: #2e2e36;
+      --pass: #4ec46f;
+      --info: #7aa2ff;
+      --warn: #f0b04a;
+      --fail: #ff6b80;
+      --pass-bg: #16301f;
+      --info-bg: #1a2440;
+      --warn-bg: #3a2a12;
+      --fail-bg: #3d1820;
+      --focus: #7aa2ff;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.55 system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 16px 64px;
+    }
+
+    h1 { margin: 0 0 6px; font-size: 26px; line-height: 1.2; }
+    h2 { margin: 28px 0 10px; font-size: 17px; }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); }
+    code { font: 13px ui-monospace, Consolas, monospace; }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    .drop {
+      display: grid;
+      place-items: center;
+      gap: 10px;
+      margin: 24px 0 8px;
+      padding: 32px 16px;
+      border: 2px dashed var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      text-align: center;
+      transition: border-color .15s;
+    }
+
+    .drop.over { border-color: var(--accent); }
+
+    .button {
+      display: inline-block;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .button input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .button:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+    .summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 24px 0 4px;
+    }
+
+    .pill {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .finding {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+    }
+
+    .finding + .finding { margin-top: 8px; }
+    .finding .detail { grid-column: 2; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
+    .finding .title { font-weight: 600; }
+
+    .tag {
+      align-self: start;
+      min-width: 46px;
+      padding: 1px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .pass { color: var(--pass); background: var(--pass-bg); }
+    .info { color: var(--info); background: var(--info-bg); }
+    .warn { color: var(--warn); background: var(--warn-bg); }
+    .fail { color: var(--fail); background: var(--fail-bg); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 13px;
+    }
+
+    th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+    th { color: var(--muted); font-weight: 600; }
+    td code { overflow-wrap: anywhere; }
+
+    .note {
+      margin-top: 32px;
+      padding: 14px 16px;
+      border-left: 3px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 560px) {
+      .hash { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Extension Safety Check</h1>
+    <p class="muted">Pick an unpacked Chrome extension folder. This page reads the files in your browser and looks for the usual red flags. Nothing is uploaded; the page makes no network requests.</p>
+
+    <div id="drop" class="drop">
+      <label class="button">
+        Choose extension folder
+        <input id="picker" type="file" webkitdirectory multiple>
+      </label>
+      <span class="muted">or drop the folder here</span>
+    </div>
+
+    <div id="results" aria-live="polite"></div>
+
+    <div class="note">
+      <strong>What this can and can't tell you.</strong>
+      It's a static scan: it reads the code and the manifest, it doesn't run anything.
+      It catches the common warning signs (broad permissions, network calls, code loaded at runtime, hidden code),
+      but a clean result isn't a guarantee. The strongest check is still reading the code, which for small extensions takes minutes.
+    </div>
+  </main>
+
+  <script>
+    // Permissions that reach beyond the page they run on. Anything not listed here is shown as "info".
+    const SENSITIVE_PERMISSIONS = {
+      cookies: "Read and change cookies, including sign-in sessions",
+      history: "Read and change your browsing history",
+      tabs: "See the address and title of every open tab",
+      webRequest: "Watch the network traffic of pages",
+      webRequestBlocking: "Block or change network traffic",
+      declarativeNetRequest: "Block or redirect network requests",
+      downloads: "Start and manage downloads",
+      management: "Manage your other extensions",
+      debugger: "Attach a debugger to pages (full control)",
+      nativeMessaging: "Talk to programs installed on your computer",
+      proxy: "Route your traffic through a proxy",
+      privacy: "Change Chrome's privacy settings",
+      clipboardRead: "Read your clipboard",
+      bookmarks: "Read and change your bookmarks",
+      identity: "Access your Google account identity",
+      scripting: "Inject code into pages at runtime",
+      topSites: "Read your most-visited sites",
+      geolocation: "See your location"
+    };
+
+    const KNOWN_PERMISSIONS = {
+      storage: "Save its own settings",
+      activeTab: "Access the current tab only when you click the extension",
+      alarms: "Schedule timers",
+      contextMenus: "Add items to the right-click menu",
+      notifications: "Show notifications",
+      sidePanel: "Show a side panel"
+    };
+
+    const CODE_CHECKS = [
+      { re: /\bfetch\s*\(/, level: "warn", title: "Network request (fetch)" },
+      { re: /\bXMLHttpRequest\b/, level: "warn", title: "Network request (XMLHttpRequest)" },
+      { re: /\bWebSocket\b/, level: "warn", title: "Live connection (WebSocket)" },
+      { re: /\bEventSource\b/, level: "warn", title: "Live connection (EventSource)" },
+      { re: /\bsendBeacon\b/, level: "warn", title: "Background report (sendBeacon)" },
+      { re: /\bimportScripts\s*\(/, level: "warn", title: "Loads extra scripts at runtime" },
+      { re: /\beval\s*\(/, level: "fail", title: "Runs text as code (eval)" },
+      { re: /\bnew\s+Function\s*\(/, level: "fail", title: "Runs text as code (new Function)" },
+      { re: /\bset(?:Timeout|Interval)\s*\(\s*["'`]/, level: "warn", title: "Runs text as code (timer with a string)" },
+      { re: /\batob\s*\(/, level: "warn", title: "Decodes hidden text (atob)" },
+      { re: /<script[^>]+src\s*=\s*["']?https?:/i, level: "fail", title: "Loads a script from the internet" },
+      { re: /<(?:link|iframe|img)[^>]+(?:href|src)\s*=\s*["']?https?:/i, level: "warn", title: "Loads a resource from the internet" },
+      { re: /url\(\s*["']?https?:|@import\s+(?:url\()?["']?https?:/i, level: "warn", title: "Stylesheet loads something from the internet" }
+    ];
+
+    const CODE_EXT = /\.(m?js|html?|css)$/i;
+    const BINARY_RISK = /\.(wasm|exe|dll|so|dylib|bat|cmd|ps1|sh)$/i;
+
+    const results = document.getElementById("results");
+    const drop = document.getElementById("drop");
+
+    // Reading the folder
+
+    document.getElementById("picker").addEventListener("change", event => {
+      const files = [...event.target.files].map(file => ({
+        path: file.webkitRelativePath.split("/").slice(1).join("/"),
+        file
+      }));
+      run(files);
+    });
+
+    drop.addEventListener("dragover", event => {
+      event.preventDefault();
+      drop.classList.add("over");
+    });
+
+    drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+
+    drop.addEventListener("drop", async event => {
+      event.preventDefault();
+      drop.classList.remove("over");
+      const entry = event.dataTransfer.items[0]?.webkitGetAsEntry();
+      if (!entry?.isDirectory) {
+        showError("Drop a folder, not a file.");
+        return;
+      }
+      run(await readEntry(entry, ""));
+    });
+
+    async function readEntry(dir, prefix) {
+      const out = [];
+      const reader = dir.createReader();
+      let batch;
+      do {
+        batch = await new Promise((resolve, reject) => reader.readEntries(resolve, reject));
+        for (const entry of batch) {
+          const path = prefix + entry.name;
+          if (entry.isDirectory) out.push(...await readEntry(entry, path + "/"));
+          else out.push({ path, file: await new Promise((resolve, reject) => entry.file(resolve, reject)) });
+        }
+      } while (batch.length);
+      return out;
+    }
+
+    // If a whole repo was picked, scan only the folder that holds manifest.json.
+    function scopeToExtension(files) {
+      const manifests = files
+        .filter(f => f.path.split("/").pop() === "manifest.json")
+        .sort((a, b) => a.path.split("/").length - b.path.split("/").length);
+      if (!manifests.length) return null;
+
+      const base = manifests[0].path.slice(0, -"manifest.json".length);
+      return {
+        base,
+        files: files
+          .filter(f => f.path.startsWith(base))
+          .map(f => ({ ...f, path: f.path.slice(base.length) }))
+      };
+    }
+
+    // Checks
+
+    async function run(allFiles) {
+      const scoped = scopeToExtension(allFiles);
+      if (!scoped) {
+        showError("No manifest.json found. Pick the extension's folder (the one with manifest.json in it).");
+        return;
+      }
+
+      const files = scoped.files;
+      let manifest;
+      try {
+        manifest = JSON.parse(await files.find(f => f.path === "manifest.json").file.text());
+      } catch (error) {
+        showError("manifest.json couldn't be read: " + error.message);
+        return;
+      }
+
+      const sections = [
+        ["Permissions and site access", checkManifest(manifest)],
+        ["Network and hidden code", await checkCode(files)],
+        ["Chrome features used", await checkApis(files)]
+      ];
+
+      render(manifest, scoped.base, sections, await fileTable(files));
+    }
+
+    function checkManifest(m) {
+      const out = [];
+      const perms = m.permissions || [];
+
+      if (m.manifest_version === 3) out.push(["pass", "Manifest V3", "Chrome's current extension format, which forbids loading code from the internet."]);
+      else out.push(["warn", `Manifest V${m.manifest_version}`, "Older format with fewer built-in protections."]);
+
+      if (!perms.length) out.push(["pass", "No permissions requested", ""]);
+      for (const p of perms) {
+        if (SENSITIVE_PERMISSIONS[p]) out.push(["warn", `Permission: ${p}`, SENSITIVE_PERMISSIONS[p]]);
+        else out.push([KNOWN_PERMISSIONS[p] ? "pass" : "info", `Permission: ${p}`, KNOWN_PERMISSIONS[p] || "Less common permission; look up what it allows."]);
+      }
+
+      const hosts = [...(m.host_permissions || []), ...(m.content_scripts || []).flatMap(c => c.matches || [])];
+      const broad = hosts.filter(h => h === "<all_urls>" || /^\*:\/\/\*\//.test(h) || /^https?:\/\/\*\//.test(h));
+      if (broad.length) out.push(["fail", "Access to every website", broad.join(", ")]);
+      else if (hosts.length) out.push(["pass", "Site access limited to", [...new Set(hosts)].join(", ")]);
+
+      const optional = [...(m.optional_permissions || []), ...(m.optional_host_permissions || [])];
+      if (optional.length) out.push(["info", "Can ask for more permissions later", optional.join(", ")]);
+
+      if (m.background) out.push(["info", "Has a background script", "Code that runs even when no page is open. Check what it does."]);
+      else out.push(["pass", "No background script", "Nothing runs unless a matching page is open."]);
+
+      if (m.externally_connectable) out.push(["warn", "Websites can message the extension", JSON.stringify(m.externally_connectable)]);
+
+      const csp = JSON.stringify(m.content_security_policy || "");
+      if (/unsafe-eval|https?:/.test(csp)) out.push(["warn", "Loosened security policy", csp]);
+
+      if (m.update_url) out.push(["warn", "Updates from outside the Chrome Web Store", m.update_url]);
+      if (m.key) out.push(["info", "Fixed extension ID (key)", "Keeps the same ID when loaded from a folder. Normal for unpacked extensions."]);
+
+      return out;
+    }
+
+    async function checkCode(files) {
+      const out = [];
+      const links = [];
+
+      for (const { path, file } of files) {
+        if (BINARY_RISK.test(path)) out.push(["warn", "File that can't be reviewed as text", path]);
+        if (!CODE_EXT.test(path)) continue;
+
+        const lines = (await file.text()).split(/\r?\n/);
+        lines.forEach((line, i) => {
+          const where = `${path}:${i + 1}`;
+
+          for (const check of CODE_CHECKS) {
+            if (check.re.test(line)) out.push([check.level, check.title, `${where} — ${snippet(line)}`]);
+          }
+
+          if (/\.m?js$/i.test(path) && line.length > 500) {
+            out.push(["warn", "Very long line (minified or obfuscated)", `${where} — hard to review by eye`]);
+          }
+
+          for (const url of line.match(/https?:\/\/[^\s"'`<>)]+/g) || []) {
+            if (url.startsWith("http://www.w3.org/")) continue;
+            const isLink = new RegExp(`<a\\b[^>]*href\\s*=\\s*["']${escapeRe(url)}`).test(line);
+            if (isLink) links.push(`${where} — ${url}`);
+            else out.push(["warn", "Web address in code", `${where} — ${url}`]);
+          }
+        });
+      }
+
+      if (!out.some(([level]) => level !== "pass")) {
+        out.unshift(["pass", "No network calls, remote code or hidden code found", "Checked every .js, .html and .css file."]);
+      }
+      for (const link of links) out.push(["info", "Link (opens only when clicked)", link]);
+      return out;
+    }
+
+    async function checkApis(files) {
+      const used = new Map();
+      for (const { path, file } of files) {
+        if (!/\.m?js$/i.test(path)) continue;
+        for (const [, ns] of (await file.text()).matchAll(/\b(?:chrome|browser)\.(\w+)/g)) {
+          if (!used.has(ns)) used.set(ns, new Set());
+          used.get(ns).add(path);
+        }
+      }
+
+      if (!used.size) return [["pass", "No Chrome extension features used", ""]];
+      return [...used].map(([ns, paths]) => [
+        SENSITIVE_PERMISSIONS[ns] ? "warn" : "pass",
+        `chrome.${ns}`,
+        (SENSITIVE_PERMISSIONS[ns] || KNOWN_PERMISSIONS[ns] || describeApi(ns)) + ` — in ${[...paths].join(", ")}`
+      ]);
+    }
+
+    function describeApi(ns) {
+      return { runtime: "Talk between its own parts, read its own manifest", i18n: "Translations" }[ns] || "Look up what this feature does";
+    }
+
+    async function fileTable(files) {
+      const rows = [];
+      for (const { path, file } of files.sort((a, b) => a.path.localeCompare(b.path))) {
+        const digest = await crypto.subtle.digest("SHA-256", await file.arrayBuffer());
+        const hex = [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, "0")).join("");
+        rows.push({ path, size: file.size, hex });
+      }
+      return rows;
+    }
+
+    // Output
+
+    function render(manifest, base, sections, files) {
+      const all = sections.flatMap(([, findings]) => findings);
+      const count = level => all.filter(([l]) => l === level).length;
+
+      const summary = ["fail", "warn", "info", "pass"]
+        .filter(level => count(level))
+        .map(level => `<span class="pill ${level}">${count(level)} ${label(level)}</span>`)
+        .join("");
+
+      results.innerHTML = `
+        <h2>${esc(manifest.name || "Unnamed extension")} <span class="muted">v${esc(manifest.version || "?")}</span></h2>
+        <p class="muted">${base ? `Scanned the <code>${esc(base)}</code> folder (where manifest.json is). ` : ""}${files.length} files.</p>
+        <div class="summary">${summary}</div>
+        ${sections.map(([title, findings]) => `
+          <h2>${title}</h2>
+          ${findings.map(([level, t, detail]) => `
+            <div class="finding">
+              <span class="tag ${level}">${label(level)}</span>
+              <span class="title">${esc(t)}</span>
+              ${detail ? `<span class="detail">${esc(detail)}</span>` : ""}
+            </div>`).join("")}
+        `).join("")}
+        <h2>Files</h2>
+        <p class="muted">SHA-256 fingerprints let you confirm your copy matches a published release.</p>
+        <table>
+          <thead><tr><th>File</th><th>Size</th><th class="hash">SHA-256</th></tr></thead>
+          <tbody>${files.map(f => `
+            <tr><td><code>${esc(f.path)}</code></td><td>${(f.size / 1024).toFixed(1)} KB</td><td class="hash"><code title="${f.hex}">${f.hex.slice(0, 16)}…</code></td></tr>`).join("")}
+          </tbody>
+        </table>`;
+    }
+
+    function showError(message) {
+      results.innerHTML = `<div class="finding"><span class="tag fail">Error</span><span class="title">${esc(message)}</span></div>`;
+    }
+
+    const label = level => ({ pass: "OK", info: "Info", warn: "Check", fail: "Risk" })[level];
+    const snippet = line => line.trim().slice(0, 140);
+    const escapeRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+name: Feature request
+description: Suggest something else to hide, or a way to make the extension better.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas are very welcome, big or small. If it's about hiding a new part of YouTube, a screenshot helps a lot.
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why would it help you?
+      description: The problem behind the idea often leads to a better solution.
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot (optional)
+      description: Drag an image here to show which part of YouTube you mean.

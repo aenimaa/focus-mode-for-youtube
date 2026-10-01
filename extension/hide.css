@@ -1,0 +1,39 @@
+/*
+  Everything here is hidden by default, so nothing flashes while the page loads.
+  content.js lists the switched-off features in <html data-ytnd-off="...">,
+  which stops the matching rules below from applying.
+*/
+
+/* Related videos: only the list itself, so playlists, live chat and the transcript keep working */
+html:not([data-ytnd-off~="sidebar"]) ytd-watch-flexy #related {
+  display: none !important;
+}
+
+/* Drop the whole right column when related videos were all it held */
+html:not([data-ytnd-off~="sidebar"]) ytd-watch-flexy #secondary:not(:has(
+  ytd-playlist-panel-renderer:not([hidden]),
+  #chat-container ytd-live-chat-frame:not([hidden]),
+  ytd-engagement-panel-section-list-renderer[visibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"]
+)) {
+  display: none !important;
+}
+
+/* Comments */
+html:not([data-ytnd-off~="comments"]) ytd-watch-flexy #comments {
+  display: none !important;
+}
+
+/* Shorts shelves: Home, Search, Subscriptions and under the video */
+html:not([data-ytnd-off~="shorts"]) :is(
+  ytd-reel-shelf-renderer,
+  ytd-rich-shelf-renderer[is-shorts],
+  ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts], ytd-reel-shelf-renderer),
+  grid-shelf-view-model:has(ytm-shorts-lockup-view-model, ytm-shorts-lockup-view-model-v2)
+) {
+  display: none !important;
+}
+
+/* Video description */
+html:not([data-ytnd-off~="description"]) ytd-watch-metadata :is(#description, #description-inline-expander) {
+  display: none !important;
+}

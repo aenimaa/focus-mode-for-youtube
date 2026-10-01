@@ -1,0 +1,11 @@
+# Packaged builds
+*.zip
+*.crx
+
+# Private signing keys: never commit these
+*.pem
+
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
