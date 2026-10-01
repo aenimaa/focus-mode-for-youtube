@@ -21,7 +21,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/hero-dark.svg">
-    <img src="docs/illustrations/hero-light.svg" width="800" alt="Before: YouTube with suggestions, comments and Shorts all around the video. After: the same page with only the video and its title, calm and centered.">
+    <img src="docs/illustrations/hero-light.svg" width="100%" alt="Before: YouTube with suggestions, comments and Shorts all around the video. After: the same page with only the video and its title, calm and centered.">
   </picture>
 </p>
 
@@ -47,7 +47,7 @@ The "Up next" column beside the player. The video moves to the center; playlists
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/related-dark.svg">
-  <img src="docs/illustrations/related-light.svg" width="480" alt="A video page without the column of suggested videos. The player sits in the center.">
+  <img src="docs/illustrations/related-light.svg" width="100%" alt="A video page without the column of suggested videos. The player sits in the center.">
 </picture>
 
 #### End screen
@@ -56,7 +56,7 @@ The cards and suggestion grid that appear as a video ends. Autoplay's countdown 
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/endscreen-dark.svg">
-  <img src="docs/illustrations/endscreen-light.svg" width="480" alt="The last moments of a video, with no suggestion cards laid over the picture.">
+  <img src="docs/illustrations/endscreen-light.svg" width="100%" alt="The last moments of a video, with no suggestion cards laid over the picture.">
 </picture>
 
 #### Comments
@@ -65,7 +65,7 @@ The comments under the video.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/comments-dark.svg">
-  <img src="docs/illustrations/comments-light.svg" width="480" alt="The area under a video, with the comments tucked away.">
+  <img src="docs/illustrations/comments-light.svg" width="100%" alt="The area under a video, with the comments tucked away.">
 </picture>
 
 #### Description
@@ -74,7 +74,7 @@ The box under the title, with views, date and description.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/description-dark.svg">
-  <img src="docs/illustrations/description-light.svg" width="480" alt="A video title with nothing below it: no views, date or description box.">
+  <img src="docs/illustrations/description-light.svg" width="100%" alt="A video title with nothing below it: no views, date or description box.">
 </picture>
 
 ### On Home
@@ -85,7 +85,7 @@ Shorts rows, single Shorts in search and under videos, and the Shorts entry in t
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/shorts-dark.svg">
-  <img src="docs/illustrations/shorts-light.svg" width="480" alt="YouTube's Home page with regular videos only. The row of tall Shorts and the Shorts menu entry are gone.">
+  <img src="docs/illustrations/shorts-light.svg" width="100%" alt="YouTube's Home page with regular videos only. The row of tall Shorts and the Shorts menu entry are gone.">
 </picture>
 
 #### Explore
@@ -94,7 +94,7 @@ The Explore section of the left menu, and Home's "Explore more topics" row.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/explore-dark.svg">
-  <img src="docs/illustrations/explore-light.svg" width="480" alt="YouTube's Home page with a shorter left menu and no row of topics to explore.">
+  <img src="docs/illustrations/explore-light.svg" width="100%" alt="YouTube's Home page with a shorter left menu and no row of topics to explore.">
 </picture>
 
 ## 🎛️ Gentle controls
@@ -109,10 +109,19 @@ The Explore section of the left menu, and Home's "Explore more topics" row.
 - **Settings:** the popup's look (Light, Dark or System), and the corner badge.
 - **About:** how it keeps you safe, and where to report a problem.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/popup-dark.png">
+    <img src="docs/screenshots/popup-light.png" width="320" alt="The extension's popup in light and dark: the Focus tab with maps of the Video page and Home, and a tile for each part of YouTube.">
+  </picture>
+</p>
+
 ## 🔒 Safe by design
 
 Runs only on youtube.com. Its only permission is saving its own settings. No network requests, no tracking, nothing collected.
 [How to verify it yourself →](SAFETY.md) · [Online safety checker →](https://aenimaa.github.io/focus-mode-for-youtube/tools/safety-check.html)
+
+Curious how that compares? See [how much access different kinds of extensions need →](SAFETY.md#how-much-access-does-an-extension-need)
 
 ## 🙋 Something broken? Got an idea?
 

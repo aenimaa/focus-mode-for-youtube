@@ -4,305 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Focus Mode for YouTube</title>
-  <meta name="description" content="A free, open-source Chrome extension that hides the distracting parts of YouTube. No tracking, no network requests.">
+  <meta name="description" content="A free, open-source Chrome extension that tucks away the distracting parts of YouTube. No tracking, no network requests.">
   <link rel="icon" href="extension/icons/icon32.png">
+  <link rel="alternate" hreflang="fa" href="fa/">
   <script>
-    // Apply a saved Light/Dark choice before the page paints. Shared with the safety checker.
+    // Apply a saved Light/Dark choice before the page paints. Shared with the safety checker and the Persian page.
     try {
       const theme = localStorage.getItem("theme");
       if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
     } catch (_) {}
   </script>
-  <style>
-    @font-face {
-      font-family: "Asap";
-      src: url("extension/fonts/asap-latin-var.woff2") format("woff2");
-      font-weight: 400 700;
-      font-style: normal;
-    }
-
-    * { box-sizing: border-box; }
-
-    :root {
-      color-scheme: light;
-      --bg: #fffbfb;
-      --card: #ffffff;
-      --text: #2a0a12;
-      --muted: #74525a;
-      --line: #ebdcdf;
-      --soft: #f6ecee;
-      --raised: #ffffff;
-      --accent: #d3133f;
-      --accent-text: #c0103a;
-      --on-accent: #ffffff;
-      --focus: #4f46e5;
-      --line-strong: #dcc5ca;
-      --btn-from: #dd1440;
-      --btn-to: #c0103a;
-      --btn-hover-from: #c9123b;
-      --btn-hover-to: #b00e35;
-      --shine: linear-gradient(180deg, rgba(255, 255, 255, .20) 0%, rgba(255, 255, 255, 0) 45%);
-      --shadow-accent: 0 1px 2px rgba(120, 8, 34, .30), 0 6px 16px -6px rgba(211, 19, 63, .45);
-      --glow: rgba(211, 19, 63, .07);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        color-scheme: dark;
-        --bg: #1a1013;
-        --card: #221518;
-        --text: #f8eef0;
-        --muted: #c0a8ae;
-        --line: #3b272c;
-        --soft: #251619;
-        --raised: #2e1c21;
-        --accent-text: #ff6b80;
-        --focus: #a5b4fc;
-        --line-strong: #533a40;
-        --shadow-accent: 0 1px 2px rgba(0, 0, 0, .40), 0 6px 18px -6px rgba(211, 19, 63, .55);
-        --glow: rgba(211, 19, 63, .14);
-      }
-    }
-
-    :root[data-theme="dark"] {
-      color-scheme: dark;
-      --bg: #1a1013;
-      --card: #221518;
-      --text: #f8eef0;
-      --muted: #c0a8ae;
-      --line: #3b272c;
-      --soft: #251619;
-      --raised: #2e1c21;
-      --accent-text: #ff6b80;
-      --focus: #a5b4fc;
-      --line-strong: #533a40;
-      --shadow-accent: 0 1px 2px rgba(0, 0, 0, .40), 0 6px 18px -6px rgba(211, 19, 63, .55);
-      --glow: rgba(211, 19, 63, .14);
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font: 16px/1.6 "Asap", system-ui, "Segoe UI", Roboto, Arial, sans-serif;
-    }
-
-    a { color: var(--accent-text); }
-    :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-
-    .wrap {
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-
-    /* Top bar */
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 16px 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .brand img { border-radius: 7px; }
-
-    .segmented {
-      display: inline-flex;
-      padding: 2px;
-      border-radius: 8px;
-      background: var(--soft);
-    }
-
-    .segmented label { position: relative; }
-
-    .segmented input {
-      position: absolute;
-      inset: 0;
-      margin: 0;
-      opacity: 0;
-    }
-
-    .segmented span {
-      display: block;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-      cursor: pointer;
-    }
-
-    .segmented input:checked + span {
-      background: var(--raised);
-      color: var(--text);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-    }
-
-    .segmented input:focus-visible + span {
-      outline: 2px solid var(--focus);
-      outline-offset: 1px;
-    }
-
-    /* Hero */
-
-    .hero {
-      padding: 48px 0 32px;
-      text-align: center;
-      background: radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 70%);
-    }
-
-    .hero img { border-radius: 20px; }
-
-    h1 {
-      margin: 16px 0 8px;
-      font-size: clamp(30px, 6vw, 44px);
-      line-height: 1.1;
-    }
-
-    .tagline {
-      margin: 0 auto;
-      max-width: 520px;
-      font-size: 19px;
-    }
-
-    .fine {
-      margin: 8px 0 0;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 22px;
-      border-radius: 999px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    /* The logo's shine on a text-safe wine gradient (white text 4.9:1 at its lightest point) */
-    .button.primary {
-      background: var(--shine), linear-gradient(160deg, var(--btn-from), var(--btn-to));
-      color: var(--on-accent);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), var(--shadow-accent);
-    }
-
-    .button.primary:hover {
-      background: var(--shine), linear-gradient(160deg, var(--btn-hover-from), var(--btn-hover-to));
-    }
-
-    .button.secondary:hover { border-color: var(--line-strong); }
-
-    .button.secondary {
-      border: 1px solid var(--line);
-      background: var(--card);
-      color: var(--text);
-    }
-
-    .compare {
-      margin: 16px 0 0;
-    }
-
-    .compare img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    /* Show the sketch that matches the active theme */
-    .for-dark { display: none !important; }
-
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) .for-dark { display: block !important; }
-      :root:not([data-theme="light"]) .for-light { display: none !important; }
-    }
-
-    :root[data-theme="dark"] .for-dark { display: block !important; }
-    :root[data-theme="dark"] .for-light { display: none !important; }
-
-    /* Sections */
-
-    section { padding: 32px 0; }
-
-    h2 {
-      margin: 0 0 16px;
-      font-size: 24px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-      gap: 12px;
-    }
-
-    .card {
-      padding: 16px 20px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: var(--card);
-    }
-
-    .card strong { display: block; }
-    .card p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
-
-    .step {
-      display: grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      margin-bottom: 8px;
-      border-radius: 50%;
-      background: var(--soft);
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .emoji { font-size: 22px; line-height: 1; margin-bottom: 8px; display: block; }
-
-    code {
-      padding: 1px 6px;
-      border-radius: 5px;
-      background: var(--soft);
-      font: 14px ui-monospace, Consolas, monospace;
-    }
-
-    .note { margin: 12px 0 0; color: var(--muted); font-size: 15px; }
-
-    ul.facts { margin: 0; padding-left: 20px; }
-    ul.facts li + li { margin-top: 4px; }
-
-    .links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 12px; font-weight: 600; }
-
-    footer {
-      margin-top: 32px;
-      padding: 24px 0 48px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    footer p { margin: 4px 0; }
-  </style>
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
   <div class="wrap">
@@ -311,10 +23,13 @@
         <img src="extension/icons/icon32.png" width="28" height="28" alt="">
         <span>Focus Mode</span>
       </a>
-      <div class="segmented" role="radiogroup" aria-label="Appearance">
-        <label><input type="radio" name="theme" value="light"><span>Light</span></label>
-        <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
-        <label><input type="radio" name="theme" value="system"><span>System</span></label>
+      <div class="topbar-tools">
+        <a class="lang" href="fa/" hreflang="fa" lang="fa">فارسی</a>
+        <div class="segmented" role="radiogroup" aria-label="Appearance">
+          <label><input type="radio" name="theme" value="light"><span>Light</span></label>
+          <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+          <label><input type="radio" name="theme" value="system"><span>System</span></label>
+        </div>
       </div>
     </header>
 
@@ -330,7 +45,7 @@
         </div>
       </div>
 
-      <figure class="compare">
+      <figure class="compare figure-wide">
         <img class="for-light" src="docs/illustrations/hero-light.svg" width="800" height="320" alt="Before: a YouTube video page with related videos, end screen suggestions, description and comments. After: just the video, centered, with its title.">
         <img class="for-dark" src="docs/illustrations/hero-dark.svg" width="800" height="320" alt="Before: a YouTube video page with related videos, end screen suggestions, description and comments. After: just the video, centered, with its title.">
       </figure>
@@ -339,37 +54,117 @@
         <h2>🚀 Install in a minute</h2>
         <div class="grid">
           <div class="card"><span class="step">1</span><strong>Unzip the download</strong><p>You'll get one folder.</p></div>
-          <div class="card"><span class="step">2</span><strong>Turn on Developer mode</strong><p>Open <code>chrome://extensions</code>, switch is at the top right.</p></div>
+          <div class="card"><span class="step">2</span><strong>Turn on Developer mode</strong><p>Open <code>chrome://extensions</code>; the switch is at the top right.</p></div>
           <div class="card"><span class="step">3</span><strong>Load unpacked</strong><p>Choose the unzipped folder. That's it.</p></div>
         </div>
-        <p class="note">📌 Pin it from the puzzle-piece icon in Chrome's toolbar. Works in Edge, Brave, Opera and Vivaldi too.</p>
+        <p class="note">📌 Pin it from the puzzle-piece icon in Chrome's toolbar.</p>
       </section>
 
       <section>
         <h2>🙈 What it tucks away</h2>
-        <div class="grid">
-          <div class="card"><span class="emoji" aria-hidden="true">🎞️</span><strong>Related videos</strong><p>The column beside the player. The video moves to the center.</p></div>
-          <div class="card"><span class="emoji" aria-hidden="true">💬</span><strong>Comments</strong><p>The section below the video.</p></div>
-          <div class="card"><span class="emoji" aria-hidden="true">📱</span><strong>Shorts</strong><p>Rows, single Shorts in search, and the menu entry.</p></div>
-          <div class="card"><span class="emoji" aria-hidden="true">📝</span><strong>Video description</strong><p>The box under the title.</p></div>
-          <div class="card"><span class="emoji" aria-hidden="true">🎬</span><strong>End of video</strong><p>The cards and suggestion grid as a video ends.</p></div>
-          <div class="card"><span class="emoji" aria-hidden="true">🧭</span><strong>Explore</strong><p>The Explore menu, and Home's "Explore more topics" row.</p></div>
+        <p class="lede">Each part has its own switch, and you can bring any of them back at any time.</p>
+
+        <h3 class="feature-group">On the video page</h3>
+        <article class="feature">
+          <h4>🎞️ Related videos</h4>
+          <p>The "Up next" column beside the player. The video moves to the center; playlists, live chat and transcripts stay.</p>
+          <img class="for-light" src="docs/illustrations/related-light.svg" width="640" height="240" alt="A video page without the column of suggested videos. The player sits in the center.">
+          <img class="for-dark" src="docs/illustrations/related-dark.svg" width="640" height="240" alt="A video page without the column of suggested videos. The player sits in the center.">
+        </article>
+        <article class="feature">
+          <h4>🎬 End screen</h4>
+          <p>The cards and suggestion grid that appear as a video ends. Autoplay's countdown stays visible.</p>
+          <img class="for-light" src="docs/illustrations/endscreen-light.svg" width="640" height="240" alt="The last moments of a video, with no suggestion cards laid over the picture.">
+          <img class="for-dark" src="docs/illustrations/endscreen-dark.svg" width="640" height="240" alt="The last moments of a video, with no suggestion cards laid over the picture.">
+        </article>
+        <article class="feature">
+          <h4>💬 Comments</h4>
+          <p>The comments under the video.</p>
+          <img class="for-light" src="docs/illustrations/comments-light.svg" width="640" height="240" alt="The area under a video, with the comments tucked away.">
+          <img class="for-dark" src="docs/illustrations/comments-dark.svg" width="640" height="240" alt="The area under a video, with the comments tucked away.">
+        </article>
+        <article class="feature">
+          <h4>📝 Description</h4>
+          <p>The box under the title with views, date and description.</p>
+          <img class="for-light" src="docs/illustrations/description-light.svg" width="640" height="240" alt="A video title with nothing below it: no views, date or description box.">
+          <img class="for-dark" src="docs/illustrations/description-dark.svg" width="640" height="240" alt="A video title with nothing below it: no views, date or description box.">
+        </article>
+
+        <h3 class="feature-group">On Home</h3>
+        <article class="feature">
+          <h4>📱 Shorts</h4>
+          <p>Rows of Shorts, single Shorts in search and under videos, and the Shorts menu entry.</p>
+          <img class="for-light" src="docs/illustrations/shorts-light.svg" width="640" height="240" alt="YouTube's Home page with regular videos only. The row of tall Shorts and the Shorts menu entry are gone.">
+          <img class="for-dark" src="docs/illustrations/shorts-dark.svg" width="640" height="240" alt="YouTube's Home page with regular videos only. The row of tall Shorts and the Shorts menu entry are gone.">
+        </article>
+        <article class="feature">
+          <h4>🧭 Explore</h4>
+          <p>The Explore section of the left menu, and Home's "Explore more topics" row.</p>
+          <img class="for-light" src="docs/illustrations/explore-light.svg" width="640" height="240" alt="YouTube's Home page with a shorter left menu and no row of topics to explore.">
+          <img class="for-dark" src="docs/illustrations/explore-dark.svg" width="640" height="240" alt="YouTube's Home page with a shorter left menu and no row of topics to explore.">
+        </article>
+      </section>
+
+      <section>
+        <h2>🎛️ Gentle controls</h2>
+        <div class="controls">
+          <div>
+            <div class="control">
+              <strong>⏸️ Pause when you want YouTube as usual</strong>
+              <p>Master has three settings: On, Pause and Off. Pause for 15 minutes, 1 hour or until tomorrow morning, and it comes back by itself.</p>
+            </div>
+            <div class="control">
+              <strong>🫧 A quiet corner badge</strong>
+              <p>A small badge in the bottom-left corner of YouTube shows what's tucked away. It stays dull until you hover it and shows itself once a day. Close it and you get a few seconds to undo, or switch it off in the popup.</p>
+            </div>
+            <div class="control">
+              <strong>🗺️ A popup with a map</strong>
+              <p>The Focus tab shows a small map of the video page and of Home. Tap a tile, or the area itself, to tuck it away or bring it back. Settings and About are one tab away.</p>
+            </div>
+          </div>
+          <div class="shot">
+            <img class="for-light" src="docs/screenshots/popup-light.png" width="320" alt="The extension's popup in light mode: the Focus tab with maps of the video page and Home, and a tile for each part of YouTube.">
+            <img class="for-dark" src="docs/screenshots/popup-dark.png" width="320" alt="The extension's popup in dark mode: the Focus tab with maps of the video page and Home, and a tile for each part of YouTube.">
+          </div>
         </div>
-        <p class="note">Each has its own switch. Master turns them all off, or pauses them for 15 minutes, an hour or until tomorrow morning, after which they come back by themselves. A small, quiet badge in the corner of YouTube shows what's tucked away; it stays dull until you hover it, and you can hide it.</p>
       </section>
 
       <section>
         <h2>🔒 Safe by design</h2>
-        <div class="card">
-          <ul class="facts">
-            <li>Runs only on youtube.com</li>
-            <li>Its only permission is saving your settings</li>
-            <li>No network requests, no tracking, nothing collected</li>
-          </ul>
-          <div class="links">
-            <a href="https://github.com/aenimaa/focus-mode-for-youtube/blob/main/SAFETY.md">How to verify it yourself →</a>
-            <a href="tools/safety-check.html">Online safety checker →</a>
+        <p class="lede">It runs only on youtube.com, its only permission is saving its own settings, and it makes no network requests. Nothing is tracked or collected.</p>
+
+        <h3 class="feature-group">How much access does an extension need?</h3>
+        <p class="note-small">More access isn't bad by itself: a tool that works on every website has to ask for every website. It just means more trust. Here's where common kinds of extensions sit.</p>
+        <div class="ladder">
+          <div class="rung us">
+            <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="on"></i></div>
+            <strong>Changes how one website looks <span class="tag">Focus Mode</span></strong>
+            <span>Saving its settings, plus that one site</span>
           </div>
+          <div class="rung">
+            <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i class="on"></i><i class="on"></i></div>
+            <strong>Organises your tabs, history or bookmarks</strong>
+            <span>Tabs, history or bookmarks</span>
+          </div>
+          <div class="rung">
+            <div class="bars" aria-hidden="true"><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <strong>Works on any website you visit</strong>
+            <span>Every website (ad blockers, translators, dark-mode tools)</span>
+          </div>
+          <div class="rung">
+            <div class="bars" aria-hidden="true"><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <strong>Watches or changes network traffic</strong>
+            <span>Web requests on the sites it covers</span>
+          </div>
+          <div class="rung">
+            <div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <strong>Works together with an app on your computer</strong>
+            <span>Native messaging, often with broad site access</span>
+          </div>
+        </div>
+        <div class="links">
+          <a href="https://github.com/aenimaa/focus-mode-for-youtube/blob/main/SAFETY.md">How to verify it yourself →</a>
+          <a href="tools/safety-check.html">Online safety checker →</a>
         </div>
       </section>
 
@@ -380,6 +175,36 @@
           <a href="https://github.com/aenimaa/focus-mode-for-youtube/issues/new?template=bug_report.yml">🐞 Report a problem</a>
           <a href="https://github.com/aenimaa/focus-mode-for-youtube/issues/new?template=feature_request.yml">💡 Suggest a feature</a>
         </div>
+      </section>
+
+      <section>
+        <h2>📚 More</h2>
+        <details>
+          <summary>🔄 Updating to a new version</summary>
+          <div><p>Download the new zip, unzip it over your old folder, and click <strong>Reload</strong> on the extension's card in <code>chrome://extensions</code>. Your settings stay, even if you move or rename the folder.</p></div>
+        </details>
+        <details>
+          <summary>🌐 Other browsers</summary>
+          <div><p>Works in Chrome 107+ and other Chromium browsers: Edge, Brave, Opera and Vivaldi. Their extensions page has the same Developer mode and Load unpacked options.</p></div>
+        </details>
+        <details>
+          <summary>⚙️ How it works</summary>
+          <div>
+            <p>The hiding rules are plain CSS, applied before YouTube draws the page, so nothing flashes on screen first. A tiny script switches rules off for the parts you've chosen to keep. Changes apply to every open YouTube tab at once, and with Chrome sync on, your choices follow you to your other computers.</p>
+<pre>extension/      The extension: what's in the download
+  hide.css      Rules that tuck each part away
+  content.js    Switches rules off for parts you keep
+  badge.js      The quiet corner badge
+  settings.js   Loads and saves settings
+  popup.*       The popup
+tools/
+  safety-check.html   The safety checker</pre>
+          </div>
+        </details>
+        <details>
+          <summary>🤝 Contributing</summary>
+          <div><p>Pull requests are welcome. For anything bigger than a small fix, please open an issue first. New releases are built automatically when a version tag is pushed.</p></div>
+        </details>
       </section>
     </main>
 

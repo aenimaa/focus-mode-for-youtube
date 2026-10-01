@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Focus Mode for YouTube | افزونه‌ای برای تماشای آرام‌تر</title>
+  <meta name="description" content="افزونه‌ای رایگان و متن‌باز برای Chrome که بخش‌های حواس‌پرت‌کن YouTube را کنار می‌گذارد. بدون ردیابی و بدون هیچ درخواستی به شبکه.">
+  <link rel="icon" href="../extension/icons/icon32.png">
+  <link rel="alternate" hreflang="en" href="../">
+  <script>
+    // Apply a saved Light/Dark choice before the page paints. Shared with the safety checker and the Persian page.
+    try {
+      const theme = localStorage.getItem("theme");
+      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+    } catch (_) {}
+  </script>
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="brand" href="./">
+        <img src="../extension/icons/icon32.png" width="28" height="28" alt="">
+        <span>Focus Mode</span>
+      </a>
+      <div class="topbar-tools">
+        <a class="lang" href="../" hreflang="en" lang="en">English</a>
+        <div class="segmented" role="radiogroup" aria-label="ظاهر">
+          <label><input type="radio" name="theme" value="light"><span>روشن</span></label>
+          <label><input type="radio" name="theme" value="dark"><span>تیره</span></label>
+          <label><input type="radio" name="theme" value="system"><span>سیستم</span></label>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <img src="../docs/icon.png" width="96" height="96" alt="">
+        <h1>Focus Mode for YouTube</h1>
+        <p class="tagline">ویدیویی را که برایش آمده‌اید تماشا کنید. بقیه کنار می‌ماند.</p>
+        <p class="fine">رایگان · متن‌باز · بدون ردیابی · بدون وابستگی به YouTube</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip">⬇️ دریافت برای Chrome</a>
+          <a class="button secondary" href="https://github.com/aenimaa/focus-mode-for-youtube">مشاهده در GitHub</a>
+        </div>
+      </div>
+
+      <figure class="compare figure-wide">
+        <img class="for-light" src="../docs/illustrations/hero-light.svg" width="800" height="320" alt="قبل: صفحهٔ ویدیو در YouTube با ویدیوهای مرتبط، پیشنهادهای پایان ویدیو، توضیحات و نظرها. بعد: فقط ویدیو و عنوانش، در وسط صفحه.">
+        <img class="for-dark" src="../docs/illustrations/hero-dark.svg" width="800" height="320" alt="قبل: صفحهٔ ویدیو در YouTube با ویدیوهای مرتبط، پیشنهادهای پایان ویدیو، توضیحات و نظرها. بعد: فقط ویدیو و عنوانش، در وسط صفحه.">
+      </figure>
+
+      <section>
+        <h2>🚀 نصب در یک دقیقه</h2>
+        <div class="grid">
+          <div class="card"><span class="step">۱</span><strong>فایل دانلودشده را از حالت فشرده خارج کنید</strong><p>یک پوشه تحویل می‌گیرید.</p></div>
+          <div class="card"><span class="step">۲</span><strong>Developer mode (حالت توسعه‌دهنده) را روشن کنید</strong><p>صفحهٔ <code>chrome://extensions</code> را باز کنید؛ کلیدش بالای صفحه است.</p></div>
+          <div class="card"><span class="step">۳</span><strong>Load unpacked (بارگذاری پوشهٔ بازشده)</strong><p>پوشه‌ای را که از فایل فشرده بیرون آمده انتخاب کنید. همین.</p></div>
+        </div>
+        <p class="note">📌 از نماد تکهٔ پازل در نوار ابزار Chrome سنجاقش کنید تا همیشه دم دستتان باشد.</p>
+      </section>
+
+      <section>
+        <h2>🙈 چه چیزهایی را کنار می‌گذارد</h2>
+        <p class="lede">هر بخش کلید خودش را دارد و هر وقت دلتان برایش تنگ شد، می‌توانید برش گردانید.</p>
+
+        <h3 class="feature-group">در صفحهٔ ویدیو</h3>
+        <article class="feature">
+          <h4>🎞️ ویدیوهای مرتبط</h4>
+          <p>ستون ویدیوهای پیشنهادی کنار پخش‌کننده. ویدیو به وسط صفحه می‌آید؛ فهرست‌های پخش، گفتگوی زنده و رونوشت ویدیو سر جایشان می‌مانند.</p>
+          <img class="for-light" src="../docs/illustrations/related-light.svg" width="640" height="240" alt="صفحهٔ ویدیو بدون ستون ویدیوهای پیشنهادی؛ پخش‌کننده وسط صفحه است.">
+          <img class="for-dark" src="../docs/illustrations/related-dark.svg" width="640" height="240" alt="صفحهٔ ویدیو بدون ستون ویدیوهای پیشنهادی؛ پخش‌کننده وسط صفحه است.">
+        </article>
+        <article class="feature">
+          <h4>🎬 صفحهٔ پایانی</h4>
+          <p>کارت‌ها و شبکهٔ ویدیوهای پیشنهادی که در پایان ویدیو ظاهر می‌شوند. شمارش معکوس پخش خودکار همچنان دیده می‌شود.</p>
+          <img class="for-light" src="../docs/illustrations/endscreen-light.svg" width="640" height="240" alt="لحظه‌های پایانی یک ویدیو، بدون کارت‌های پیشنهادی روی تصویر.">
+          <img class="for-dark" src="../docs/illustrations/endscreen-dark.svg" width="640" height="240" alt="لحظه‌های پایانی یک ویدیو، بدون کارت‌های پیشنهادی روی تصویر.">
+        </article>
+        <article class="feature">
+          <h4>💬 نظرها</h4>
+          <p>نظرهای زیر ویدیو.</p>
+          <img class="for-light" src="../docs/illustrations/comments-light.svg" width="640" height="240" alt="بخش زیر ویدیو، بدون نظرها.">
+          <img class="for-dark" src="../docs/illustrations/comments-dark.svg" width="640" height="240" alt="بخش زیر ویدیو، بدون نظرها.">
+        </article>
+        <article class="feature">
+          <h4>📝 توضیحات</h4>
+          <p>کادر زیر عنوان، با تعداد بازدید، تاریخ و توضیحات ویدیو.</p>
+          <img class="for-light" src="../docs/illustrations/description-light.svg" width="640" height="240" alt="عنوان ویدیو و زیرش هیچ‌چیز؛ نه بازدید، نه تاریخ، نه کادر توضیحات.">
+          <img class="for-dark" src="../docs/illustrations/description-dark.svg" width="640" height="240" alt="عنوان ویدیو و زیرش هیچ‌چیز؛ نه بازدید، نه تاریخ، نه کادر توضیحات.">
+        </article>
+
+        <h3 class="feature-group">در صفحهٔ اصلی (Home)</h3>
+        <article class="feature">
+          <h4>📱 Shorts</h4>
+          <p>ردیف‌های Shorts، تک‌ویدیوهای Shorts در نتایج جست‌وجو و زیر ویدیوها، و گزینهٔ Shorts در منو.</p>
+          <img class="for-light" src="../docs/illustrations/shorts-light.svg" width="640" height="240" alt="صفحهٔ اصلی YouTube فقط با ویدیوهای معمولی؛ ردیف ویدیوهای عمودی Shorts و گزینهٔ Shorts در منو دیگر نیستند.">
+          <img class="for-dark" src="../docs/illustrations/shorts-dark.svg" width="640" height="240" alt="صفحهٔ اصلی YouTube فقط با ویدیوهای معمولی؛ ردیف ویدیوهای عمودی Shorts و گزینهٔ Shorts در منو دیگر نیستند.">
+        </article>
+        <article class="feature">
+          <h4>🧭 کاوش (Explore)</h4>
+          <p>بخش کاوش در منوی کناری، و ردیف «Explore more topics» (کاوش در موضوع‌های بیشتر) در صفحهٔ اصلی.</p>
+          <img class="for-light" src="../docs/illustrations/explore-light.svg" width="640" height="240" alt="صفحهٔ اصلی YouTube با منوی کناری کوتاه‌تر و بدون ردیف موضوع‌ها برای کاوش.">
+          <img class="for-dark" src="../docs/illustrations/explore-dark.svg" width="640" height="240" alt="صفحهٔ اصلی YouTube با منوی کناری کوتاه‌تر و بدون ردیف موضوع‌ها برای کاوش.">
+        </article>
+      </section>
+
+      <section>
+        <h2>🎛️ کنترل‌های آرام</h2>
+        <div class="controls">
+          <div>
+            <div class="control">
+              <strong>⏸️ هر وقت YouTube مثل همیشه را خواستید، مکث کنید</strong>
+              <p>کلید اصلی (Master) سه حالت دارد: On (روشن)، Pause (مکث) و Off (خاموش). می‌توانید برای ۱۵ دقیقه، یک ساعت یا تا فردا صبح مکث کنید؛ بعد خودش دوباره روشن می‌شود.</p>
+            </div>
+            <div class="control">
+              <strong>🫧 نشانی آرام در گوشه</strong>
+              <p>نشان کوچکی در گوشهٔ پایین سمت چپ YouTube می‌گوید چه چیزهایی کنار رفته‌اند. تا نشانگر موس را رویش نبرید کم‌رنگ می‌ماند و روزی فقط یک بار خودش را نشان می‌دهد. وقتی می‌بندیدش چند ثانیه فرصت دارید پشیمان شوید؛ از پنجرهٔ افزونه هم می‌شود خاموشش کرد.</p>
+            </div>
+            <div class="control">
+              <strong>🗺️ پنجره‌ای با نقشه</strong>
+              <p>زبانهٔ Focus (تمرکز) نقشهٔ کوچکی از صفحهٔ ویدیو و صفحهٔ اصلی نشان می‌دهد. روی یک کاشی، یا خودِ آن بخش روی نقشه، بزنید تا کنار برود یا برگردد. Settings (تنظیمات) و About (درباره) هم فقط یک زبانه آن‌طرف‌ترند.</p>
+            </div>
+          </div>
+          <div class="shot">
+            <img class="for-light" src="../docs/screenshots/popup-light.png" width="320" alt="پنجرهٔ افزونه در حالت روشن: زبانهٔ Focus با نقشه‌های صفحهٔ ویدیو و صفحهٔ اصلی، و یک کاشی برای هر بخش YouTube.">
+            <img class="for-dark" src="../docs/screenshots/popup-dark.png" width="320" alt="پنجرهٔ افزونه در حالت تیره: زبانهٔ Focus با نقشه‌های صفحهٔ ویدیو و صفحهٔ اصلی، و یک کاشی برای هر بخش YouTube.">
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔒 امن از پایه</h2>
+        <p class="lede">فقط روی youtube.com کار می‌کند، تنها اجازه‌اش ذخیرهٔ تنظیمات خودش است و هیچ درخواستی به شبکه نمی‌فرستد. چیزی ردیابی یا جمع نمی‌شود.</p>
+
+        <h3 class="feature-group">یک افزونه به چه میزان دسترسی نیاز دارد؟</h3>
+        <p class="note-small">دسترسی بیشتر به‌خودی‌خود بد نیست: ابزاری که روی همهٔ وب‌سایت‌ها کار می‌کند، ناچار است به همهٔ آن‌ها دسترسی بخواهد. فقط یعنی باید بیشتر به آن اعتماد کنید. ببینید انواع رایج افزونه‌ها کجای این نردبان‌اند.</p>
+        <div class="ladder">
+          <div class="rung us">
+            <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i class="on"></i></div>
+            <strong>ظاهر یک وب‌سایت را تغییر می‌دهد <span class="tag">Focus Mode</span></strong>
+            <span>ذخیرهٔ تنظیمات خودش، به‌علاوهٔ همان یک سایت</span>
+          </div>
+          <div class="rung">
+            <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i class="on"></i><i class="on"></i></div>
+            <strong>زبانه‌ها، تاریخچه یا نشانک‌هایتان را مرتب می‌کند</strong>
+            <span>زبانه‌ها، تاریخچه یا نشانک‌ها</span>
+          </div>
+          <div class="rung">
+            <div class="bars" aria-hidden="true"><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <strong>روی هر وب‌سایتی که باز کنید کار می‌کند</strong>
+            <span>همهٔ وب‌سایت‌ها (تبلیغ‌گیرها، مترجم‌ها، ابزارهای حالت تیره)</span>
+          </div>
+          <div class="rung">
+            <div class="bars" aria-hidden="true"><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <strong>ترافیک شبکه را می‌بیند یا تغییر می‌دهد</strong>
+            <span>درخواست‌های وب در سایت‌هایی که پوشش می‌دهد</span>
+          </div>
+          <div class="rung">
+            <div class="bars" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <strong>همراه با برنامه‌ای روی رایانهٔ شما کار می‌کند</strong>
+            <span>Native messaging (پیام‌رسانی با برنامه‌های رایانه)، اغلب همراه با دسترسی گسترده به سایت‌ها</span>
+          </div>
+        </div>
+        <div class="links">
+          <a href="https://github.com/aenimaa/focus-mode-for-youtube/blob/main/SAFETY.md">خودتان بررسی کنید (به انگلیسی) ←</a>
+          <a href="../tools/safety-check.html">بررسی‌کنندهٔ ایمنی آنلاین ←</a>
+        </div>
+      </section>
+
+      <section>
+        <h2>🙋 چیزی درست کار نمی‌کند؟ ایده‌ای دارید؟</h2>
+        <p>YouTube صفحه‌اش را زیاد تغییر می‌دهد؛ برای همین گزارش‌های شماست که این افزونه را سرپا نگه می‌دارد.</p>
+        <div class="links">
+          <a href="https://github.com/aenimaa/focus-mode-for-youtube/issues/new?template=bug_report.yml">🐞 گزارش مشکل</a>
+          <a href="https://github.com/aenimaa/focus-mode-for-youtube/issues/new?template=feature_request.yml">💡 پیشنهاد قابلیت</a>
+        </div>
+      </section>
+
+      <section>
+        <h2>📚 بیشتر</h2>
+        <details>
+          <summary>🔄 به‌روزرسانی به نسخهٔ جدید</summary>
+          <div><p>فایل zip جدید را دانلود کنید، آن را روی پوشهٔ قبلی باز کنید و در <code>chrome://extensions</code> روی <strong>Reload (بارگذاری دوباره)</strong> در کارت افزونه بزنید. تنظیماتتان سر جایش می‌ماند، حتی اگر پوشه را جابه‌جا کنید یا نامش را عوض کنید.</p></div>
+        </details>
+        <details>
+          <summary>🌐 مرورگرهای دیگر</summary>
+          <div><p>در Chrome نسخهٔ ۱۰۷ به بعد و دیگر مرورگرهای Chromium کار می‌کند: Edge، Brave، Opera و Vivaldi. صفحهٔ افزونه‌های این مرورگرها هم همان گزینه‌های Developer mode و Load unpacked را دارد.</p></div>
+        </details>
+        <details>
+          <summary>⚙️ چطور کار می‌کند</summary>
+          <div>
+            <p>قاعده‌های پنهان‌سازی، CSS ساده‌اند و پیش از آن‌که YouTube صفحه را نمایش دهد اعمال می‌شوند؛ پس هیچ چیز حتی لحظه‌ای روی صفحه نمی‌پرد. اسکریپت کوچکی قاعدهٔ بخش‌هایی را که خواسته‌اید بمانند غیرفعال می‌کند. تغییرات بی‌درنگ به همهٔ زبانه‌های باز YouTube می‌رسد و اگر همگام‌سازی Chrome روشن باشد، انتخاب‌هایتان روی رایانه‌های دیگرتان هم با شما می‌آید.</p>
+<pre>extension/      The extension: what's in the download
+  hide.css      Rules that tuck each part away
+  content.js    Switches rules off for parts you keep
+  badge.js      The quiet corner badge
+  settings.js   Loads and saves settings
+  popup.*       The popup
+tools/
+  safety-check.html   The safety checker</pre>
+          </div>
+        </details>
+        <details>
+          <summary>🤝 مشارکت</summary>
+          <div><p>از Pull requestها استقبال می‌کنیم. برای هر چیزی بزرگ‌تر از یک اصلاح کوچک، لطفاً اول یک issue باز کنید. نسخه‌های جدید وقتی یک تگ نسخه push شود، خودکار ساخته می‌شوند.</p></div>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <p>ساختهٔ Nima Sh به روش وایب‌کدینگ؛ کسی که حواس خودش هم پرت می‌شود · <a href="https://github.com/aenimaa/focus-mode-for-youtube/blob/main/LICENSE">مجوز MIT</a> · قلم: <a href="https://github.com/Omnibus-Type/Asap">Asap</a></p>
+      <p>YouTube علامت تجاری Google LLC است. این پروژه مورد تأیید Google یا YouTube نیست و هیچ وابستگی‌ای به آن‌ها ندارد.</p>
+    </footer>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    let saved = "system";
+    try { saved = localStorage.getItem("theme") || "system"; } catch (_) {}
+
+    document.querySelectorAll('input[name="theme"]').forEach(input => {
+      input.checked = input.value === saved;
+      input.addEventListener("change", () => {
+        if (input.value === "system") delete root.dataset.theme;
+        else root.dataset.theme = input.value;
+        try { localStorage.setItem("theme", input.value); } catch (_) {}
+      });
+    });
+  </script>
+</body>
+</html>

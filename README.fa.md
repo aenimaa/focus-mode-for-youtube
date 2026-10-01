@@ -23,7 +23,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/hero-dark.svg">
-    <img src="docs/illustrations/hero-light.svg" width="800" alt="قبل: YouTube با ویدیوهای پیشنهادی، نظرها و Shorts در اطراف ویدیو. بعد: همان صفحه فقط با ویدیو و عنوانش، آرام و در وسط.">
+    <img src="docs/illustrations/hero-light.svg" width="100%" alt="قبل: YouTube با ویدیوهای پیشنهادی، نظرها و Shorts در اطراف ویدیو. بعد: همان صفحه فقط با ویدیو و عنوانش، آرام و در وسط.">
   </picture>
 </p>
 
@@ -51,7 +51,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/related-dark.svg">
-  <img src="docs/illustrations/related-light.svg" width="480" alt="صفحهٔ ویدیو بدون ستون ویدیوهای پیشنهادی؛ پخش‌کننده وسط صفحه است.">
+  <img src="docs/illustrations/related-light.svg" width="100%" alt="صفحهٔ ویدیو بدون ستون ویدیوهای پیشنهادی؛ پخش‌کننده وسط صفحه است.">
 </picture>
 
 #### صفحهٔ پایانی
@@ -60,7 +60,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/endscreen-dark.svg">
-  <img src="docs/illustrations/endscreen-light.svg" width="480" alt="لحظه‌های پایانی یک ویدیو، بدون کارت‌های پیشنهادی روی تصویر.">
+  <img src="docs/illustrations/endscreen-light.svg" width="100%" alt="لحظه‌های پایانی یک ویدیو، بدون کارت‌های پیشنهادی روی تصویر.">
 </picture>
 
 #### نظرها
@@ -69,7 +69,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/comments-dark.svg">
-  <img src="docs/illustrations/comments-light.svg" width="480" alt="بخش زیر ویدیو، بدون نظرها.">
+  <img src="docs/illustrations/comments-light.svg" width="100%" alt="بخش زیر ویدیو، بدون نظرها.">
 </picture>
 
 #### توضیحات
@@ -78,7 +78,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/description-dark.svg">
-  <img src="docs/illustrations/description-light.svg" width="480" alt="عنوان ویدیو و زیرش هیچ‌چیز؛ نه بازدید، نه تاریخ، نه کادر توضیحات.">
+  <img src="docs/illustrations/description-light.svg" width="100%" alt="عنوان ویدیو و زیرش هیچ‌چیز؛ نه بازدید، نه تاریخ، نه کادر توضیحات.">
 </picture>
 
 ### در صفحهٔ اصلی (Home)
@@ -89,7 +89,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/shorts-dark.svg">
-  <img src="docs/illustrations/shorts-light.svg" width="480" alt="صفحهٔ اصلی YouTube فقط با ویدیوهای معمولی؛ ردیف ویدیوهای عمودی Shorts و گزینهٔ Shorts در منو دیگر نیستند.">
+  <img src="docs/illustrations/shorts-light.svg" width="100%" alt="صفحهٔ اصلی YouTube فقط با ویدیوهای معمولی؛ ردیف ویدیوهای عمودی Shorts و گزینهٔ Shorts در منو دیگر نیستند.">
 </picture>
 
 #### کاوش (Explore)
@@ -98,7 +98,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/illustrations/explore-dark.svg">
-  <img src="docs/illustrations/explore-light.svg" width="480" alt="صفحهٔ اصلی YouTube با منوی کناری کوتاه‌تر و بدون ردیف موضوع‌ها برای کاوش.">
+  <img src="docs/illustrations/explore-light.svg" width="100%" alt="صفحهٔ اصلی YouTube با منوی کناری کوتاه‌تر و بدون ردیف موضوع‌ها برای کاوش.">
 </picture>
 
 ## 🎛️ کنترل‌های آرام
@@ -113,10 +113,19 @@
 - **Settings (تنظیمات):** ظاهر پنجره (روشن، تیره یا مطابق سیستم) و نشان گوشه.
 - **About (درباره):** این‌که چطور امن می‌ماند، و جایی برای گزارش مشکل.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/popup-dark.png">
+    <img src="docs/screenshots/popup-light.png" width="320" alt="پنجرهٔ افزونه در حالت روشن و تیره: زبانهٔ Focus با نقشهٔ صفحهٔ ویدیو و صفحهٔ اصلی، و یک کاشی برای هر بخش YouTube.">
+  </picture>
+</p>
+
 ## 🔒 امن از پایه
 
 فقط روی youtube.com کار می‌کند و تنها اجازه‌اش ذخیرهٔ تنظیمات خودش است. هیچ درخواستی به شبکه نمی‌فرستد، ردیابی نمی‌کند و چیزی جمع نمی‌کند.
 [خودتان بررسی کنید (به انگلیسی) ←](SAFETY.md) · [بررسی‌کنندهٔ ایمنی آنلاین ←](https://aenimaa.github.io/focus-mode-for-youtube/tools/safety-check.html)
+
+[ببینید هر نوع افزونه به چه میزان دسترسی نیاز دارد ←](SAFETY.md#how-much-access-does-an-extension-need)
 
 ## 🙋 چیزی درست کار نمی‌کند؟ ایده‌ای دارید؟
 
