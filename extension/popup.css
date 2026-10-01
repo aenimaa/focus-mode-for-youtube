@@ -67,6 +67,12 @@
   --focus: #3ea6ff;
 }
 
+/* An open section can push past Chrome's 600px popup limit; reserve the scrollbar's space so nothing shifts */
+html {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
 body {
   margin: 0;
   width: 320px;
