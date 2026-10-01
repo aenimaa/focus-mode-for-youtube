@@ -22,7 +22,7 @@ Chrome shows this warning for **any** extension that changes how a website looks
 - **No code from the internet.** Everything it runs is in the `extension/` folder. Chrome's Manifest V3 format forbids loading code from the web anyway.
 - **No background process.** Nothing runs unless a YouTube tab is open.
 
-The only link in the extension is **"Check it yourself →"** in the popup, which opens this page in a new tab when you click it.
+The popup has two links: **"Check it yourself →"**, which opens this page, and the **GitHub icon** in the footer, which opens the project's source code. Both open in a new tab only when you click them.
 
 ## Where your settings live
 

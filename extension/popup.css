@@ -421,6 +421,35 @@ body {
   color: var(--muted);
 }
 
+.footer {
+  align-items: center;
+}
+
+.credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.repo-link {
+  display: inline-grid;
+  place-items: center;
+  padding: 2px;
+  border-radius: 4px;
+  color: var(--muted);
+  transition: color .15s;
+}
+
+.repo-link:hover {
+  color: var(--text);
+}
+
+.repo-link svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before {
     transition: none !important;
