@@ -2,7 +2,9 @@
 // briefly shows itself once a day, and never blocks anything. Built in a closed shadow root so
 // YouTube's styles can't change it, with text set as plain text (never as HTML).
 const Badge = (() => {
-  const ICON = "M3 6V4.5A1.5 1.5 0 0 1 4.5 3H6M14 3h1.5A1.5 1.5 0 0 1 17 4.5V6M17 14v1.5a1.5 1.5 0 0 1-1.5 1.5H14M6 17H4.5A1.5 1.5 0 0 1 3 15.5V14";
+  // The logo's 16px drawing: squircle parentheses holding a play mark
+  const BRACKETS = "M5.3 3.2C3.7 3.5 3 4.3 3 6V10C3 11.7 3.7 12.5 5.3 12.8M10.7 3.2C12.3 3.5 13 4.3 13 6V10C13 11.7 12.3 12.5 10.7 12.8";
+  const PLAY = "M6.5 5.75V10.25L10.25 8Z";
 
   const STYLE = `
     :host {
@@ -16,7 +18,7 @@ const Badge = (() => {
       --text: #0f0f0f;
       --muted: #606060;
       --line: rgba(0, 0, 0, .12);
-      --accent: #e0002e;
+      --accent: #d3133f;
       --focus: #065fd4;
     }
     :host([data-dark]) {
@@ -37,7 +39,8 @@ const Badge = (() => {
       background: var(--bg); color: var(--accent);
       box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
     }
-    .mark svg { width: 18px; height: 18px; }
+    .mark svg { width: 20px; height: 20px; }
+    .mark .play { fill: var(--text); stroke: var(--text); }
     .panel {
       display: none; align-items: center; gap: 10px; padding: 5px 5px 5px 14px;
       border: 1px solid var(--line); border-radius: 999px;
@@ -79,17 +82,19 @@ const Badge = (() => {
   function icon() {
     const ns = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("viewBox", "0 0 20 20");
+    svg.setAttribute("viewBox", "0 0 16 16");
     svg.setAttribute("aria-hidden", "true");
     const frame = document.createElementNS(ns, "path");
-    frame.setAttribute("d", ICON);
+    frame.setAttribute("d", BRACKETS);
     frame.setAttribute("fill", "none");
     frame.setAttribute("stroke", "currentColor");
     frame.setAttribute("stroke-width", "2");
     frame.setAttribute("stroke-linecap", "round");
     const play = document.createElementNS(ns, "path");
-    play.setAttribute("d", "M8 6.8v6.4l5.2-3.2z");
-    play.setAttribute("fill", "currentColor");
+    play.setAttribute("d", PLAY);
+    play.setAttribute("class", "play");
+    play.setAttribute("stroke-width", "1");
+    play.setAttribute("stroke-linejoin", "round");
     svg.append(frame, play);
     return svg;
   }
@@ -104,7 +109,7 @@ const Badge = (() => {
     const wrap = el("div", "wrap");
     const mark = el("button", "mark");
     mark.type = "button";
-    mark.setAttribute("aria-label", "No Distractions for YouTube");
+    mark.setAttribute("aria-label", "Focus Mode for YouTube");
     mark.append(icon());
 
     const panel = el("div", "panel");
