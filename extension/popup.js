@@ -26,7 +26,6 @@ const PAGES = {
 // they turn red while tucked away, and clicking them flips the switch.
 
 const R = (x, y, w, h, rx, cls = "el") => `<rect class="${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
-const C = (cx, cy, r, cls = "el") => `<circle class="${cls}" cx="${cx}" cy="${cy}" r="${r}"/>`;
 const zone = (key, parts, boxes) =>
   `<g class="zone" data-k="${key}">${parts}${boxes.map(([x, y, w, h]) => `<rect class="box" x="${x}" y="${y}" width="${w}" height="${h}" rx="3"/>`).join("")}</g>`;
 const svg = body => `<svg viewBox="0 0 288 124" preserveAspectRatio="none">${body}</svg>`;
@@ -81,11 +80,21 @@ const MAPS = { watch: watchMap, home: homeMap };
 
 for (const [page, switches] of Object.entries(PAGES)) {
   document.querySelector(`[data-map="${page}"]`).innerHTML = MAPS[page]();
-  document.querySelector(`[data-tiles="${page}"]`).innerHTML = switches.map(s => `
-    <button type="button" class="tile" data-k="${s.key}" aria-pressed="false" title="${s.note.replace(/"/g, "&quot;")}">
-      <svg viewBox="0 0 16 16" aria-hidden="true">${s.icon}</svg>
-      <span>${s.label}</span>
-    </button>`).join("");
+  // Tiles are built as elements with plain text; only the constant icon paths go in as markup
+  const tiles = document.querySelector(`[data-tiles="${page}"]`);
+  for (const s of switches) {
+    const tile = document.createElement("button");
+    tile.type = "button";
+    tile.className = "tile";
+    tile.dataset.k = s.key;
+    tile.title = s.note;
+    tile.setAttribute("aria-pressed", "false");
+    tile.innerHTML = `<svg viewBox="0 0 16 16" aria-hidden="true">${s.icon}</svg>`;
+    const label = document.createElement("span");
+    label.textContent = s.label;
+    tile.append(label);
+    tiles.append(tile);
+  }
 }
 
 const highlight = (key, on) =>
@@ -162,13 +171,14 @@ function render() {
   const mode = state.master ? "on" : paused ? "pause" : "off";
   document.querySelector(`input[name="master"][value="${mode}"]`).checked = true;
 
-  const count = YTND.FEATURES.filter(key => state[key]).length;
+  const count = YTND.countOn(state);
   document.getElementById("masterStatus").textContent =
     mode === "on" ? `${count} of ${YTND.FEATURES.length} tucked away`
       : mode === "pause" ? `Paused, ${YTND.backAt(state.pausedUntil)}`
         : "YouTube as usual";
   document.getElementById("pauseRow").hidden = mode !== "pause";
   pagesEl.classList.toggle("inactive", !state.master);
+  pagesEl.inert = !state.master;  // dimmed tiles can't be reached with the keyboard either
 
   for (const [page, switches] of Object.entries(PAGES)) {
     const on = switches.filter(s => state[s.key]).length;

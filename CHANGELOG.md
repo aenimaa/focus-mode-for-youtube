@@ -2,6 +2,18 @@
 
 What changed in each release. The release page on GitHub shows the section for that version.
 
+## 3.1.0
+
+### Improvements
+- The play button in the logo is optically centred, with a small adjustment for each icon size.
+- Clearer wording in places, and the Persian pages now read as standard written Persian.
+- Tidier code: shared helpers for pausing and resuming, safer popup building, and less unused CSS.
+- Includes the calmer colours from 3.0.1.
+
+### Fixes
+- While paused or off, the dimmed tiles in the popup could still be switched with the keyboard.
+- The safety page now lists all four files that run on YouTube, and all three links in the popup.
+
 ## 3.0.1
 
 ### Improvements
@@ -44,7 +56,7 @@ What changed in each release. The release page on GitHub shows the section for t
 
 ### New features
 - **Pause:** bring everything back for 15 minutes, 1 hour or until tomorrow morning. It switches itself back on.
-- **A quiet corner badge** on YouTube that shows what's tucked away. It stays dull until you hover it.
+- **A quiet corner badge** on YouTube that shows what's tucked away. It stays dim until you hover it.
 - **"Something still showing?"** opens a bug report with the versions and the kind of page filled in. It never includes the page's address.
 
 ### Improvements

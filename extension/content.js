@@ -19,9 +19,8 @@ function schedulePauseEnd(settings) {
   if (settings.master || !settings.pausedUntil) return;
 
   const wait = settings.pausedUntil - Date.now();
-  const resume = () => YTND.save({ master: true, pausedUntil: 0 });
-  if (wait <= 0) resume();
-  else pauseTimer = setTimeout(resume, Math.min(wait, 2 ** 31 - 1));
+  if (wait <= 0) YTND.resume();
+  else pauseTimer = setTimeout(() => YTND.resume(), wait);
 }
 
 // Put our attribute back if the page ever strips it, and follow YouTube's light/dark theme for the badge

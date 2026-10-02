@@ -1,4 +1,4 @@
-// Shared by content.js and popup.js.
+// Shared by content.js, badge.js and popup.js.
 const YTND = {
   ATTR: "data-ytnd-off",
   FEATURES: ["sidebar", "comments", "shorts", "description", "endscreen", "explore"],
@@ -42,5 +42,19 @@ const YTND = {
 
   save(patch) {
     return chrome.storage.sync.set(patch);
+  },
+
+  // Everything visible for a while; content.js switches it back on when the time is up
+  pause(ms) {
+    return this.save({ master: false, pausedUntil: Date.now() + ms });
+  },
+
+  resume() {
+    return this.save({ master: true, pausedUntil: 0 });
+  },
+
+  // How many sections are switched on
+  countOn(settings) {
+    return this.FEATURES.filter(key => settings[key]).length;
   }
 };

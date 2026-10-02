@@ -261,7 +261,6 @@ h2 {
   font-size: 14px;
 }
 
-.emoji { font-size: 22px; line-height: 1; margin-bottom: 8px; display: block; }
 
 code {
   padding: 1px 6px;
@@ -272,8 +271,6 @@ code {
 
 .note { margin: 12px 0 0; color: var(--muted); font-size: 15px; }
 
-ul.facts { margin: 0; padding-left: 20px; }
-ul.facts li + li { margin-top: 4px; }
 
 .links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 12px; font-weight: 600; }
 
@@ -306,14 +303,6 @@ footer p { margin: 4px 0; }
 
 .figure-wide img { display: block; width: 100%; height: auto; border-radius: 16px; }
 
-/* Show the image that matches the active theme */
-.for-dark { display: none !important; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .for-dark { display: block !important; }
-  :root:not([data-theme="light"]) .for-light { display: none !important; }
-}
-:root[data-theme="dark"] .for-dark { display: block !important; }
-:root[data-theme="dark"] .for-light { display: none !important; }
 
 /* Features: a title, one line, and the before/after illustration */
 .feature-group { margin: 24px 0 8px; font-size: 18px; }

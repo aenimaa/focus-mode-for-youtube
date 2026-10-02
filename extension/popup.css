@@ -9,7 +9,7 @@
 }
 
 /*
-  3.0 "Wine" palette (see design/style-3.0.md, where every pair is checked against WCAG AA).
+  Neutral surfaces with a wine accent; every colour pair passes WCAG AA.
   --accent fills carry white text at 5.3:1; --accent-line marks "on" outlines (lighter in dark mode);
   --focus is indigo so keyboard focus never looks like "on".
   --map-* draw the page maps: YouTube's neutral greys, with tucked-away parts in --accent.
@@ -182,7 +182,6 @@ button { font: inherit; color: inherit; }
   box-shadow: var(--shadow-sm);
 }
 
-.tab-panel[hidden] { display: none; }
 
 /* Segmented controls (Master and Appearance) */
 
@@ -527,7 +526,6 @@ button { font: inherit; color: inherit; }
   font-weight: 700;
 }
 
-.about-title + .facts,
 .about-note { margin-top: 0; }
 
 .facts {

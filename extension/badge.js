@@ -1,4 +1,4 @@
-// A small, quiet badge in the bottom-left corner of YouTube. It stays dull until you hover it,
+// A small, quiet badge in the bottom-left corner of YouTube. It stays dim until you hover it,
 // briefly shows itself once a day, and never blocks anything. Built in a closed shadow root so
 // YouTube's styles can't change it, with text set as plain text (never as HTML).
 const Badge = (() => {
@@ -12,7 +12,7 @@ const Badge = (() => {
       position: fixed;
       left: 16px;
       bottom: 16px;
-      z-index: 2100;
+      z-index: 2100; /* above YouTube's page and top bar (about 2000), below its menus and dialogs */
       font: 13px/1.35 system-ui, "Segoe UI", Roboto, Arial, sans-serif;
       --bg: #ffffff;
       --text: #0f0f0f;
@@ -134,9 +134,9 @@ const Badge = (() => {
         clearTimeout(undoTimer);
         YTND.save({ badge: true });
       } else if (latest?.master) {
-        YTND.save({ master: false, pausedUntil: Date.now() + 15 * 60 * 1000 });
+        YTND.pause(15 * 60 * 1000);
       } else {
-        YTND.save({ master: true, pausedUntil: 0 });
+        YTND.resume();
       }
     });
 
@@ -144,7 +144,7 @@ const Badge = (() => {
     close.addEventListener("click", () => {
       undoUntil = Date.now() + UNDO_MS;
       clearTimeout(undoTimer);
-      undoTimer = setTimeout(() => update(latest), UNDO_MS + 50);
+      undoTimer = setTimeout(() => update(latest), UNDO_MS + 50); // just after the undo window closes
       YTND.save({ badge: false });
     });
 
@@ -164,7 +164,7 @@ const Badge = (() => {
       return;
     }
     if (settings.master) {
-      const count = YTND.FEATURES.filter(key => settings[key]).length;
+      const count = YTND.countOn(settings);
       ui.title.textContent = "Tucked away";
       ui.sub.textContent = `${count} ${count === 1 ? "section is" : "sections are"} out of sight`;
       ui.action.textContent = "Pause 15 min";
@@ -183,7 +183,7 @@ const Badge = (() => {
     if (lastPeek === today) return;
     await chrome.storage.local.set({ lastPeek: today });
     ui.wrap.classList.add("peek");
-    setTimeout(() => ui.wrap.classList.remove("peek"), 4000);
+    setTimeout(() => ui.wrap.classList.remove("peek"), 4000); // shown open for 4 seconds
   }
 
   function syncTheme() {

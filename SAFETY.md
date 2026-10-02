@@ -22,7 +22,7 @@ Chrome shows this warning for **any** extension that changes how a website looks
 - **No code from the internet.** Everything it runs is in the `extension/` folder. Chrome's Manifest V3 format forbids loading code from the web anyway.
 - **No background process.** Nothing runs unless a YouTube tab is open.
 
-The popup has two links: **"Check it yourself →"**, which opens this page, and the **GitHub icon** in the footer, which opens the project's source code. Both open in a new tab only when you click them.
+The popup has three links: **"Check it yourself →"** opens this page, **"Let me know →"** opens a bug report (see below), and the **GitHub icon** in the footer opens the source code. Each opens in a new tab, and only when you click it.
 
 ## What it adds to YouTube's page
 
@@ -64,16 +64,17 @@ Run on every release. Results for this version:
 |---|---|
 | Permissions | `storage` only; site access limited to `https://www.youtube.com/*` |
 | Network calls, code loaded from the web, hidden or encoded code | None found by the [safety checker](https://aenimaa.github.io/focus-mode-for-youtube/tools/safety-check.html) |
-| Automated tests (settings, pause, corner badge, popup, hiding rules) | All pass |
+| Automated tests of settings, pause, the corner badge, the popup and the hiding rules | All pass (run by the maker before each release; not yet published in this repo) |
 | Loads and runs in a real browser | Yes (tested in a Chromium browser with a clean profile) |
 | Secrets or private keys in the repository | None |
 
 ## Verify it yourself
 
-1. **Read the code** in [`extension/`](extension/). Only three files ever touch YouTube, about 100 lines together:
+1. **Read the code** in [`extension/`](extension/). Only four files ever run on YouTube, about 400 lines together:
    - `hide.css` holds the rules that hide each section.
    - `content.js` switches those rules off for the sections you've turned off.
    - `settings.js` loads and saves your settings.
+   - `badge.js` draws the small corner badge.
 
    The rest (`popup.html`, `popup.css`, `popup.js`, `theme-init.js`) is the popup window, which never touches YouTube.
 2. **Run the safety checker.** Open the [online checker](https://aenimaa.github.io/focus-mode-for-youtube/tools/safety-check.html) (or [`tools/safety-check.html`](tools/safety-check.html) from this repo, offline) and pick the extension folder. It reads the files on your computer, uploads nothing, and flags the usual red flags: broad permissions, network calls, code loaded at runtime, and hidden or minified code. It also prints a SHA-256 fingerprint for every file.
