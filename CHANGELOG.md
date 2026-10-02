@@ -2,6 +2,13 @@
 
 What changed in each release. The release page on GitHub shows the section for that version.
 
+## 3.1.1
+
+### Improvements
+- The README and website now show the corner badge, at rest and open.
+- The tests are published in the repo. They run on every change, and a release can't be built unless they pass.
+- The website's light and dark switch is one shared script, and your choice is saved under its own name.
+
 ## 3.1.0
 
 ### Improvements

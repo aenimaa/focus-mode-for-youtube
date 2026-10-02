@@ -16,3 +16,6 @@ BACKLOG.md
 _staging/
 *.log
 .claude/
+
+# Test dependencies (npm install)
+node_modules/

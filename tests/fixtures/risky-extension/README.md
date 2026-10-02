@@ -1,0 +1,1 @@
+A deliberately unsafe sample extension, used only to test that the safety checker catches the usual warning signs: access to every website, cookie access, network calls, `eval`, encoded code and a script loaded from the internet. It isn't part of Focus Mode for YouTube and doesn't ship in the release.

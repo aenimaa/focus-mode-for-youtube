@@ -4,13 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Extension Safety Check</title>
-  <script>
-    // Apply a saved Light/Dark choice before the page paints. Shared with the project's home page.
-    try {
-      const theme = localStorage.getItem("theme");
-      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
-    } catch (_) {}
-  </script>
+  <script src="../theme.js"></script>
   <style>
     * { box-sizing: border-box; }
 
@@ -379,21 +373,6 @@
 
     const CODE_EXT = /\.(m?js|html?|css)$/i;
     const BINARY_RISK = /\.(wasm|exe|dll|so|dylib|bat|cmd|ps1|sh)$/i;
-
-    // Appearance switch
-    (() => {
-      const root = document.documentElement;
-      let saved = "system";
-      try { saved = localStorage.getItem("theme") || "system"; } catch (_) {}
-      document.querySelectorAll('input[name="theme"]').forEach(input => {
-        input.checked = input.value === saved;
-        input.addEventListener("change", () => {
-          if (input.value === "system") delete root.dataset.theme;
-          else root.dataset.theme = input.value;
-          try { localStorage.setItem("theme", input.value); } catch (_) {}
-        });
-      });
-    })();
 
     const results = document.getElementById("results");
     const drop = document.getElementById("drop");

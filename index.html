@@ -7,13 +7,7 @@
   <meta name="description" content="A free, open-source Chrome extension that tucks away the distracting parts of YouTube. No tracking, no network requests.">
   <link rel="icon" href="extension/icons/icon32.png">
   <link rel="alternate" hreflang="fa" href="fa/">
-  <script>
-    // Apply a saved Light/Dark choice before the page paints. Shared with the safety checker and the Persian page.
-    try {
-      const theme = localStorage.getItem("theme");
-      if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
-    } catch (_) {}
-  </script>
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -116,6 +110,8 @@
             <div class="control">
               <strong>🫧 A quiet corner badge</strong>
               <p>A small badge in the bottom-left corner of YouTube shows what's tucked away. It stays dim until you hover it and shows itself once a day. Close it and you get a few seconds to undo, or switch it off in the popup.</p>
+              <img class="for-light badge-shot" src="docs/screenshots/badge-light.png" width="772" height="125" alt="The corner badge on YouTube: a dim round icon at rest, and open with what's tucked away and a Pause 15 min button.">
+              <img class="for-dark badge-shot" src="docs/screenshots/badge-dark.png" width="772" height="125" alt="The corner badge on YouTube: a dim round icon at rest, and open with what's tucked away and a Pause 15 min button.">
             </div>
             <div class="control">
               <strong>🗺️ A popup with a map</strong>
@@ -214,19 +210,5 @@ tools/
     </footer>
   </div>
 
-  <script>
-    const root = document.documentElement;
-    let saved = "system";
-    try { saved = localStorage.getItem("theme") || "system"; } catch (_) {}
-
-    document.querySelectorAll('input[name="theme"]').forEach(input => {
-      input.checked = input.value === saved;
-      input.addEventListener("change", () => {
-        if (input.value === "system") delete root.dataset.theme;
-        else root.dataset.theme = input.value;
-        try { localStorage.setItem("theme", input.value); } catch (_) {}
-      });
-    });
-  </script>
 </body>
 </html>

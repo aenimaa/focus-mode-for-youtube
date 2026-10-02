@@ -64,7 +64,7 @@ Run on every release. Results for this version:
 |---|---|
 | Permissions | `storage` only; site access limited to `https://www.youtube.com/*` |
 | Network calls, code loaded from the web, hidden or encoded code | None found by the [safety checker](https://aenimaa.github.io/focus-mode-for-youtube/tools/safety-check.html) |
-| Automated tests of settings, pause, the corner badge, the popup and the hiding rules | All pass (run by the maker before each release; not yet published in this repo) |
+| Automated tests of settings, pause, the corner badge, the popup, the site's theme switch and this safety checker | All pass. They're in [`tests/`](tests/), run on every change, and must pass before a release is built |
 | Loads and runs in a real browser | Yes (tested in a Chromium browser with a clean profile) |
 | Secrets or private keys in the repository | None |
 

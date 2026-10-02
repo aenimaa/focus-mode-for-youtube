@@ -1,0 +1,15 @@
+{
+  "name": "focus-mode-for-youtube",
+  "private": true,
+  "description": "Tests for the Focus Mode for YouTube extension. The extension itself has no dependencies.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/run.js"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

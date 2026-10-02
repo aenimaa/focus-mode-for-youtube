@@ -402,3 +402,6 @@ html, body { overflow-x: clip; }
   .topbar-tools { width: 100%; justify-content: space-between; }
   .segmented span { padding: 4px 8px; }
 }
+
+/* The corner badge, at rest and open */
+.badge-shot { display: block; width: 100%; height: auto; margin-top: 10px; border-radius: 12px; }

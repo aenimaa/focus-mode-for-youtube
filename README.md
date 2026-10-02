@@ -103,6 +103,13 @@ The Explore section of the left menu, and Home's "Explore more topics" row.
 
 **🫧 A quiet corner badge.** A small badge in the bottom-left corner of YouTube shows what's tucked away, with a button to pause for 15 minutes. It stays dim until you hover it and shows itself once a day. Close it with ✕ and you get a few seconds to **Undo**. You can also switch it off in the popup.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/badge-dark.png">
+    <img src="docs/screenshots/badge-light.png" width="100%" alt="The corner badge on YouTube: a dim round icon at rest, and open with what's tucked away and a Pause 15 min button.">
+  </picture>
+</p>
+
 **🗺️ A popup with a map.** Three tabs:
 
 - **Focus:** a small map of the Video page and of Home. Tap a tile, or the area itself on the map, to tuck it away or bring it back.
@@ -183,7 +190,7 @@ tools/
 <summary><b>🤝 Contributing</b></summary>
 <br>
 
-Pull requests are welcome. For anything bigger than a small fix, please open an issue first so we can agree on the approach. New releases are built automatically when a version tag (like `v3.0.0`) is pushed.
+Pull requests are welcome. To run the tests, install [Node.js](https://nodejs.org) and run `npm install`, then `npm test`. For anything bigger than a small fix, please open an issue first so we can agree on the approach. New releases are built automatically when a version tag (like `v3.0.0`) is pushed.
 
 </details>
 
