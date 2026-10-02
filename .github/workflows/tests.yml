@@ -1,9 +1,9 @@
-# Runs the tests on every push and pull request.
+# Runs the tests on every push to main or staging, and on every pull request.
 name: Tests
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   pull_request:
 
 permissions:
