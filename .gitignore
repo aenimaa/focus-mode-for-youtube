@@ -19,3 +19,7 @@ _staging/
 
 # Test dependencies (npm install)
 node_modules/
+
+# Project knowledge and agent pointers (local, agent-agnostic)
+knowledge/
+AGENTS.md
