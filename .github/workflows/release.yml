@@ -22,6 +22,16 @@ jobs:
             exit 1
           fi
 
+      # Every release needs its own notes: the "## <version>" section of CHANGELOG.md
+      - name: Take this version's notes from CHANGELOG.md
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v v="$version" '$0 == "## " v {found=1; next} found && /^## / {exit} found' CHANGELOG.md > changes.md
+          if ! grep -q '[^[:space:]]' changes.md; then
+            echo "CHANGELOG.md has no '## $version' section. Add the release notes, then tag again."
+            exit 1
+          fi
+
       # Files sit at the zip's root, so "Extract all" gives one folder with manifest.json inside
       - name: Build the zip
         run: |
@@ -33,6 +43,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           {
+            cat changes.md
+            echo
+            echo "---"
+            echo
             cat .github/release-notes.md
             echo
             echo "**SHA-256** of the zip: \`$(cut -d' ' -f1 SHA256SUMS.txt)\`"

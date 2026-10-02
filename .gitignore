@@ -9,3 +9,10 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Working files that stay on this computer (design rounds, briefs, planning, scratch)
+design/
+BACKLOG.md
+_staging/
+*.log
+.claude/
