@@ -3,10 +3,59 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Focus Mode for YouTube</title>
-  <meta name="description" content="A free, open-source Chrome extension that tucks away the distracting parts of YouTube. No tracking, no network requests.">
+  <title>Focus Mode for YouTube: hide Shorts and recommendations</title>
+  <meta name="description" content="A free, open-source Chrome extension that hides YouTube's related videos, Shorts, comments and end screens. One permission, no tracking, no network requests.">
+  <link rel="canonical" href="https://aenimaa.github.io/focus-mode-for-youtube/">
+  <link rel="alternate" hreflang="en" href="https://aenimaa.github.io/focus-mode-for-youtube/">
+  <link rel="alternate" hreflang="fa" href="https://aenimaa.github.io/focus-mode-for-youtube/fa/">
+  <link rel="alternate" hreflang="x-default" href="https://aenimaa.github.io/focus-mode-for-youtube/">
   <link rel="icon" href="extension/icons/icon32.png">
-  <link rel="alternate" hreflang="fa" href="fa/">
+  <link rel="apple-touch-icon" href="extension/icons/icon128.png">
+  <meta name="theme-color" content="#fcfbfb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161314" media="(prefers-color-scheme: dark)">
+  <!-- Search Console: paste the token from "HTML tag" verification here, then remove this comment.
+  <meta name="google-site-verification" content="TOKEN"> -->
+
+  <!-- Sharing previews (Open Graph is read by LinkedIn, Facebook, Telegram, Slack, Discord, X and others) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Focus Mode for YouTube">
+  <meta property="og:title" content="Focus Mode for YouTube">
+  <meta property="og:description" content="A calm Chrome extension that hides YouTube's related videos, Shorts, comments and end screens. Free, open source, no tracking.">
+  <meta property="og:url" content="https://aenimaa.github.io/focus-mode-for-youtube/">
+  <meta property="og:image" content="https://aenimaa.github.io/focus-mode-for-youtube/docs/social/share.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="Focus Mode for YouTube: the logo, the line 'Hides Shorts, comments and related videos', and the extension's popup.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fa_IR">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": "https://aenimaa.github.io/focus-mode-for-youtube/#app",
+    "name": "Focus Mode for YouTube",
+    "description": "A Chrome extension that hides YouTube's related videos, Shorts, comments, description, end screens and Explore section. Each part has its own switch, and a pause brings YouTube back for a while.",
+    "url": "https://aenimaa.github.io/focus-mode-for-youtube/",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome 107+, Edge, Brave, Opera, Vivaldi",
+    "softwareVersion": "3.1.1",
+    "downloadUrl": "https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip",
+    "installUrl": "https://aenimaa.github.io/focus-mode-for-youtube/",
+    "softwareHelp": "https://github.com/aenimaa/focus-mode-for-youtube#readme",
+    "releaseNotes": "https://github.com/aenimaa/focus-mode-for-youtube/blob/main/CHANGELOG.md",
+    "license": "https://opensource.org/licenses/MIT",
+    "isAccessibleForFree": true,
+    "permissions": "storage; site access to www.youtube.com only",
+    "image": "https://aenimaa.github.io/focus-mode-for-youtube/docs/social/share.png",
+    "screenshot": "https://aenimaa.github.io/focus-mode-for-youtube/docs/screenshots/popup-light.png",
+    "inLanguage": ["en", "fa"],
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Nima Sh", "url": "https://github.com/aenimaa" },
+    "sameAs": ["https://github.com/aenimaa/focus-mode-for-youtube"]
+  }
+  </script>
   <script src="theme.js"></script>
   <link rel="stylesheet" href="site.css">
 </head>
@@ -32,7 +81,7 @@
         <img src="docs/logo.svg" width="96" height="96" alt="">
         <h1>Focus Mode for YouTube</h1>
         <p class="tagline">Watch the video you came for. The rest stays tucked away.</p>
-        <p class="fine">Free · open source · no tracking · not affiliated with YouTube</p>
+        <p class="fine">A free Chrome extension · open source · no tracking · not affiliated with YouTube</p>
         <div class="actions">
           <a class="button primary" href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip">⬇️ Download for Chrome</a>
           <a class="button secondary" href="https://github.com/aenimaa/focus-mode-for-youtube">View on GitHub</a>

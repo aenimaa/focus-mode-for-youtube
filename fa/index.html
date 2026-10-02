@@ -3,10 +3,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Focus Mode for YouTube | افزونه‌ای برای تماشای آرام‌تر</title>
-  <meta name="description" content="افزونه‌ای رایگان و متن‌باز برای Chrome که بخش‌های حواس‌پرت‌کن YouTube را کنار می‌گذارد. بدون ردیابی و بدون هیچ درخواستی به شبکه.">
+  <title>Focus Mode for YouTube | حذف شورتس و ویدیوهای پیشنهادی یوتیوب</title>
+  <meta name="description" content="افزونه‌ای رایگان و متن‌باز برای Chrome که ویدیوهای پیشنهادی، Shorts (شورتس)، نظرها و صفحهٔ پایانی یوتیوب را کنار می‌گذارد. بدون ردیابی و بدون هیچ درخواستی به شبکه.">
+  <link rel="canonical" href="https://aenimaa.github.io/focus-mode-for-youtube/fa/">
+  <link rel="alternate" hreflang="en" href="https://aenimaa.github.io/focus-mode-for-youtube/">
+  <link rel="alternate" hreflang="fa" href="https://aenimaa.github.io/focus-mode-for-youtube/fa/">
+  <link rel="alternate" hreflang="x-default" href="https://aenimaa.github.io/focus-mode-for-youtube/">
   <link rel="icon" href="../extension/icons/icon32.png">
-  <link rel="alternate" hreflang="en" href="../">
+  <link rel="apple-touch-icon" href="../extension/icons/icon128.png">
+  <meta name="theme-color" content="#fcfbfb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161314" media="(prefers-color-scheme: dark)">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Focus Mode for YouTube">
+  <meta property="og:title" content="Focus Mode for YouTube | یوتیوب آرام‌تر">
+  <meta property="og:description" content="افزونه‌ای رایگان و متن‌باز برای Chrome که ویدیوهای پیشنهادی، Shorts، نظرها و صفحهٔ پایانی یوتیوب را کنار می‌گذارد. بدون ردیابی.">
+  <meta property="og:url" content="https://aenimaa.github.io/focus-mode-for-youtube/fa/">
+  <meta property="og:image" content="https://aenimaa.github.io/focus-mode-for-youtube/docs/social/share.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="Focus Mode for YouTube: نشان افزونه، جملهٔ «Shorts، نظرها و ویدیوهای مرتبط را پنهان می‌کند» و پنجرهٔ افزونه.">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": "https://aenimaa.github.io/focus-mode-for-youtube/#app",
+    "name": "Focus Mode for YouTube",
+    "description": "افزونه‌ای برای Chrome که ویدیوهای پیشنهادی، Shorts، نظرها، توضیحات، صفحهٔ پایانی و بخش کاوش یوتیوب را کنار می‌گذارد. هر بخش کلید خودش را دارد و با مکث، یوتیوب برای مدتی مثل همیشه می‌شود.",
+    "url": "https://aenimaa.github.io/focus-mode-for-youtube/fa/",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome 107+, Edge, Brave, Opera, Vivaldi",
+    "softwareVersion": "3.1.1",
+    "downloadUrl": "https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip",
+    "license": "https://opensource.org/licenses/MIT",
+    "isAccessibleForFree": true,
+    "permissions": "storage; site access to www.youtube.com only",
+    "image": "https://aenimaa.github.io/focus-mode-for-youtube/docs/social/share.png",
+    "inLanguage": "fa",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Nima Sh", "url": "https://github.com/aenimaa" },
+    "sameAs": ["https://github.com/aenimaa/focus-mode-for-youtube"]
+  }
+  </script>
   <script src="../theme.js"></script>
   <link rel="stylesheet" href="../site.css">
 </head>
@@ -32,7 +74,7 @@
         <img src="../docs/logo.svg" width="96" height="96" alt="">
         <h1>Focus Mode for YouTube</h1>
         <p class="tagline">ویدیویی را که برایش آمده‌اید تماشا کنید. بقیه کنار می‌ماند.</p>
-        <p class="fine">رایگان · متن‌باز · بدون ردیابی · بدون وابستگی به YouTube</p>
+        <p class="fine">افزونهٔ رایگان Chrome برای یوتیوب · متن‌باز · بدون ردیابی · بدون وابستگی به YouTube</p>
         <div class="actions">
           <a class="button primary" href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip">⬇️ دریافت برای Chrome</a>
           <a class="button secondary" href="https://github.com/aenimaa/focus-mode-for-youtube">مشاهده در GitHub</a>
@@ -86,7 +128,7 @@
 
         <h3 class="feature-group">در صفحهٔ اصلی (Home)</h3>
         <article class="feature">
-          <h4>📱 Shorts</h4>
+          <h4>📱 Shorts (شورتس)</h4>
           <p>ردیف‌های Shorts، تک‌ویدیوهای Shorts در نتایج جست‌وجو و زیر ویدیوها، و گزینهٔ Shorts در منو.</p>
           <img class="for-light" src="../docs/illustrations/shorts-light.svg" width="640" height="240" alt="صفحهٔ اصلی YouTube فقط با ویدیوهای معمولی؛ ردیف ویدیوهای عمودی Shorts و گزینهٔ Shorts در منو دیگر نیستند.">
           <img class="for-dark" src="../docs/illustrations/shorts-dark.svg" width="640" height="240" alt="صفحهٔ اصلی YouTube فقط با ویدیوهای معمولی؛ ردیف ویدیوهای عمودی Shorts و گزینهٔ Shorts در منو دیگر نیستند.">
