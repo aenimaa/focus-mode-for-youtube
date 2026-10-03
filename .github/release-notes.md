@@ -1,5 +1,9 @@
 ### Install
 
+🦊 **On Firefox?** Install it from [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/) instead. It updates by itself.
+
+**On Chrome, Edge, Brave, Opera or Vivaldi:**
+
 1. Download **focus-mode-for-youtube.zip** below and unzip it.
 2. Open `chrome://extensions` and turn on **Developer mode**.
 3. Click **Load unpacked** and choose the unzipped folder.
