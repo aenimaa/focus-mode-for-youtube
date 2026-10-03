@@ -42,6 +42,6 @@ body:
   - type: input
     id: versions
     attributes:
-      label: Extension and Chrome version
-      description: The extension version is at the bottom of its popup; Chrome's is at chrome://version.
-      placeholder: "v3.1.1, Chrome 141"
+      label: Extension and browser version
+      description: The extension version is at the bottom of its popup. Chrome's version is at chrome://version; Firefox's is under Help → About Firefox.
+      placeholder: "v3.1.1, Chrome 141 (or Firefox 143)"
