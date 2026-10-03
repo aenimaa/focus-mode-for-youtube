@@ -13,7 +13,7 @@ That's all. It doesn't ask for your tabs, browsing history, cookies, downloads o
 
 ### "Read and change your data on www.youtube.com"
 
-Chrome shows this warning (Firefox words it as "Access your data for www.youtube.com") for **any** extension that changes how a website looks, because the same permission that allows hiding a sidebar could, in a different extension, allow reading the page. This extension uses it only to apply CSS rules (`display: none`) to specific parts of the page. It never reads the page's content, your account, your watch history or your comments.
+Chrome shows this warning for **any** extension that changes how a website looks, because the same permission that allows hiding a sidebar could, in a different extension, allow reading the page. This extension uses it only to apply CSS rules (`display: none`) to specific parts of the page. It never reads the page's content, your account, your watch history or your comments.
 
 ## What it doesn't do
 
@@ -40,7 +40,7 @@ Your settings are saved with `chrome.storage.sync`. If you've turned on Chrome s
 
 ## Privacy policy
 
-Focus Mode for YouTube does not collect, store, share or sell any personal or usage data. The only data it keeps is the on/off and theme settings described above, which stay in your browser (and in Chrome sync or Firefox Sync, if you use them). There are no third parties involved.
+Focus Mode for YouTube does not collect, store, share or sell any personal or usage data. The only data it keeps is the on/off and theme settings described above, which stay in your browser (and in Chrome sync, if you use it). There are no third parties involved.
 
 ## How much access does an extension need?
 
@@ -85,7 +85,6 @@ Run on every release. Results for this version:
 
 - **[VirusTotal](https://www.virustotal.com/)** accepts a `.zip` of the extension folder. Two caveats: uploaded files become available to security researchers, and antivirus engines look for *known* malware, so a clean result says little about a small extension like this one.
 - **Store-based scanners** (ExtensionTotal, Spin.AI, Chrome-Stats) only work on extensions published in the Chrome Web Store, so they can't scan this one yet.
-- **On Firefox**, every add-on on [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/) passes Mozilla's automated validation and is signed by Mozilla before it can be installed. Mozilla can also review it by hand at any time.
 
 ### What the checker can't tell you
 

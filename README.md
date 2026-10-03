@@ -15,8 +15,7 @@
 
 <p align="center">
   <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ Download the latest version</b></a><br>
-  <sub>For Chrome and other Chromium browsers · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">Website</a></sub><br>
-  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><b>🦊 Get it for Firefox</b></a>
+  <sub>For Chrome and other Chromium browsers · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">Website</a></sub>
 </p>
 
 <p align="center">
@@ -29,8 +28,6 @@
 ---
 
 ## 🚀 Install in a minute
-
-🦊 **On Firefox?** [Add it from Firefox Add-ons](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/) in one click, and it updates by itself. The steps below are for Chrome and other Chromium browsers.
 
 1. **Unzip** the download.
 2. Open `chrome://extensions` and turn on **Developer mode** (top right).
@@ -157,8 +154,6 @@ Download the new zip, unzip it over your old folder, and click **Reload** on the
 <summary><b>🌐 Other browsers</b></summary>
 <br>
 
-🦊 **Firefox 140+:** install it from [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/). It updates by itself.
-
 Works in Chrome 107+ and other Chromium browsers: Edge, Brave, Opera and Vivaldi. Their extensions page has the same **Developer mode** and **Load unpacked** options.
 
 </details>
@@ -167,7 +162,7 @@ Works in Chrome 107+ and other Chromium browsers: Edge, Brave, Opera and Vivaldi
 <summary><b>⚙️ How it works</b></summary>
 <br>
 
-The hiding rules are plain CSS, applied before YouTube draws the page, so nothing flashes on screen first. Changes reach every open YouTube tab instantly. With Chrome sync or Firefox Sync on, your choices follow you to your other computers.
+The hiding rules are plain CSS, applied before YouTube draws the page, so nothing flashes on screen first. Changes reach every open YouTube tab instantly. With Chrome sync on, your choices follow you to your other computers.
 
 ```mermaid
 flowchart LR
