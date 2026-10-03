@@ -17,8 +17,7 @@
 
 <p align="center">
   <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ دریافت آخرین نسخه</b></a><br>
-  <sub>برای Chrome و دیگر مرورگرهای Chromium · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">وب‌سایت</a></sub><br>
-  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><img src="https://img.shields.io/amo/v/focus-mode-for-youtube?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139" alt="دریافت از Firefox Add-ons"></a>
+  <sub>برای Chrome و دیگر مرورگرهای Chromium · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">وب‌سایت</a></sub>
 </p>
 
 <p align="center">
@@ -31,8 +30,6 @@
 ---
 
 ## 🚀 نصب در یک دقیقه
-
-🦊 **از Firefox استفاده می‌کنید؟** آن را با یک کلیک [از Firefox Add-ons نصب کنید](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/)؛ خودش به‌روز می‌شود. مراحل زیر برای Chrome و دیگر مرورگرهای Chromium است.
 
 **۱.** فایل دانلودشده را **از حالت فشرده خارج کنید**.
 
@@ -161,8 +158,6 @@ YouTube صفحه‌اش را زیاد تغییر می‌دهد؛ برای همی
 <summary><b>🌐 مرورگرهای دیگر</b></summary>
 <br>
 
-🦊 **Firefox نسخهٔ ۱۴۰ به بعد:** آن را از [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/) نصب کنید. خودش به‌روز می‌شود.
-
 در Chrome نسخهٔ ۱۰۷ به بعد و دیگر مرورگرهای Chromium کار می‌کند: Edge، Brave، Opera و Vivaldi. صفحهٔ افزونه‌های این مرورگرها هم همان گزینه‌های **Developer mode** و **Load unpacked** را دارد.
 
 </details>
@@ -171,7 +166,7 @@ YouTube صفحه‌اش را زیاد تغییر می‌دهد؛ برای همی
 <summary><b>⚙️ چطور کار می‌کند</b></summary>
 <br>
 
-قاعده‌های پنهان‌سازی CSS ساده‌اند و پیش از آن‌که YouTube صفحه را نمایش دهد اعمال می‌شوند؛ پس چیزی حتی لحظه‌ای روی صفحه نمی‌آید. تغییرات بی‌درنگ به همهٔ زبانه‌های باز YouTube می‌رسد. اگر همگام‌سازی Chrome یا Firefox Sync روشن باشد، انتخاب‌هایتان روی رایانه‌های دیگرتان هم با شما می‌آید.
+قاعده‌های پنهان‌سازی CSS ساده‌اند و پیش از آن‌که YouTube صفحه را نمایش دهد اعمال می‌شوند؛ پس چیزی حتی لحظه‌ای روی صفحه نمی‌آید. تغییرات بی‌درنگ به همهٔ زبانه‌های باز YouTube می‌رسد. اگر همگام‌سازی Chrome روشن باشد، انتخاب‌هایتان روی رایانه‌های دیگرتان هم با شما می‌آید.
 
 <div dir="ltr">
 
