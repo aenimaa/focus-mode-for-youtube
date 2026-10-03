@@ -16,7 +16,7 @@
 <p align="center">
   <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ Download the latest version</b></a><br>
   <sub>For Chrome and other Chromium browsers · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">Website</a></sub><br>
-  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><b>🦊 Get it for Firefox</b></a>
+  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><img src="https://img.shields.io/amo/v/focus-mode-for-youtube?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139" alt="Get it on Firefox Add-ons"></a>
 </p>
 
 <p align="center">
