@@ -17,7 +17,8 @@
 
 <p align="center">
   <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ دریافت آخرین نسخه</b></a><br>
-  <sub>برای Chrome و دیگر مرورگرهای Chromium · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">وب‌سایت</a></sub>
+  <sub>برای Chrome و دیگر مرورگرهای Chromium · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">وب‌سایت</a></sub><br>
+  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><b>🦊 دریافت برای Firefox</b></a>
 </p>
 
 <p align="center">
@@ -30,6 +31,8 @@
 ---
 
 ## 🚀 نصب در یک دقیقه
+
+🦊 **از Firefox استفاده می‌کنید؟** آن را با یک کلیک [از Firefox Add-ons نصب کنید](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/)؛ خودش به‌روز می‌شود. مراحل زیر برای Chrome و دیگر مرورگرهای Chromium است.
 
 **۱.** فایل دانلودشده را **از حالت فشرده خارج کنید**.
 

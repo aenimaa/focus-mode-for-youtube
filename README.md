@@ -15,7 +15,8 @@
 
 <p align="center">
   <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ Download the latest version</b></a><br>
-  <sub>For Chrome and other Chromium browsers · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">Website</a></sub>
+  <sub>For Chrome and other Chromium browsers · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">Website</a></sub><br>
+  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><b>🦊 Get it for Firefox</b></a>
 </p>
 
 <p align="center">
@@ -28,6 +29,8 @@
 ---
 
 ## 🚀 Install in a minute
+
+🦊 **On Firefox?** [Add it from Firefox Add-ons](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/) in one click, and it updates by itself. The steps below are for Chrome and other Chromium browsers.
 
 1. **Unzip** the download.
 2. Open `chrome://extensions` and turn on **Developer mode** (top right).
