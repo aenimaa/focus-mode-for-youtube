@@ -18,7 +18,7 @@
 <p align="center">
   <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ دریافت آخرین نسخه</b></a><br>
   <sub>برای Chrome و دیگر مرورگرهای Chromium · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">وب‌سایت</a></sub><br>
-  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><b>🦊 دریافت برای Firefox</b></a>
+  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><img src="https://img.shields.io/amo/v/focus-mode-for-youtube?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139" alt="دریافت از Firefox Add-ons"></a>
 </p>
 
 <p align="center">
