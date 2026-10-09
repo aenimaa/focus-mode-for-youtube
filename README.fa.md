@@ -16,9 +16,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ دریافت آخرین نسخه</b></a><br>
-  <sub>برای Chrome و دیگر مرورگرهای Chromium · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">وب‌سایت</a></sub><br>
-  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><img src="https://img.shields.io/amo/v/focus-mode-for-youtube?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139" alt="دریافت از Firefox Add-ons"></a>
+  <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><img src="https://img.shields.io/github/v/release/aenimaa/focus-mode-for-youtube?label=Download%20for%20Chrome&logo=googlechrome&logoColor=white&color=d3133f" alt="دریافت برای Chrome"></a>
+  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><img src="https://img.shields.io/amo/v/focus-mode-for-youtube?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139" alt="دریافت از Firefox Add-ons"></a><br>
+  <sub>در Chrome، Edge، Brave، Opera، Vivaldi و Firefox کار می‌کند · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">وب‌سایت</a></sub>
 </p>
 
 <p align="center">
@@ -32,15 +32,19 @@
 
 ## 🚀 نصب در یک دقیقه
 
-🦊 **از Firefox استفاده می‌کنید؟** آن را با یک کلیک [از Firefox Add-ons نصب کنید](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/)؛ خودش به‌روز می‌شود. مراحل زیر برای Chrome و دیگر مرورگرهای Chromium است.
+**Chrome، Edge، Brave، Opera یا Vivaldi**
 
-**۱.** فایل دانلودشده را **از حالت فشرده خارج کنید**.
+**۱.** [فایل zip را دانلود کنید](https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip) و آن را **از حالت فشرده خارج کنید**.
 
 **۲.** صفحهٔ `chrome://extensions` را باز کنید و در بالای صفحه **Developer mode (حالت توسعه‌دهنده)** را روشن کنید.
 
 **۳.** روی **Load unpacked (بارگذاری پوشهٔ بازشده)** بزنید و پوشه‌ای را که از فایل فشرده بیرون آمده انتخاب کنید.
 
 📌 بعد روی نماد تکهٔ پازل در نوار ابزار Chrome بزنید و **Focus Mode for YouTube** را سنجاق کنید تا همیشه دم دستتان باشد.
+
+**Firefox**
+
+🦊 آن را با یک کلیک [از Firefox Add-ons نصب کنید](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/). خودش به‌روز می‌شود.
 
 ## 🙈 چه چیزهایی را کنار می‌گذارد
 
@@ -160,8 +164,6 @@ YouTube صفحه‌اش را زیاد تغییر می‌دهد؛ برای همی
 <details>
 <summary><b>🌐 مرورگرهای دیگر</b></summary>
 <br>
-
-🦊 **Firefox نسخهٔ ۱۴۰ به بعد:** آن را از [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/) نصب کنید. خودش به‌روز می‌شود.
 
 در Chrome نسخهٔ ۱۰۷ به بعد و دیگر مرورگرهای Chromium کار می‌کند: Edge، Brave، Opera و Vivaldi. صفحهٔ افزونه‌های این مرورگرها هم همان گزینه‌های **Developer mode** و **Load unpacked** را دارد.
 
