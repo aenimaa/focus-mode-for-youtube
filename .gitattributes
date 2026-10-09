@@ -1,2 +1,10 @@
 * text=auto eol=lf
 *.png binary
+
+# GitHub's language bar counts only the extension and its tests; the website counts as documentation
+index.html linguist-documentation
+fa/** linguist-documentation
+tools/** linguist-documentation
+docs/** linguist-documentation
+site.css linguist-documentation
+theme.js linguist-documentation

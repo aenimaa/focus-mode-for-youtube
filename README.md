@@ -14,8 +14,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><b>⬇️ Download the latest version</b></a><br>
-  <sub>For Chrome and other Chromium browsers · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">Website</a></sub>
+  <a href="https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip"><img src="https://img.shields.io/github/v/release/aenimaa/focus-mode-for-youtube?label=Download%20for%20Chrome&logo=googlechrome&logoColor=white&color=d3133f" alt="Download for Chrome"></a>
+  <a href="https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/"><img src="https://img.shields.io/amo/v/focus-mode-for-youtube?label=Firefox%20Add-ons&logo=firefoxbrowser&logoColor=white&color=FF7139" alt="Get it on Firefox Add-ons"></a><br>
+  <sub>Works in Chrome, Edge, Brave, Opera, Vivaldi and Firefox · <a href="https://aenimaa.github.io/focus-mode-for-youtube/">Website</a></sub>
 </p>
 
 <p align="center">
@@ -29,11 +30,17 @@
 
 ## 🚀 Install in a minute
 
-1. **Unzip** the download.
+**Chrome, Edge, Brave, Opera or Vivaldi**
+
+1. [Download the zip](https://github.com/aenimaa/focus-mode-for-youtube/releases/latest/download/focus-mode-for-youtube.zip) and **unzip** it.
 2. Open `chrome://extensions` and turn on **Developer mode** (top right).
 3. Click **Load unpacked** and choose the unzipped folder.
 
 📌 Then click the puzzle-piece icon in Chrome's toolbar and pin **Focus Mode for YouTube**.
+
+**Firefox**
+
+🦊 [Add it from Firefox Add-ons](https://addons.mozilla.org/firefox/addon/focus-mode-for-youtube/) in one click. It updates by itself.
 
 ## 🙈 What it tucks away
 
@@ -162,7 +169,7 @@ Works in Chrome 107+ and other Chromium browsers: Edge, Brave, Opera and Vivaldi
 <summary><b>⚙️ How it works</b></summary>
 <br>
 
-The hiding rules are plain CSS, applied before YouTube draws the page, so nothing flashes on screen first. Changes reach every open YouTube tab instantly. With Chrome sync on, your choices follow you to your other computers.
+The hiding rules are plain CSS, applied before YouTube draws the page, so nothing flashes on screen first. Changes reach every open YouTube tab instantly. With Chrome sync or Firefox Sync on, your choices follow you to your other computers.
 
 ```mermaid
 flowchart LR
