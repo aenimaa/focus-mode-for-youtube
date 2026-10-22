@@ -225,6 +225,13 @@ const badgeText = win => {
     dom.window.close();
   }
 
+  // 12. With related videos tucked away, the ambient glow can't add a horizontal scrollbar
+  {
+    const css = read("hide.css");
+    check("hide.css: clips the page sideways while related videos are tucked away",
+      /html:not\(\[data-ytnd-off~="sidebar"\]\) ytd-watch-flexy \{\s*overflow-x: clip !important;/.test(css));
+  }
+
   console.log(failures ? `\n${failures} FAILED` : "\nALL PASSED");
   process.exit(failures ? 1 : 0);
 })();

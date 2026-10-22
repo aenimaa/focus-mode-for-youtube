@@ -18,6 +18,15 @@ html:not([data-ytnd-off~="sidebar"]) ytd-watch-flexy #secondary:not(:has(
   display: none !important;
 }
 
+/*
+  With the right column gone, YouTube's ambient-mode glow around the player (a wide canvas)
+  sticks out past the window and adds a horizontal scrollbar. Clip it at the page's edge;
+  clip, unlike hidden, doesn't create a scroll box, so sticky parts of the page keep working.
+*/
+html:not([data-ytnd-off~="sidebar"]) ytd-watch-flexy {
+  overflow-x: clip !important;
+}
+
 /* Comments */
 html:not([data-ytnd-off~="comments"]) ytd-watch-flexy #comments {
   display: none !important;

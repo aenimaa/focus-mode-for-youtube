@@ -2,6 +2,11 @@
 
 What changed in each release. The release page on GitHub shows the section for that version.
 
+## 3.1.2
+
+### Fixes
+- With related videos tucked away, the page no longer scrolls sideways. YouTube's ambient glow around the player stuck out past the window.
+
 ## 3.1.1
 
 ### Improvements
