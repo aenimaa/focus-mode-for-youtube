@@ -12,7 +12,7 @@
   Neutral surfaces with a wine accent; every colour pair passes WCAG AA.
   --accent fills carry white text at 5.3:1; --accent-line marks "on" outlines (lighter in dark mode);
   --focus is indigo so keyboard focus never looks like "on".
-  --map-* draw the page maps: YouTube's neutral greys, with tucked-away parts in --accent.
+  --map-* draw the page maps: YouTube's neutral greys; tucked-away parts become dashed outlines (--map-dash).
 */
 :root {
   color-scheme: light;
@@ -34,8 +34,7 @@
   --map-player: #2b2526;
   --map-on-player: #5e5658;
   --line-strong: #d6d0d1;
-  --tile-on: #fdedf0;
-  --tile-on-hover: #fbe3e8;
+  --map-dash: #b9b1b3;
   --accent-line: #d3133f;
   --brand-from: #ff1a35;
   --brand-to: #d3133f;
@@ -66,8 +65,7 @@
     --map-player: #050404;
     --map-on-player: #403a3b;
     --line-strong: #4a4345;
-    --tile-on: #3a1520;
-    --tile-on-hover: #451825;
+    --map-dash: #6b6264;
     --accent-line: #ff6b80;
     --shadow-xs: 0 1px 1px rgba(0, 0, 0, .30);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, .40), inset 0 1px 0 rgba(255, 255, 255, .04);
@@ -93,8 +91,7 @@
   --map-player: #050404;
   --map-on-player: #403a3b;
   --line-strong: #4a4345;
-  --tile-on: #3a1520;
-  --tile-on-hover: #451825;
+  --map-dash: #6b6264;
   --accent-line: #ff6b80;
   --shadow-xs: 0 1px 1px rgba(0, 0, 0, .30);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .40), inset 0 1px 0 rgba(255, 255, 255, .04);
@@ -358,7 +355,7 @@ button { font: inherit; color: inherit; }
 
 .page.closed .page-inner { visibility: hidden; }
 
-/* Page maps: a sketch of the real page; tucked-away parts are red and can be clicked */
+/* Page maps: a sketch of the real page; tucked-away parts are dashed outlines and can be clicked */
 
 .map { margin: 2px 0 6px; }
 
@@ -366,7 +363,7 @@ button { font: inherit; color: inherit; }
 .map svg {
   display: block;
   width: 100%;
-  height: 104px;
+  height: 90px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--map-bg);
@@ -377,8 +374,9 @@ button { font: inherit; color: inherit; }
 .map .player { fill: var(--map-player); }
 .map .on-player { fill: var(--map-on-player); }
 .map .zone { cursor: pointer; }
-.map .zone .part { transition: fill .15s; }
-.map .zone.on .part { fill: var(--accent); }
+.map .zone .part { fill: var(--map-strong); transition: fill .15s; }
+.map .zone .part.on-player { fill: var(--map-on-player); }
+.map .zone.on .part { fill: transparent; stroke: var(--map-dash); stroke-width: 1; stroke-dasharray: 2.5 2; }
 .map .zone .box { fill: transparent; stroke: none; }
 .map .zone.hl .box,
 .map .zone:hover .box {
@@ -431,33 +429,37 @@ button { font: inherit; color: inherit; }
   color: var(--text);
 }
 
+/* Shown parts stay solid. A tucked-away part goes quiet and dashed, like the space it leaves, and says so. */
+.tile[aria-pressed="false"] { color: var(--text); }
+
 .tile[aria-pressed="true"] {
-  background: var(--tile-on);
-  border-color: var(--accent-line);
-  color: var(--text);
+  background: var(--soft);
+  border-style: dashed;
+  box-shadow: none;
 }
 
-.tile[aria-pressed="true"] svg {
-  stroke: var(--accent-text);
-}
+.tile[aria-pressed="true"] svg { opacity: .75; }
 
 .tile[aria-pressed="true"]:hover {
-  background: var(--tile-on-hover);
+  background: var(--soft);
+  border-color: var(--line-strong);
 }
 
-/* A small "tucked away" dot, so "on" never relies on colour alone */
-.tile[aria-pressed="true"]::after {
-  content: "";
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--brand-from), var(--brand-to));
+.tile-state {
+  min-height: 12px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
 }
 
-/* With Master off or paused, the pages show YouTube as usual */
+.tile[aria-pressed="true"] .tile-state {
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
+.tile-state .tick { font-weight: 800; }
+
+/* With Focus mode off or paused, the pages show YouTube as usual */
 .pages.inactive .map,
 .pages.inactive .tiles {
   opacity: .45;

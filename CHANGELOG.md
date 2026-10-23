@@ -2,6 +2,17 @@
 
 What changed in each release. The release page on GitHub shows the section for that version.
 
+## Unreleased
+
+### Improvements
+- Clearer switches in the popup. A tucked-away part now looks quiet and dashed, like the space it leaves, and its tile says "Hidden ✓". Parts you keep stay solid and say "Shown".
+- "Master" is now called "Focus mode", and it says "Hiding 4 of 6". The page headings say "Hide on the video page" and "Hide on Home".
+
+## 3.1.2
+
+### Fixes
+- With related videos tucked away, the page no longer scrolls sideways. YouTube's ambient glow around the player stuck out past the window.
+
 ## 3.1.1
 
 ### Improvements

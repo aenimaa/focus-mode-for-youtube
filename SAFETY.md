@@ -6,7 +6,7 @@
 
 | What | Why |
 |---|---|
-| **`storage` permission** | Saves your settings: the Master switch, the six section switches, a pause end time, the corner badge switch, and Light/Dark/System. It also remembers the date the badge last showed itself, so it does that only once a day. |
+| **`storage` permission** | Saves your settings: the Focus mode switch, the six section switches, a pause end time, the corner badge switch, and Light/Dark/System. It also remembers the date the badge last showed itself, so it does that only once a day. |
 | **Site access: `https://www.youtube.com/*`** | Adds a stylesheet to YouTube pages that hides the sections you've switched on, and the small corner badge. |
 
 That's all. It doesn't ask for your tabs, browsing history, cookies, downloads or any other site.

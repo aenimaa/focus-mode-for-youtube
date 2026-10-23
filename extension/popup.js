@@ -23,7 +23,7 @@ const PAGES = {
 };
 
 // Page maps: block sketches of YouTube's layout. Areas a switch controls are "zones";
-// they turn red while tucked away, and clicking them flips the switch.
+// a tucked-away zone turns into a dashed outline, like the empty space it leaves, and clicking it flips the switch.
 
 const R = (x, y, w, h, rx, cls = "el") => `<rect class="${cls}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}"/>`;
 const zone = (key, parts, boxes) =>
@@ -92,7 +92,10 @@ for (const [page, switches] of Object.entries(PAGES)) {
     tile.innerHTML = `<svg viewBox="0 0 16 16" aria-hidden="true">${s.icon}</svg>`;
     const label = document.createElement("span");
     label.textContent = s.label;
-    tile.append(label);
+    // What's happening on YouTube, in words, so the state never relies on colour or shape alone
+    const status = document.createElement("small");
+    status.className = "tile-state";
+    tile.append(label, status);
     tiles.append(tile);
   }
 }
@@ -173,7 +176,7 @@ function render() {
 
   const count = YTND.countOn(state);
   document.getElementById("masterStatus").textContent =
-    mode === "on" ? `${count} of ${YTND.FEATURES.length} tucked away`
+    mode === "on" ? `Hiding ${count} of ${YTND.FEATURES.length}`
       : mode === "pause" ? `Paused, ${YTND.backAt(state.pausedUntil)}`
         : "YouTube as usual";
   document.getElementById("pauseRow").hidden = mode !== "pause";
@@ -184,7 +187,20 @@ function render() {
     const on = switches.filter(s => state[s.key]).length;
     document.querySelector(`[data-count="${page}"]`).textContent = `${on} of ${switches.length}`;
   }
-  document.querySelectorAll(".tile").forEach(tile => tile.setAttribute("aria-pressed", String(Boolean(state[tile.dataset.k]))));
+  document.querySelectorAll(".tile").forEach(tile => {
+    const hidden = Boolean(state[tile.dataset.k]);
+    tile.setAttribute("aria-pressed", String(hidden));
+    const status = tile.querySelector(".tile-state");
+    status.textContent = hidden ? "Hidden" : "Shown";
+    if (hidden) {
+      // The tick is for the eye; screen readers already hear "pressed"
+      const tick = document.createElement("span");
+      tick.className = "tick";
+      tick.setAttribute("aria-hidden", "true");
+      tick.textContent = " ✓";
+      status.append(tick);
+    }
+  });
   document.querySelectorAll(".zone").forEach(z => z.classList.toggle("on", Boolean(state[z.dataset.k])));
 
   document.getElementById("badge").checked = Boolean(state.badge);

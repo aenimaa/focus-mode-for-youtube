@@ -106,7 +106,7 @@ The Explore section of the left menu, and Home's "Explore more topics" row.
 
 ## 🎛️ Controls
 
-**⏸️ Pause when you want YouTube as usual.** The Master switch has three settings: On, Pause and Off. Pause for 15 minutes, 1 hour or until tomorrow morning. It comes back by itself.
+**⏸️ Pause when you want YouTube as usual.** **Focus mode** has three settings: On, Pause and Off. Pause for 15 minutes, 1 hour or until tomorrow morning. It comes back by itself.
 
 **🫧 A quiet corner badge.** A small badge in the bottom-left corner of YouTube shows what's tucked away, with a button to pause for 15 minutes. It stays dim until you hover it and shows itself once a day. Close it with ✕ and you get a few seconds to **Undo**. You can also switch it off in the popup.
 
